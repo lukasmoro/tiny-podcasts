@@ -1,0 +1,12 @@
+.OptionsContainer {
+  width: 100%;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.9;
+  align-items: center;
+  justify-content: center;
+}
+
+.item {
+  margin-bottom: 1rem;
+}
