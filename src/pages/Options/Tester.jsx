@@ -21,7 +21,6 @@ export default function Tester() {
 
     chrome.storage.local.set({ newUrl }, () => {
       setUrls([...urls].concat(newUrl));
-      console.log(newUrl);
     });
   };
 
