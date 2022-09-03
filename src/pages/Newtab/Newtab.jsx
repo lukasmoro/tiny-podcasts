@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './Newtab.css';
 
+//NEXT STEPS
+//Loading exactly five feeds at the same time
+//Only load first item
+//Get enclosure tag
+//Format title
+//UI
+
 const Newtab = () => {
   const [items, setItems] = useState([]);
   const formatRss = async (newUrl) => {

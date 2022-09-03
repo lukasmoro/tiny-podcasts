@@ -1,5 +1,34 @@
 import React, { useState, useEffect } from 'react';
 
+/*
+
+//https://dev.to/paulasantamaria/chrome-extensions-local-storage-1b34
+
+//Storage with key
+
+const key = 'myKey';
+const value = { name: 'my value' };
+
+chrome.storage.local.set({key: value}, () => {
+  console.log('Stored name: ' + value.name);
+});
+
+//Retrieve with key
+
+const key = 'myKey';
+chrome.storage.local.get([key], (result) => {
+  console.log('Retrieved name: ' + result.myKey.name);
+});
+
+// Remove items under a certain key (Eventhandler => Delete Button)
+
+const key = 'myKey';
+chrome.storage.local.remove([key], (result) => {
+  console.log('Removed items for the key: ' + key);
+});
+
+*/
+
 export default function Tester() {
   const [urls, setUrls] = useState([]);
 
