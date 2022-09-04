@@ -1,5 +1,5 @@
 import React from 'react';
-import Tester from './Tester4';
+import Tester from './Tester';
 
 export default function Options() {
   return (
