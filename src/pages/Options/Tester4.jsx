@@ -43,11 +43,11 @@ export default function Tester() {
       return;
     }
 
-    const key1 = '1';
+    const key = 'key1';
 
     const url1 = { name: rssUrl1 };
 
-    chrome.storage.local.set({ key1: url1 }, () => {
+    chrome.storage.local.set({ key: url1 }, () => {
       console.log(url1.name);
     });
   };
@@ -63,11 +63,11 @@ export default function Tester() {
       return;
     }
 
-    const key2 = '2';
+    const key = 'key2';
 
     const url2 = { name: rssUrl2 };
 
-    chrome.storage.local.set({ key2: url2 }, () => {
+    chrome.storage.local.set({ key: url2 }, () => {
       console.log(url2.name);
     });
   };
@@ -83,11 +83,11 @@ export default function Tester() {
       return;
     }
 
-    const key3 = '3';
+    const key = 'key3';
 
     const url3 = { name: rssUrl3 };
 
-    chrome.storage.local.set({ key3: url3 }, () => {
+    chrome.storage.local.set({ key: url3 }, () => {
       console.log(url3.name);
     });
   };

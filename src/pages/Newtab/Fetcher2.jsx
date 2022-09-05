@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Newtab.css';
 
-const Fetcher = () => {
+const Newtab = () => {
   const [items, setItems] = useState([]);
   const formatRss = async (newUrl) => {
-    console.log(newUrl.text);
-    const res = await fetch(
-      `https://api.allorigins.win/get?url=${newUrl.text}`
-    );
+    console.log(newUrl);
+    const res = await fetch(`https://api.allorigins.win/get?url=${newUrl}`);
     console.log(res);
     const { contents } = await res.json();
     const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
@@ -21,9 +19,11 @@ const Fetcher = () => {
   };
 
   useEffect(() => {
-    chrome.storage.local.get(['newUrl'], (item) => {
-      formatRss(item.newUrl);
-      console.log(item.newUrl);
+    const key = 'key2';
+    chrome.storage.local.get([key], (item) => {
+      const newUrl = item.key2.name;
+      formatRss(newUrl);
+      console.log(newUrl);
     });
   }, []);
 
@@ -42,4 +42,4 @@ const Fetcher = () => {
   );
 };
 
-export default Fetcher;
+export default Newtab;
