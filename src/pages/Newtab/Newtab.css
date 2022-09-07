@@ -1,12 +1,18 @@
 .feed {
   display: flex;
-  justify-content: space-around;
   left: 10;
   right: 10;
   bottom: 10;
 }
+
 .feed-item {
-  justify-content: space-between;
+  justify-items: space-between;
   display: flex;
   text-align: center;
+  max-width: 800px;
+}
+
+.hello {
+  margin-right: 6rem;
+  margin-top: 4rem;
 }

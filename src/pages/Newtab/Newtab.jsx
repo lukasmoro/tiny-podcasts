@@ -8,9 +8,11 @@ const Newtab = () => {
   return (
     <div className="App">
       <div className="feed">
-        <Fetcher1 className="feed-item" />
-        <Fetcher2 className="feed-item" />
-        <Fetcher3 className="feed-item" />
+        <div className="feed-item">
+          <Fetcher1 />
+          <Fetcher2 />
+          <Fetcher3 />
+        </div>
       </div>
     </div>
   );

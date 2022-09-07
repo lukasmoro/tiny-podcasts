@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Newtab.css';
 
+import ReactAudioPlayer from 'react-audio-player';
+
 const Newtab = () => {
   const [items, setItems] = useState([]);
   const formatRss = async (newUrl) => {
@@ -11,7 +13,7 @@ const Newtab = () => {
     const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
     const items = feed.querySelectorAll('item');
     const feedItems = [...items].map((el) => ({
-      link: el.querySelector('link').innerHTML,
+      mp3: el.querySelector('enclosure').getAttribute('url'),
       title: el.querySelector('title').innerHTML,
       author: el.querySelector('author').innerHTML,
     }));
@@ -31,10 +33,10 @@ const Newtab = () => {
     <div className="App">
       {items.map((item) => {
         return (
-          <div>
+          <div className="hello">
             <h1>{item.title}</h1>
             <p>{item.author}</p>
-            <a href={item.link}>{item.link}</a>
+            <ReactAudioPlayer src={item.mp3} controls />
           </div>
         );
       })}

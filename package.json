@@ -15,6 +15,7 @@
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.2",
     "react": "^17.0.2",
+    "react-audio-player": "^0.17.0",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0",
     "use-chrome-storage": "^1.0.8"
