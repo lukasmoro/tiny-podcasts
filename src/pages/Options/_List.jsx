@@ -1,56 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Form from './_Form';
 import Item from './_Item';
 
 function List() {
   const [todos, setTodos] = useState([]);
 
+  //THIS MUST IMPLEMENT REGEX ✅
+  //THIS MUST THROW ERROR MESSAGE FOR WRONG FORMAT
   const addTodo = (todo) => {
-    if (!todo.text || /^\s*$/.test(todo.text)) {
+    if (
+      !/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/.test(
+        todo.text
+      )
+    ) {
       return;
     }
-
+    //THIS MUST ADD TO STORAGE API ✅
     const newTodos = [todo, ...todos];
-
     setTodos(newTodos);
-    console.log(todo, ...todos);
+    chrome.storage.local.set({ newTodos }, () => {
+      console.log(newTodos);
+    });
   };
 
-  const updateTodo = (todoId, newValue) => {
-    if (!newValue.text || /^\s*$/.test(newValue.text)) {
-      return;
-    }
-
-    setTodos((prev) =>
-      prev.map((item) => (item.id === todoId ? newValue : item))
-    );
-  };
-
+  //IS THIS CHANGING STATE? YES...
+  //THIS MUST REMOVE FROM STORAGE API
   const removeTodo = (id) => {
     const removedArr = [...todos].filter((todo) => todo.id !== id);
-
     setTodos(removedArr);
-  };
-
-  const completeTodo = (id) => {
-    let updatedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        todo.isComplete = !todo.isComplete;
-      }
-      return todo;
+    chrome.storage.local.set({ removeTodo }, () => {
+      console.log(removedArr);
     });
-    setTodos(updatedTodos);
   };
 
   return (
     <>
       <Form onSubmit={addTodo} />
-      <Item
-        todos={todos}
-        completeTodo={completeTodo}
-        removeTodo={removeTodo}
-        updateTodo={updateTodo}
-      />
+      <Item todos={todos} removeTodo={removeTodo} />
     </>
   );
 }

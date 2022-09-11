@@ -3,6 +3,12 @@ import './Newtab.css';
 
 import ReactAudioPlayer from 'react-audio-player';
 
+//HOW CAN I ADJUST THIS LOGIC SO IT CAN BE APPLIED TO MULTIPLE URLS FROM THE LIST?
+//HOW DO NEWTABS LOOK IF PODCASTS ARE PLAYED IN AN OLDER TAB ALREADY?
+//OPT1: METADATA ABOUT PLAYBACK TIME IS SAVED IN STORAGE AND SYNCHRONISED TO NEW TAB
+//OPT2: LOGIC THAT CHECKS IF PLAYBACK = TRUE AND ADDS GOOGLE INSTEAD
+//OPT3: FOUND IN POPUP.JSX INSTEAD
+
 const Newtab = () => {
   const [items, setItems] = useState([]);
   const formatRss = async (newUrl) => {
@@ -12,7 +18,7 @@ const Newtab = () => {
     const { contents } = await res.json();
     const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
     const items = feed.querySelectorAll('item');
-    const feedItems = [...items].slice(0, 3).map((el) => ({
+    const feedItems = [...items].slice(0, 1).map((el) => ({
       mp3: el.querySelector('enclosure').getAttribute('url'),
       title: el.querySelector('title').innerHTML,
       author: el.querySelector('author').innerHTML,
@@ -23,6 +29,14 @@ const Newtab = () => {
   useEffect(() => {
     chrome.storage.local.get(['newUrl'], (item) => {
       formatRss(item.newUrl.text);
+      console.log(item.newUrl.text);
+    });
+  }, []);
+
+  // THIS MUST UPDATE IF NEWTODOS OR REMOVEDARR CHANGES
+  useEffect(() => {
+    chrome.storage.local.get(['hello'], (item) => {
+      console.log(item.hello);
     });
   }, []);
 
@@ -33,7 +47,7 @@ const Newtab = () => {
           <div key={key} className="hello">
             <h1>{item.title}</h1>
             <p>{item.author}</p>
-            <ReactAudioPlayer src={item.mp3} controls />
+            <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
           </div>
         );
       })}
