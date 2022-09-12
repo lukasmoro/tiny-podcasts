@@ -17,7 +17,7 @@ function Form(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="off" className="todo-form">
+    <form onSubmit={handleSubmit} autoComplete="off">
       <input
         placeholder="Enter your feeds here!"
         value={input}
