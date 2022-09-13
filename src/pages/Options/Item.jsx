@@ -9,8 +9,8 @@ const Item = ({ urls, removeUrl }) => {
   }, []);
 
   //THIS MUST GET DATA FROM STORAGE
-  return urls.map((url, index) => (
-    <div key={index}>
+  return urls.map((url, key) => (
+    <div key={key}>
       <div key={url.id}>{url.text}</div>
       <div>
         <button onClick={() => removeUrl(url.id)}> - </button>
@@ -20,3 +20,17 @@ const Item = ({ urls, removeUrl }) => {
 };
 
 export default Item;
+
+/*
+
+{items.map((item, key) => {
+        return (
+          <div key={key}>
+            <h1>{item.title}</h1>
+            <p>{item.author}</p>
+            <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+          </div>
+        );
+      })}
+
+*/

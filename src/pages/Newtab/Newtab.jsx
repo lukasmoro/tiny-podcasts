@@ -39,6 +39,7 @@ const Newtab = () => {
     });
   }, []);
 
+  //I NEED SOMETHING HERE TO CLEAN UP THE DATA (ESPECIALLY NUMBERING)
   return (
     <div className="App">
       {items.map((item, key) => {
