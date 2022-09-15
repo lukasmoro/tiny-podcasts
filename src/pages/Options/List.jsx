@@ -7,6 +7,7 @@ function List() {
 
   //THIS MUST IMPLEMENT REGEX ✅
   //THIS MUST THROW ERROR MESSAGE FOR WRONG FORMAT
+
   const addUrl = (url) => {
     if (
       !/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/.test(
@@ -16,6 +17,8 @@ function List() {
       return;
     }
     //THIS MUST ADD TO STORAGE API ✅
+    //ADDURL IS THE KEY TO THE RENDERER COMPONENT (SAME LOGIC)!!
+
     let newUrls = [url, ...urls];
     setUrls(newUrls);
     chrome.storage.local.set({ newUrls }, () => {
