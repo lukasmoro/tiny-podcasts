@@ -6,7 +6,7 @@ function List() {
   const [urls, setUrls] = useState([]);
 
   //THIS MUST IMPLEMENT REGEX ✅
-  //THIS MUST THROW ERROR MESSAGE FOR WRONG FORMAT
+  //THIS MUST THROW ERROR MESSAGE FOR WRONG FORMAT & DUPLICATE URL
 
   const addUrl = (url) => {
     if (
@@ -17,21 +17,20 @@ function List() {
       return;
     }
     //THIS MUST ADD TO STORAGE API ✅
-    //ADDURL IS THE KEY TO THE RENDERER COMPONENT (SAME LOGIC)!!
 
     let newUrls = [url, ...urls];
-    setUrls(newUrls);
+
     chrome.storage.local.set({ newUrls }, () => {
-      console.log(newUrls);
+      setUrls(newUrls);
     });
   };
 
   //THIS MUST REMOVE FROM STORAGE API ✅
   const removeUrl = (id) => {
     let newUrls = [...urls].filter((url) => url.id !== id);
-    setUrls(newUrls);
+
     chrome.storage.local.set({ newUrls }, () => {
-      console.log(newUrls);
+      setUrls(newUrls);
     });
   };
 
