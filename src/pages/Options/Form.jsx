@@ -10,7 +10,7 @@ function Form(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.onSubmit({
-      id: new Date().getTime(),
+      key: new Date().getTime(),
       text: input,
     });
     setInput('');
