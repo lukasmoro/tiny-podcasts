@@ -3,43 +3,6 @@ import './Newtab.css';
 
 import ReactAudioPlayer from 'react-audio-player';
 
-//TO DO
-
-//HOW CAN I ADJUST THIS LOGIC SO IT CAN BE APPLIED TO MULTIPLE URLS FROM THE LIST? ✅
-
-//FIX LIST (RUN IT COMPLETELY THROUGH CHROME STORAGE) ✅
-
-//ERRORHANDLING FOR WRONG FORMAT & DUPLICATE URL ✅
-
-//RE-LOADING BEHAVIOR ON SUBMIT ✅
-
-//REFACTOR COMPONENT STRUCTURE AND NEWTAB COMPONENT
-
-//ERRORHANDLING IF NEWURL IS UNDEFINED THAT IT DISPLAYS ONBOARDING
-
-//LOGIC SO ITS NOT POSSIBLE TO DEFINE MORE THAN 5 PODCAST URLS
-
-//GET RID OF COMPONENTS AND PACKAGES THAT ARE NOT NEEDED
-
-//MAKE POPUP SO IT ALSO CAN ADD URLS
-
-//HOW DO NEWTABS LOOK IF PODCASTS ARE PLAYED IN AN OLDER TAB ALREADY?
-//OPT1: METADATA ABOUT PLAYBACK TIME IS SAVED IN STORAGE AND SYNCHRONISED TO NEW TAB
-//OPT2: LOGIC THAT CHECKS IF PLAYBACK = TRUE AND ADDS GOOGLE INSTEAD
-//OPT3: FOUND IN POPUP.JSX INSTEAD
-
-//LOADING SCREEN
-
-//RENDER IMAGE COVERS
-
-//OVERALL STYLING CSS
-
-//WRITE AND ILLUSTRATE .README, ONBOARDING, TWITTER & PORTFOLIO CONTENT
-
-//MODEL LOGO RHINO, RENDER IN BLENDER
-
-//DEPLOY!
-
 const Newtab = () => {
   const [items1, setItems1] = useState([]);
   const [items2, setItems2] = useState([]);
@@ -54,11 +17,17 @@ const Newtab = () => {
     console.log(res);
     const { contents } = await res.json();
     const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const items = feed.querySelectorAll('item');
-    const feedItems = [...items].slice(0, 1).map((el) => ({
+    const image = feed.querySelectorAll('channel');
+    const item = feed.querySelectorAll('item');
+    const feedTitle = [...item].slice(0, 1).map((el) => ({
+      episode: el.querySelector('title').innerHTML,
+    }));
+    const feedItems = [...image].slice(0, 1).map((el) => ({
       mp3: el.querySelector('enclosure').getAttribute('url'),
-      title: el.querySelector('title').innerHTML,
       author: el.querySelector('author').innerHTML,
+      image: el.querySelector('url').innerHTML,
+      title: el.querySelector('title').innerHTML,
+      episode: feedTitle[0].episode,
     }));
     setItems1(feedItems);
   };
@@ -68,11 +37,17 @@ const Newtab = () => {
     console.log(res);
     const { contents } = await res.json();
     const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const items = feed.querySelectorAll('item');
-    const feedItems = [...items].slice(0, 1).map((el) => ({
+    const image = feed.querySelectorAll('channel');
+    const item = feed.querySelectorAll('item');
+    const feedTitle = [...item].slice(0, 1).map((el) => ({
+      episode: el.querySelector('title').innerHTML,
+    }));
+    const feedItems = [...image].slice(0, 1).map((el) => ({
       mp3: el.querySelector('enclosure').getAttribute('url'),
-      title: el.querySelector('title').innerHTML,
       author: el.querySelector('author').innerHTML,
+      image: el.querySelector('url').innerHTML,
+      title: el.querySelector('title').innerHTML,
+      episode: feedTitle[0].episode,
     }));
     setItems2(feedItems);
   };
@@ -82,11 +57,17 @@ const Newtab = () => {
     console.log(res);
     const { contents } = await res.json();
     const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const items = feed.querySelectorAll('item');
-    const feedItems = [...items].slice(0, 1).map((el) => ({
+    const image = feed.querySelectorAll('channel');
+    const item = feed.querySelectorAll('item');
+    const feedTitle = [...item].slice(0, 1).map((el) => ({
+      episode: el.querySelector('title').innerHTML,
+    }));
+    const feedItems = [...image].slice(0, 1).map((el) => ({
       mp3: el.querySelector('enclosure').getAttribute('url'),
-      title: el.querySelector('title').innerHTML,
       author: el.querySelector('author').innerHTML,
+      image: el.querySelector('url').innerHTML,
+      title: el.querySelector('title').innerHTML,
+      episode: feedTitle[0].episode,
     }));
     setItems3(feedItems);
   };
@@ -96,11 +77,17 @@ const Newtab = () => {
     console.log(res);
     const { contents } = await res.json();
     const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const items = feed.querySelectorAll('item');
-    const feedItems = [...items].slice(0, 1).map((el) => ({
+    const image = feed.querySelectorAll('channel');
+    const item = feed.querySelectorAll('item');
+    const feedTitle = [...item].slice(0, 1).map((el) => ({
+      episode: el.querySelector('title').innerHTML,
+    }));
+    const feedItems = [...image].slice(0, 1).map((el) => ({
       mp3: el.querySelector('enclosure').getAttribute('url'),
-      title: el.querySelector('title').innerHTML,
       author: el.querySelector('author').innerHTML,
+      image: el.querySelector('url').innerHTML,
+      title: el.querySelector('title').innerHTML,
+      episode: feedTitle[0].episode,
     }));
     setItems4(feedItems);
   };
@@ -110,18 +97,24 @@ const Newtab = () => {
     console.log(res);
     const { contents } = await res.json();
     const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const items = feed.querySelectorAll('item');
-    const feedItems = [...items].slice(0, 1).map((el) => ({
+    const image = feed.querySelectorAll('channel');
+    const item = feed.querySelectorAll('item');
+    const feedTitle = [...item].slice(0, 1).map((el) => ({
+      episode: el.querySelector('title').innerHTML,
+    }));
+    const feedItems = [...image].slice(0, 1).map((el) => ({
       mp3: el.querySelector('enclosure').getAttribute('url'),
-      title: el.querySelector('title').innerHTML,
       author: el.querySelector('author').innerHTML,
+      image: el.querySelector('url').innerHTML,
+      title: el.querySelector('title').innerHTML,
+      episode: feedTitle[0].episode,
     }));
     setItems5(feedItems);
   };
 
   // THIS MUST UPDATE IF NEWTODOS CHANGES ✅
   useEffect(() => {
-    chrome.storage.local.get(['newUrls'], (item) => {
+    chrome.storage.local.get(['newUrls'], (item, key) => {
       formatRss1(item.newUrls[0].text);
       formatRss2(item.newUrls[1].text);
       formatRss3(item.newUrls[2].text);
@@ -135,46 +128,66 @@ const Newtab = () => {
     <div className="App">
       {items1.map((item, key) => {
         return (
-          <div key={key}>
-            <h1>{item.title}</h1>
-            <p>{item.author}</p>
-            <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+          <div className="card" key={key}>
+            <div className="content">
+              <img src={item.image}></img>
+              <h1>{item.title}</h1>
+              <h2>{item.episode}</h2>
+              <p>{item.author}</p>
+              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+            </div>
           </div>
         );
       })}
       {items2.map((item, key) => {
         return (
-          <div key={key}>
-            <h1>{item.title}</h1>
-            <p>{item.author}</p>
-            <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+          <div className="card" key={key}>
+            <div className="content">
+              <img src={item.image}></img>
+              <h1>{item.title}</h1>
+              <h2>{item.episode}</h2>
+              <p>{item.author}</p>
+              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+            </div>
           </div>
         );
       })}
       {items3.map((item, key) => {
         return (
-          <div key={key}>
-            <h1>{item.title}</h1>
-            <p>{item.author}</p>
-            <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+          <div className="card" key={key}>
+            <div className="content">
+              <img src={item.image}></img>
+              <h1>{item.title}</h1>
+              <h2>{item.episode}</h2>
+              <p>{item.author}</p>
+              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+            </div>
           </div>
         );
       })}
       {items4.map((item, key) => {
         return (
-          <div key={key}>
-            <h1>{item.title}</h1>
-            <p>{item.author}</p>
-            <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+          <div className="card" key={key}>
+            <div className="content">
+              <img src={item.image}></img>
+              <h1>{item.title}</h1>
+              <h2>{item.episode}</h2>
+              <p>{item.author}</p>
+              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+            </div>
           </div>
         );
       })}
       {items5.map((item, key) => {
         return (
-          <div key={key}>
-            <h1>{item.title}</h1>
-            <p>{item.author}</p>
-            <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+          <div className="card" key={key}>
+            <div className="content">
+              <img src={item.image}></img>
+              <h1>{item.title}</h1>
+              <h2>{item.episode}</h2>
+              <p>{item.author}</p>
+              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+            </div>
           </div>
         );
       })}

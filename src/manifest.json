@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Podcasts for Chrome",
+  "name": "Podcasts",
   "description": "Play your favourite podcasts from a new tab.",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },

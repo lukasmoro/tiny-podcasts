@@ -18,20 +18,19 @@ function List() {
     });
   }, []);
 
-  //THIS MUST THROW ERROR MESSAGE FOR WRONG FORMAT ✅ & DUPLICATE URL ✅ & RETURN IF UNDEFINED ✅ & IF MORE THEN 5
-
   const addUrl = (item) => {
     const urlChecker = (url) => url.text != item.text;
 
     let check = items.every(urlChecker);
 
     if (
+      items.length > 4 ||
       !check ||
       !/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/.test(
         item.text
       )
     ) {
-      alert('Please enter a valid url!');
+      alert('Please enter a valid url! You can enter up to five podcast!');
       return;
     }
 
