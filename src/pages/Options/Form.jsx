@@ -24,7 +24,9 @@ function Form(props) {
         onChange={handleChange}
         name="text"
       />
-      <button onClick={handleSubmit}>Submit</button>
+      <button className="submit" onClick={handleSubmit}>
+        Submit
+      </button>
     </form>
   );
 }

@@ -8,7 +8,9 @@ const Item = ({ items, removeUrl }) => {
         return (
           <div key={key}>
             <p key={item.key}>{item.text}</p>
-            <button onClick={() => removeUrl(item.key)}> - </button>
+            <button className="remove" onClick={() => removeUrl(item.key)}>
+              Remove
+            </button>
           </div>
         );
       })}
