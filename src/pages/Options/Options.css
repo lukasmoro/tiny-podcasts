@@ -10,38 +10,67 @@ body {
   background-color: #35363a;
 }
 
+button {
+  width: 70px;
+}
+
 .App {
   display: flex;
   flex-direction: column;
   justify-content: start;
 }
 
+.head {
+  text-align: center;
+  margin-top: 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+}
+
 .card {
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
   background-color: #262626;
   border-radius: 2rem;
   max-width: 700px;
-  margin-top: 5rem;
+  margin-top: 3rem;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
 }
 
 .container {
-  padding: 3rem;
+  padding: 2rem;
 }
 
 form {
-  width: 100%;
-  align-content: space-between;
+  justify-content: space-between;
+  display: flex;
+  margin-bottom: 2rem;
+  align-items: center;
 }
 input {
+  outline: none;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -22px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -28px inset;
   border: none;
-  width: 80%;
   font-size: 0.9rem;
   border-radius: 5rem;
   background: #ffffff;
-  padding: 0.6rem;
+  width: 50%;
+  height: 2.22rem;
+  padding-left: 0.85rem;
 }
+
+.items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  margin-top: 2rem;
+  align-items: center;
+}
+
 .submit,
 .remove {
   border: none;
@@ -53,27 +82,64 @@ input {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
-.remove {
+.remove :hover {
+  color: #ff8181;
+  transition: ease-in 0.2s;
+}
+
+.submit {
+  background-color: #bdffdf;
+  margin-left: 5px;
 }
 
 h1 {
   font-weight: 400;
   font-size: 24px;
   color: #d0d0d0;
+  margin-top: 0.5rem;
 }
 
 h2 {
-  margin-top: 0.2rem;
-  font-weight: 400;
-  color: #d0d0d0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #a5a5a5;
 }
+
 p {
   font-weight: 400;
   font-size: 0.9rem;
   color: #d0d0d0;
 }
 
+a {
+  text-decoration: none;
+  color: #19a0fc;
+}
+
 .instructions {
-  margin-top: 1rem;
-  margin-bottom: 20px;
+  margin-top: 2rem;
+  max-width: 400px;
+  margin-bottom: 2.5rem;
+}
+
+.greets {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.spacer {
+  width: 400px;
+}
+
+.line {
+  margin-top: 3.5rem;
+  width: 400px;
+  height: 1px;
+  background: #5a5a5a;
+}
+
+.signature {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 0.75rem;
 }

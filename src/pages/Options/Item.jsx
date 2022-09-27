@@ -6,7 +6,7 @@ const Item = ({ items, removeUrl }) => {
     <div className="App">
       {items?.map((item, key) => {
         return (
-          <div key={key}>
+          <div className="items" key={key}>
             <p key={item.key}>{item.text}</p>
             <button className="remove" onClick={() => removeUrl(item.key)}>
               Remove

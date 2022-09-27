@@ -5,19 +5,30 @@ import List from './List';
 export default function Options() {
   return (
     <div className="App">
+      <div className="head">
+        <h2>Podcasts for Chrome</h2>
+        <h1>Options</h1>
+        <div className="spacer"></div>
+      </div>
       <div className="card">
         <div className="container">
-          <p>Podcasts for Chrome</p>
-          <h1>Options</h1>
+          <h2>Managing RSS-Feeds</h2>
           <p className="instructions">
-            Add and remove links to rss-feeds of your favorite podcasts in the
-            list here or in the pop-up. <br /> You can display up to five
-            podcasts in your new tab.
+            Add and remove up to five links to rss-feeds of your favorite
+            podcasts in the list below or in the pop-up.
           </p>
           <List />
-          <p>Enjoy your podcasts! ✨</p>
+          <div className="line"></div>
+          <p className="greets">
+            Enjoy your podcasts and never stop learning! 🎧✨
+          </p>
         </div>
       </div>
+      <p className="signature">
+        Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.
+        <br />
+        <a href="">Github</a> • <a href="">Privacy Policy</a>
+      </p>
     </div>
   );
 }
