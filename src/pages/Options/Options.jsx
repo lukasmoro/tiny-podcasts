@@ -6,7 +6,7 @@ export default function Options() {
   return (
     <div className="App">
       <div className="head">
-        <h2>Podcasts for Chrome</h2>
+        <h2>Podcasts</h2>
         <h1>Options</h1>
         <div className="spacer"></div>
       </div>
@@ -19,9 +19,7 @@ export default function Options() {
           </p>
           <List />
           <div className="line"></div>
-          <p className="greets">
-            Enjoy your podcasts and never stop learning! 🎧✨
-          </p>
+          <p className="greets">Enjoy your podcasts! 🎧✨</p>
         </div>
       </div>
       <p className="signature">

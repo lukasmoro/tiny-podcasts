@@ -3,7 +3,7 @@ import Form from './Form';
 
 const Item = ({ items, removeUrl }) => {
   return (
-    <div className="App">
+    <div>
       {items?.map((item, key) => {
         return (
           <div className="items" key={key}>

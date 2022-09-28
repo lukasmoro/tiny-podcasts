@@ -19,7 +19,7 @@ function Form(props) {
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <input
-        placeholder="Enter your feeds here!"
+        placeholder="Enter your RSS-feeds here!"
         value={input}
         onChange={handleChange}
         name="text"

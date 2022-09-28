@@ -1,4 +1,5 @@
 import React from 'react';
+import './Popup.css';
 import List from '../Options/List';
 
 const Popup = () => {
