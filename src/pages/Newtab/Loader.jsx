@@ -3,9 +3,9 @@ import React from 'react';
 function Loader() {
   return (
     <svg
-      width="45"
-      height="45"
-      viewBox="0 0 45 45"
+      width="90"
+      height="90"
+      viewBox="0 0 90 90"
       xmlns="http://www.w3.org/2000/svg"
       stroke="#fff"
     >

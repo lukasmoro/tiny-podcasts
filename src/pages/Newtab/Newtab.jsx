@@ -3,13 +3,23 @@ import './Newtab.css';
 
 import ReactAudioPlayer from 'react-audio-player';
 import Loader from './Loader';
-import Renderer1 from './Renderer1';
-import Renderer2 from './Renderer2';
-import Renderer3 from './Renderer3';
-import Renderer4 from './Renderer4';
-import Renderer5 from './Renderer5';
+import Renderer from './Renderer';
 
 const Newtab = () => {
+  const [loading, setLoading] = useState(false);
+
+  const loader = () => {
+    setLoading(true);
+    console.log('something');
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    loader();
+  }, []);
+
   // const ref = useRef(null);
   // const [width, setWidth] = useState(0);
   // useLayoutEffect(() => {
@@ -20,12 +30,14 @@ const Newtab = () => {
   //I NEED SOMETHING HERE TO CLEAN UP THE DATA (ESPECIALLY NUMBERING)
 
   return (
-    <div className="App">
-      <Renderer1 />
-      <Renderer2 />
-      <Renderer3 />
-      <Renderer4 />
-      <Renderer5 />
+    <div>
+      {loading ? (
+        <div className="loader">
+          <Loader />
+        </div>
+      ) : (
+        <Renderer />
+      )}
     </div>
   );
 };
