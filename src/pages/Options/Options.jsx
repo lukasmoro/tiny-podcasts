@@ -6,13 +6,16 @@ export default function Options() {
   return (
     <div className="App">
       <div className="head">
-        <h2>Podcasts</h2>
-        <h1>Options</h1>
+        <img
+          src={require('/Users/lukasmoro/Desktop/podcasts-chrome-extension/public/img/podcastslogo.png')}
+          alt="logo"
+        />
         <div className="spacer"></div>
       </div>
       <div className="card">
         <div className="container">
           <h2>Managing RSS-Feeds</h2>
+          <h1>Settings</h1>
           <p className="instructions">
             Add and remove up to five links to rss-feeds of your favorite
             podcasts in the list below or in the pop-up.

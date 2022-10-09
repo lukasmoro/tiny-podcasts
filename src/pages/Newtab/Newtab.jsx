@@ -1,39 +1,27 @@
 import React, { useRef, useLayoutEffect, useEffect, useState } from 'react';
-import './Newtab.css';
 
 import ReactAudioPlayer from 'react-audio-player';
 import Loader from './Loader';
 import Renderer from './Renderer';
+import Onboarding from './Onboarding';
 
 const Newtab = () => {
-  const [loading, setLoading] = useState(false);
-
-  const loader = () => {
-    setLoading(true);
-    console.log('something');
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  };
+  const [onboarding, setOnboarding] = useState(false);
 
   useEffect(() => {
-    loader();
+    chrome.storage.local.get(['newUrls'], (item, key) => {
+      const checker = item.newUrls.length;
+      if (checker === 0) {
+        setOnboarding(true);
+      }
+    });
   }, []);
-
-  // const ref = useRef(null);
-  // const [width, setWidth] = useState(0);
-  // useLayoutEffect(() => {
-  //   setWidth(ref.current.offsetWidth);
-  //   console.log(ref.current.offsetWidth);
-  // }, []);
-
-  //I NEED SOMETHING HERE TO CLEAN UP THE DATA (ESPECIALLY NUMBERING)
 
   return (
     <div>
-      {loading ? (
-        <div className="loader">
-          <Loader />
+      {onboarding ? (
+        <div>
+          <Onboarding />
         </div>
       ) : (
         <Renderer />

@@ -21,8 +21,8 @@ button {
 }
 
 .head {
-  text-align: left;
-  margin-top: 5rem;
+  text-align: center;
+  margin-top: 3rem;
   margin-left: auto;
   margin-right: auto;
   max-width: 400px;
@@ -33,7 +33,7 @@ button {
   background-color: #262626;
   border-radius: 0.5rem;
   max-width: 700px;
-  margin-top: 3rem;
+  margin-top: 2.5rem;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 2rem;
@@ -66,9 +66,7 @@ input {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  display: flex;
   margin-top: 2rem;
-  align-items: center;
 }
 
 .submit,
@@ -113,6 +111,15 @@ p {
 a {
   text-decoration: none;
   color: #19a0fc;
+}
+
+img {
+  display: flex;
+  justify-content: flex-end;
+  width: auto;
+  height: 6rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .instructions {

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
+import './Renderer.css';
 
 function Renderer(props) {
   const [items1, setItems1] = useState([]);
@@ -28,6 +29,7 @@ function Renderer(props) {
     }));
     setItems1(feedItems);
   };
+
   const formatRss2 = async (newUrl) => {
     console.log(newUrl);
     const res = await fetch(`https://api.allorigins.win/get?url=${newUrl}`);
@@ -111,13 +113,25 @@ function Renderer(props) {
 
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
-      formatRss1(item.newUrls[0].text);
-      formatRss2(item.newUrls[1].text);
-      formatRss3(item.newUrls[2].text);
-      formatRss4(item.newUrls[3].text);
-      formatRss5(item.newUrls[4].text);
+      const checker = item.newUrls.length;
+      if (checker === 0) {
+        setOnboarding(true);
+      } else {
+        formatRss1(item.newUrls[0].text);
+        formatRss2(item.newUrls[1].text);
+        formatRss3(item.newUrls[2].text);
+        formatRss4(item.newUrls[3].text);
+        formatRss5(item.newUrls[4].text);
+      }
     });
   }, []);
+
+  // const ref = useRef(null);
+  // const [width, setWidth] = useState(0);
+  // useLayoutEffect(() => {
+  //   setWidth(ref.current.offsetWidth);
+  //   console.log(ref.current.offsetWidth);
+  // }, []);
 
   return (
     <div className="App">

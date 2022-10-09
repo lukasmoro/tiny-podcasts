@@ -1,12 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Podcasts",
-  "description": "Play your favourite podcasts from a new tab.",
+  "description": "Add your favorite podcasts with RSS-Feeds and play them from a new tab.",
   "options_page": "options.html",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icon-34.png"
+  },
+  "icons": {
+    "32": "icon-34.png",
+    "128": "icon-128.png"
   },
   "permissions": ["storage", "tabs"],
   "content_security_policy": {

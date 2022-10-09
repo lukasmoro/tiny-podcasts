@@ -1,0 +1,43 @@
+.onboarding {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.instructions {
+  max-width: 700px;
+  line-height: 2;
+  font-weight: 400;
+  font-size: 1rem;
+  color: #d0d0d0;
+  margin-top: 1.2rem;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.textbox {
+  margin-left: 2rem;
+}
+
+.logo-onboarding {
+  height: 11rem;
+  width: auto;
+  margin: 0;
+}
+
+.head-onboarding {
+  margin-top: 0;
+}
+
+.link {
+  cursor: help;
+}
+
+.container {
+  margin: 0;
+  display: flex;
+  margin-top: 20%;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
