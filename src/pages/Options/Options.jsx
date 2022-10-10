@@ -15,7 +15,7 @@ export default function Options() {
       <div className="card">
         <div className="container">
           <h2>Managing RSS-Feeds</h2>
-          <h1>Settings</h1>
+          <h1>Options</h1>
           <p className="instructions">
             Add and remove up to five links to rss-feeds of your favorite
             podcasts in the list below or in the pop-up.

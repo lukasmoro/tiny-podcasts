@@ -31,7 +31,7 @@ button {
 .card {
   box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
   background-color: #262626;
-  border-radius: 0.5rem;
+  border-radius: 1.5rem;
   max-width: 700px;
   margin-top: 2.5rem;
   margin-left: auto;
@@ -64,6 +64,7 @@ input {
 
 .items {
   display: flex;
+  max-width: 400px;
   justify-content: space-between;
   align-items: center;
   margin-top: 2rem;
@@ -123,14 +124,14 @@ img {
 }
 
 .instructions {
+  font-size: 0.9rem;
   margin-top: 2rem;
   max-width: 400px;
   margin-bottom: 2.5rem;
 }
 
 .greets {
-  margin-top: 3rem;
-  margin-bottom: 1rem;
+  margin-top: 2rem;
 }
 
 .spacer {
@@ -138,14 +139,17 @@ img {
 }
 
 .line {
-  margin-top: 3.5rem;
+  margin-top: 2rem;
   width: 400px;
   height: 1px;
   background: #5a5a5a;
 }
 
 .signature {
-  margin-top: 2rem;
+  position: absolute;
+  margin-top: 55rem;
+  left: 50%;
+  transform: translate(-50%, 0);
   text-align: center;
   font-size: 0.75rem;
 }

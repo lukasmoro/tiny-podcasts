@@ -140,9 +140,21 @@ function Renderer(props) {
           <div className="card" key={key}>
             <div className="content">
               <img src={item.image}></img>
-              <h1>{item.title}</h1>
-              <h2>{item.episode.replace(/&amp;/g, '&')}</h2>
-              <p>{item.author}</p>
+              <h1>
+                {item.title
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h1>
+              <h2>
+                {item.episode
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h2>
+              <p>
+                {item.author
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </p>
               <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
             </div>
           </div>
@@ -153,9 +165,21 @@ function Renderer(props) {
           <div className="card" key={key}>
             <div className="content">
               <img src={item.image}></img>
-              <h1>{item.title}</h1>
-              <h2>{item.episode.replace(/&amp;/g, '&')}</h2>
-              <p>{item.author}</p>
+              <h1>
+                {item.title
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h1>
+              <h2>
+                {item.episode
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h2>
+              <p>
+                {item.author
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </p>
               <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
             </div>
           </div>
@@ -166,9 +190,21 @@ function Renderer(props) {
           <div className="card" key={key}>
             <div className="content">
               <img src={item.image}></img>
-              <h1>{item.title}</h1>
-              <h2>{item.episode.replace(/&amp;/g, '&')}</h2>
-              <p>{item.author}</p>
+              <h1>
+                {item.title
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h1>
+              <h2>
+                {item.episode
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h2>
+              <p>
+                {item.author
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </p>
               <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
             </div>
           </div>
@@ -179,9 +215,21 @@ function Renderer(props) {
           <div className="card" key={key}>
             <div className="content">
               <img src={item.image}></img>
-              <h1>{item.title}</h1>
-              <h2>{item.episode.replace(/&amp;/g, '&')}</h2>
-              <p>{item.author}</p>
+              <h1>
+                {item.title
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h1>
+              <h2>
+                {item.episode
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h2>
+              <p>
+                {item.author
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </p>
               <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
             </div>
           </div>
@@ -192,9 +240,21 @@ function Renderer(props) {
           <div className="card" key={key}>
             <div className="content">
               <img src={item.image}></img>
-              <h1>{item.title}</h1>
-              <h2>{item.episode.replace(/&amp;/g, '&')}</h2>
-              <p>{item.author}</p>
+              <h1>
+                {item.title
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h1>
+              <h2>
+                {item.episode
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </h2>
+              <p>
+                {item.author
+                  .replace(/&amp;/g, '&')
+                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+              </p>
               <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
             </div>
           </div>

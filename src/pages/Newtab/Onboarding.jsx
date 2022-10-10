@@ -14,24 +14,36 @@ function Onboarding() {
         </div>
         <div className="textbox">
           <h1 className="head-onboarding">
-            Seems like you did not add any RSS-Feeds, yet.
+            Looks like you did not add any Podcasts, yet.
           </h1>
-          <ol type="1" className="instructions">
-            <li>
-              Find <a className="link">RSS-Feeds</a> by searching for "Podcast's
-              name + RSS-Feed".
-            </li>
-            <li>
-              Add up to 5 URLs to RSS-Feeds of your favorite podcasts in the
-              options or in the pop-up.
-            </li>
-            <li>
-              Congratulations, the podcast's latest episode will now be
-              displayed in your new tab!
-            </li>
-          </ol>
+          <div className="instructions">
+            <ol>
+              <li>
+                Find{' '}
+                <div className="tooltip">
+                  <a href="https://feeds.simplecast.com/eew_vyNL">
+                    RSS-Feeds <span className="tooltiptext">example</span>
+                  </a>
+                </div>{' '}
+                by searching for "Podcast's name + RSS-Feed".
+              </li>
+              <li>
+                Copy and paste up to 5 URLs of podcasts into the options or
+                pop-up.
+              </li>
+              <li>
+                The podcast's latest episode will now be displayed in your new
+                tab!
+              </li>
+            </ol>
+          </div>
         </div>
       </div>
+      <p className="signature">
+        Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.
+        <br />
+        <a href="">Github</a> • <a href="">Privacy Policy</a>
+      </p>
     </div>
   );
 }

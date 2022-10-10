@@ -20,13 +20,14 @@
 }
 
 .logo-onboarding {
-  height: 11rem;
-  width: auto;
+  max-width: 11rem;
+  height: auto;
   margin: 0;
 }
 
 .head-onboarding {
   margin-top: 0;
+  max-width: 1000px;
 }
 
 .link {
@@ -40,4 +41,59 @@
   margin-left: auto;
   margin-right: auto;
   align-items: center;
+}
+a {
+  text-decoration: none;
+  color: #19a0fc;
+}
+
+ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+.signature {
+  color: #d0d0d0;
+  position: absolute;
+  margin-top: 55rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip */
+
+.tooltip .tooltiptext {
+  width: 80px;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -40px;
+  visibility: hidden;
+  background-color: black;
+  color: #d0d0d0;
+  text-align: center;
+  padding: 1px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 100;
+}
+
+.tooltip .tooltiptext::after {
+  content: ' ';
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
