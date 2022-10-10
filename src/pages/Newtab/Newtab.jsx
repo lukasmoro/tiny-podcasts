@@ -9,7 +9,7 @@ const Newtab = () => {
   const [onboarding, setOnboarding] = useState(false);
 
   useEffect(() => {
-    chrome.storage.local.get(['newUrls'], (item, key) => {
+    chrome.storage.sync.get(['newUrls'], (item, key) => {
       const checker = item.newUrls.length;
       if (checker === 0) {
         setOnboarding(true);
