@@ -1,267 +1,95 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import './Renderer.css';
 
-function Renderer(props) {
-  const [items1, setItems1] = useState([]);
-  const [items2, setItems2] = useState([]);
-  const [items3, setItems3] = useState([]);
-  const [items4, setItems4] = useState([]);
-  const [items5, setItems5] = useState([]);
+function parseRss(xml) {
+  try {
+    const xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
+    const firstItem = xmlDoc.querySelector('item');
 
-  const formatRss1 = async (newUrl) => {
-    console.log(newUrl);
-    const res = await fetch(`https://api.allorigins.win/get?url=${newUrl}`);
-    console.log(res);
-    const { contents } = await res.json();
-    const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const image = feed.querySelectorAll('channel');
-    const item = feed.querySelectorAll('item');
-    const feedTitle = [...item].slice(0, 1).map((el) => ({
-      episode: el.querySelector('title').innerHTML,
-    }));
-    const feedItems = [...image].slice(0, 1).map((el) => ({
-      mp3: el.querySelector('enclosure').getAttribute('url'),
-      author: el.querySelector('author').innerHTML,
-      image: el.querySelector('url').innerHTML,
-      title: el.querySelector('title').innerHTML,
-      episode: feedTitle[0].episode,
-    }));
-    setItems1(feedItems);
-  };
+    if (!firstItem) {
+      console.log('No items found in RSS feed');
+      return null;
+    }
 
-  const formatRss2 = async (newUrl) => {
-    console.log(newUrl);
-    const res = await fetch(`https://api.allorigins.win/get?url=${newUrl}`);
-    console.log(res);
-    const { contents } = await res.json();
-    const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const image = feed.querySelectorAll('channel');
-    const item = feed.querySelectorAll('item');
-    const feedTitle = [...item].slice(0, 1).map((el) => ({
-      episode: el.querySelector('title').innerHTML,
-    }));
-    const feedItems = [...image].slice(0, 1).map((el) => ({
-      mp3: el.querySelector('enclosure').getAttribute('url'),
-      author: el.querySelector('author').innerHTML,
-      image: el.querySelector('url').innerHTML,
-      title: el.querySelector('title').innerHTML,
-      episode: feedTitle[0].episode,
-    }));
-    setItems2(feedItems);
-  };
-  const formatRss3 = async (newUrl) => {
-    console.log(newUrl);
-    const res = await fetch(`https://api.allorigins.win/get?url=${newUrl}`);
-    console.log(res);
-    const { contents } = await res.json();
-    const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const image = feed.querySelectorAll('channel');
-    const item = feed.querySelectorAll('item');
-    const feedTitle = [...item].slice(0, 1).map((el) => ({
-      episode: el.querySelector('title').innerHTML,
-    }));
-    const feedItems = [...image].slice(0, 1).map((el) => ({
-      mp3: el.querySelector('enclosure').getAttribute('url'),
-      author: el.querySelector('author').innerHTML,
-      image: el.querySelector('url').innerHTML,
-      title: el.querySelector('title').innerHTML,
-      episode: feedTitle[0].episode,
-    }));
-    setItems3(feedItems);
-  };
-  const formatRss4 = async (newUrl) => {
-    console.log(newUrl);
-    const res = await fetch(`https://api.allorigins.win/get?url=${newUrl}`);
-    console.log(res);
-    const { contents } = await res.json();
-    const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const image = feed.querySelectorAll('channel');
-    const item = feed.querySelectorAll('item');
-    const feedTitle = [...item].slice(0, 1).map((el) => ({
-      episode: el.querySelector('title').innerHTML,
-    }));
-    const feedItems = [...image].slice(0, 1).map((el) => ({
-      mp3: el.querySelector('enclosure').getAttribute('url'),
-      author: el.querySelector('author').innerHTML,
-      image: el.querySelector('url').innerHTML,
-      title: el.querySelector('title').innerHTML,
-      episode: feedTitle[0].episode,
-    }));
-    setItems4(feedItems);
-  };
-  const formatRss5 = async (newUrl) => {
-    console.log(newUrl);
-    const res = await fetch(`https://api.allorigins.win/get?url=${newUrl}`);
-    console.log(res);
-    const { contents } = await res.json();
-    const feed = new window.DOMParser().parseFromString(contents, 'text/xml');
-    const image = feed.querySelectorAll('channel');
-    const item = feed.querySelectorAll('item');
-    const feedTitle = [...item].slice(0, 1).map((el) => ({
-      episode: el.querySelector('title').innerHTML,
-    }));
-    const feedItems = [...image].slice(0, 1).map((el) => ({
-      mp3: el.querySelector('enclosure').getAttribute('url'),
-      author: el.querySelector('author').innerHTML,
-      image: el.querySelector('url').innerHTML,
-      title: el.querySelector('title').innerHTML,
-      episode: feedTitle[0].episode,
-    }));
-    setItems5(feedItems);
-  };
+    const item = {
+      mp3: firstItem.querySelector('enclosure').getAttribute('url'),
+      image: xmlDoc.querySelector('url').childNodes[0].nodeValue,
+      author: firstItem.querySelector('author').childNodes[0].nodeValue,
+      title: xmlDoc.querySelector('title').childNodes[0].nodeValue,
+      episode: firstItem.querySelector('title').childNodes[0].nodeValue,
+    };
+
+    console.log(item);
+
+    return item;
+  } catch (err) {
+    console.log('Error parsing RSS feed: ', err);
+    return null;
+  }
+}
+
+const Renderer = () => {
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    chrome.storage.sync.get(['newUrls'], (item, key) => {
-      const checker = item.newUrls.length;
-      if (checker === 0) {
+    chrome.storage.local.get(['newUrls'], (item, key) => {
+      if (!item.newUrls) {
         setOnboarding(true);
-      } else {
-        formatRss1(item.newUrls[0].text);
-        formatRss2(item.newUrls[1].text);
-        formatRss3(item.newUrls[2].text);
-        formatRss4(item.newUrls[3].text);
-        formatRss5(item.newUrls[4].text);
+        return;
       }
+
+      const newUrls = item.newUrls.map((newUrl) => newUrl.text);
+
+      Promise.all(newUrls.map((url) => fetch(url)))
+        .then((responses) => Promise.all(responses.map((r) => r.text())))
+        .then((xmlStrings) => {
+          const firstPodcasts = xmlStrings.map(parseRss);
+          setItems(firstPodcasts);
+        })
+        .catch((error) => console.error(error));
     });
   }, []);
 
-  // const ref = useRef(null);
-  // const [width, setWidth] = useState(0);
-  // useLayoutEffect(() => {
-  //   setWidth(ref.current.offsetWidth);
-  //   console.log(ref.current.offsetWidth);
-  // }, []);
-
   return (
     <div className="App">
-      {items1.map((item, key) => {
-        return (
-          <div className="card" key={key}>
-            <div className="content">
-              <img src={item.image}></img>
-              <h1>
-                {item.title
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h1>
-              <h2>
-                {item.episode
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h2>
-              <p>
-                {item.author
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </p>
-              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
+      {items.map(
+        (podcast, index) =>
+          podcast && (
+            <div className="card" key={index}>
+              <div className="content">
+                <ul>
+                  <li key={podcast.link}>
+                    <img src={podcast.image}></img>
+                    <h1 href={podcast.link}>{podcast.title}</h1>
+                    <h2>
+                      {podcast.episode
+                        .replace(/&amp;/g, '&')
+                        .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+                    </h2>
+                    <p>
+                      {podcast.author
+                        .replace(/&amp;/g, '&')
+                        .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
+                    </p>
+                    <ReactAudioPlayer
+                      src={podcast.mp3}
+                      preload="metadata"
+                      controls
+                    />
+                  </li>
+                </ul>
+              </div>
             </div>
-          </div>
-        );
-      })}
-      {items2.map((item, key) => {
-        return (
-          <div className="card" key={key}>
-            <div className="content">
-              <img src={item.image}></img>
-              <h1>
-                {item.title
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h1>
-              <h2>
-                {item.episode
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h2>
-              <p>
-                {item.author
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </p>
-              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
-            </div>
-          </div>
-        );
-      })}
-      {items3.map((item, key) => {
-        return (
-          <div className="card" key={key}>
-            <div className="content">
-              <img src={item.image}></img>
-              <h1>
-                {item.title
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h1>
-              <h2>
-                {item.episode
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h2>
-              <p>
-                {item.author
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </p>
-              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
-            </div>
-          </div>
-        );
-      })}
-      {items4.map((item, key) => {
-        return (
-          <div className="card" key={key}>
-            <div className="content">
-              <img src={item.image}></img>
-              <h1>
-                {item.title
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h1>
-              <h2>
-                {item.episode
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h2>
-              <p>
-                {item.author
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </p>
-              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
-            </div>
-          </div>
-        );
-      })}
-      {items5.map((item, key) => {
-        return (
-          <div className="card" key={key}>
-            <div className="content">
-              <img src={item.image}></img>
-              <h1>
-                {item.title
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h1>
-              <h2>
-                {item.episode
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </h2>
-              <p>
-                {item.author
-                  .replace(/&amp;/g, '&')
-                  .replace(/<!\[CDATA\[(.*?)\]\]>/g, '$1')}
-              </p>
-              <ReactAudioPlayer src={item.mp3} preload="metadata" controls />
-            </div>
-          </div>
-        );
-      })}
+          )
+      )}
+      <p className="signature">
+        Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.
+        <br />
+        <a href="">Github</a> • <a href="">Privacy Policy</a>
+      </p>
     </div>
   );
-}
+};
 
 export default Renderer;

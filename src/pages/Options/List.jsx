@@ -6,7 +6,7 @@ function List() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    chrome.storage.sync.get(['newUrls'], (item) => {
+    chrome.storage.local.get(['newUrls'], (item) => {
       console.log(item.newUrls);
       const items = item.newUrls;
       const feedItems = [...items].map((el, key) => ({
@@ -36,7 +36,7 @@ function List() {
 
     let newUrls = [item, ...items];
 
-    chrome.storage.sync.set({ newUrls }, () => {
+    chrome.storage.local.set({ newUrls }, () => {
       setItems(newUrls);
       console.log(newUrls);
     });
@@ -45,7 +45,7 @@ function List() {
   const removeUrl = (key) => {
     let newUrls = items.filter((item) => item.key !== key);
     console.log(key);
-    chrome.storage.sync.set({ newUrls }, () => {
+    chrome.storage.local.set({ newUrls }, () => {
       setItems(newUrls);
     });
   };
