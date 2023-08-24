@@ -34,6 +34,7 @@ const Carousel = () => {
   const [items, setItems] = useState([]);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
   const [viewMode, setViewMode] = useState('coverflow');
+  const [centerCoverIndex, setCenterCoverIndex] = useState(0);
 
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
