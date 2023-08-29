@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import Form from './Form';
+import React, { useEffect } from 'react';
 
 const Item = ({ items, removeUrl }) => {
+
   return (
     <div>
       {items?.map((item, key) => {
