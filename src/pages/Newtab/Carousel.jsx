@@ -75,34 +75,39 @@ const Carousel = () => {
                   key={index}
                   onClick={() => handlePodcastClick(podcast)}
                 >
-                  <img src={podcast.image} alt={podcast.title} width={600} height={600} />
+                  <div className='podcast-episode'><h2 >{podcast.episode}</h2></div>
+                  <img src={podcast.image} alt={podcast.title} />
+                  {/* <ReactAudioPlayer className='player' src={podcast.mp3} controls /> */}
                 </li>
               )
           )}
           <li className='spacer' ></li>
         </ul>
-      )}
-      {viewMode === 'podcast' && selectedPodcast && (
-        <div className="podcast-view">
-          <button
-            className="back-button"
-            onClick={() => setViewMode('coverflow')}
-          >
-            Back
-          </button>
-          <div className="podcast-details">
-            <img
-              src={selectedPodcast.image}
-              alt={'Oops! Cover not loading.'}
-            ></img>
-            <h2>{selectedPodcast.title}</h2>
-            <p>{selectedPodcast.author}</p>
-            <p>{selectedPodcast.episode}</p>
-            <ReactAudioPlayer src={selectedPodcast.mp3} controls />
+      )
+      }
+      {
+        viewMode === 'podcast' && selectedPodcast && (
+          <div className="podcast-view">
+            <button
+              className="back-button"
+              onClick={() => setViewMode('coverflow')}
+            >
+              Back
+            </button>
+            <div className="podcast-details">
+              <img
+                src={selectedPodcast.image}
+                alt={'Oops! Cover not loading.'}
+              ></img>
+              <h2>{selectedPodcast.title}</h2>
+              <p>{selectedPodcast.author}</p>
+              <p>{selectedPodcast.episode}</p>
+              <ReactAudioPlayer src={selectedPodcast.mp3} controls />
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )
+      }
+    </div >
   );
 };
 

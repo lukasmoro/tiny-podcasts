@@ -5,6 +5,9 @@
   font-family: 'Barlow', 'Inter', Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
+}
+
+body {
   background-color: #262626;
 }
 
@@ -21,13 +24,14 @@ h1 {
 }
 
 h2 {
-  max-width: 300px;
+  margin: 0;
+  white-space: normal;
   font-size: 18px;
-  margin-top: 0.2rem;
-  margin-left: auto;
-  margin-right: auto;
-  font-weight: 400;
+  font-weight: 100;
   color: #d0d0d0;
+  text-align: center;
+  animation: linear adjust-opacity both;
+  animation-timeline: --li-in-and-out-of-view;
 }
 
 p {
@@ -65,6 +69,7 @@ p {
   border-radius: 8px;
 }
 
+
 .cards {
   list-style: none;
   white-space: nowrap;
@@ -85,19 +90,19 @@ p {
   width: var(--cover-size);
   aspect-ratio: 1;
   scroll-snap-align: center;
+  margin-top: 2rem;
 }
 
 .spacer {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   padding: 0 4rem;
 }
 
 .cards li img {
   width: 300px;
   height: 300px;
-  padding: 5rem;
-  margin: 5rem;
+  padding: 0 7.5rem;
   margin-top: 10rem;
 }
 
@@ -123,6 +128,20 @@ p {
   }
 }
 
+@keyframes adjust-opacity {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes rotate-cover {
   35% {
     transform: translateX(0) rotateY(-35deg);
@@ -141,7 +160,6 @@ p {
   animation: linear adjust-z-index both;
   animation-timeline: --li-in-and-out-of-view;
   perspective: 40rem;
-  will-change: z-index;
 }
 
 .cards li>img:first-of-type {
@@ -160,3 +178,12 @@ p {
 .cards li>img:hover {
   cursor: pointer;
 }
+
+.podcast-episode {
+  max-width: 400px;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  text-align: center;
+}
+
+.player {}

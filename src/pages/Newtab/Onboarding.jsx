@@ -5,13 +5,13 @@ function Onboarding() {
   return (
     <div className="onboarding">
       <div className="container">
-        <div>
+        {/* <div>
           <img
             className="logo-onboarding"
-            src={require('/Users/lukasmoro/Desktop/podcasts-chrome-extension/public/img/podcastslogo.png')}
+            src={require('/Users/lukasmoro/Documents/React/podcasts-chrome-extension/src/assets/img/podcastslogo.png')}
             alt="logo"
           />
-        </div>
+        </div> */}
         <div className="textbox">
           <h1 className="head-onboarding">
             Looks like you did not add any Podcasts, yet.

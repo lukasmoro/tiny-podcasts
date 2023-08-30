@@ -6,11 +6,11 @@ export default function Options() {
   return (
     <div className="App">
       <div className="head">
-        <img
-          src={require('/Users/lukasmoro/Desktop/podcasts-chrome-extension/public/img/podcastslogo.png')}
+        {/* <img
+          src={require('/Users/lukasmoro/Documents/React/podcasts-chrome-extension/src/assets/img/podcastslogo.png')}
           alt="logo"
-        />
-        <div className="spacer"></div>
+        /> */}
+
       </div>
       <div className="card">
         <div className="container">
