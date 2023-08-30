@@ -2,15 +2,6 @@ import React, { useState, useEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
 import './Carousel.css';
 
-// 1. Handle scroll event DONE
-// 2. Calculate scroll position DONE
-// 3. Map scroll position to carousel position
-// A. Set cover position through CSS
-// B. Use scroll position to calculate position of every item in cover array
-// 4. Animate carousel covers
-// 5. Update state and render
-// 6. Handle cover click
-
 // Parse RSS feed & return items to render 
 function parseRss(xml) {
   try {
@@ -45,24 +36,6 @@ const Carousel = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [viewMode, setViewMode] = useState('coverflow');
 
-  // Tracking scroll position of covers through event listener
-  useEffect(() => {
-    const container = document.getElementById('scrollable');
-
-    const handleScroll = () => {
-      const currentScrollPosition = container.scrollLeft;
-      setScrollPosition(currentScrollPosition);
-      console.log('Current Scroll Position:', currentScrollPosition);
-    };
-
-    container.addEventListener('scroll', handleScroll);
-    console.log('Added scroll event listener');
-    return () => {
-      container.removeEventListener('scroll', handleScroll);
-      console.log('Removed scroll event listener');
-    };
-  }, [])
-
   // Fetching urls from chrome.storage.local 
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
@@ -90,31 +63,24 @@ const Carousel = () => {
     setViewMode('podcast');
   };
 
-  useEffect(() => {
-
-
-  }, []);
-
   return (
     <div className="App">
       {viewMode === 'coverflow' && (
-        <div className="coverflow" id='scrollable'>
+        <ul className="cards" >
+          <li className='spacer' ></li>
           {items.map(
             (podcast, index) =>
               podcast && (
-                <div
-                  className="card"
+                <li
                   key={index}
-                  style={{
-                    transform: `translateX(${podcast.x + scrollPosition * podcast.speed}px)`,
-                  }}
                   onClick={() => handlePodcastClick(podcast)}
                 >
-                  <img className='coverimage' src={podcast.image} alt={podcast.title} />
-                </div>
+                  <img src={podcast.image} alt={podcast.title} width={600} height={600} />
+                </li>
               )
           )}
-        </div>
+          <li className='spacer' ></li>
+        </ul>
       )}
       {viewMode === 'podcast' && selectedPodcast && (
         <div className="podcast-view">
