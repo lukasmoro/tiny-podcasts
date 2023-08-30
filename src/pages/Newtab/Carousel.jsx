@@ -33,7 +33,6 @@ function parseRss(xml) {
 const Carousel = () => {
   const [items, setItems] = useState([]);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [viewMode, setViewMode] = useState('coverflow');
 
   // Fetching urls from chrome.storage.local 
