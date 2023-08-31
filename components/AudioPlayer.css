@@ -1,5 +1,46 @@
-.audio-player {}
+.progress-bar {
+    --bar-bg: #19a0fc;
+    --seek-before-width: 0px;
+    --seek-before-color: #c8e9ff;
+    --knob: #FFFFFF;
+    --selectedknob: turquoise;
+    appearance: none;
+    background: var(--bar-bg);
+    border-radius: 10px;
+    position: relative;
+    width: 80%;
+    height: 11px;
+    z-index: 0;
+    outline: none;
+}
 
-.play-pause {}
+.progress-bar::before {
+    content: '';
+    height: 11px;
+    width: var(--seek-before-width);
+    background-color: var(--seek-before-color);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    cursor: pointer;
+}
 
-.forward-backward {}
+.progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--knob);
+    cursor: pointer;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+.progress-bar:active::-webkit-slider-thumb {
+    transform: scale(1.2);
+    background-color: var(--selectedknob);
+}
