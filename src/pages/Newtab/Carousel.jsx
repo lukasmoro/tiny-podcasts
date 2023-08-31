@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactAudioPlayer from 'react-audio-player';
+import AudioPlayer from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/components/AudioPlayer.jsx'
 import './Carousel.css';
 
 // Parse RSS feed & return items to render 
@@ -55,7 +56,6 @@ const Carousel = () => {
     });
   }, []);
 
-
   // Handling viewmode with click event on cover
   const handlePodcastClick = (podcast) => {
     setSelectedPodcast(podcast);
@@ -72,10 +72,11 @@ const Carousel = () => {
               podcast && (
                 <li
                   key={index}
-                  onClick={() => handlePodcastClick(podcast)}
+                // onClick={() => handlePodcastClick(podcast)}
                 >
                   <div className='podcast-episode'><h2 >{podcast.episode}</h2></div>
                   <img src={podcast.image} alt={podcast.title} />
+                  <AudioPlayer />
                   {/* <ReactAudioPlayer className='player' src={podcast.mp3} controls /> */}
                 </li>
               )
