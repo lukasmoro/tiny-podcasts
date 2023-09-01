@@ -1,17 +1,65 @@
+.audio-player {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.progress {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    z-index: -1;
+}
+
+.play-pause {
+    animation: linear adjust-opacity-ui both;
+    animation-timeline: --li-in-and-out-of-view;
+    cursor: pointer;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50rem;
+    border: none;
+}
+
+.forward-backward {
+    animation: linear adjust-opacity-ui both;
+    animation-timeline: --li-in-and-out-of-view;
+    cursor: pointer;
+    border-radius: 50rem;
+}
+
+.current-time {
+    animation: linear adjust-opacity-ui both;
+    animation-timeline: --li-in-and-out-of-view;
+}
+
+.duration {
+    animation: linear adjust-opacity-ui both;
+    animation-timeline: --li-in-and-out-of-view;
+}
+
 .progress-bar {
-    --bar-bg: #19a0fc;
+    --bar-bg: #d0d0d0;
     --seek-before-width: 0px;
-    --seek-before-color: #c8e9ff;
+    --seek-before-color: #19a0fc;
     --knob: #FFFFFF;
     --selectedknob: turquoise;
     appearance: none;
     background: var(--bar-bg);
     border-radius: 10px;
     position: relative;
-    width: 80%;
+    width: 400px;
     height: 11px;
-    z-index: 0;
+    z-index: -1;
     outline: none;
+    animation: linear adjust-opacity-ui both;
+    animation-timeline: --li-in-and-out-of-view;
 }
 
 .progress-bar::before {
@@ -30,17 +78,44 @@
 
 .progress-bar::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 15px;
-    height: 15px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     border: none;
     background-color: var(--knob);
     cursor: pointer;
-    z-index: 100;
+    z-index: 0;
     box-sizing: border-box;
 }
 
 .progress-bar:active::-webkit-slider-thumb {
     transform: scale(1.2);
     background-color: var(--selectedknob);
+}
+
+body {
+    view-timeline-name: --li-in-and-out-of-view;
+    view-timeline-axis: inline;
+}
+
+@keyframes adjust-opacity-ui {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }

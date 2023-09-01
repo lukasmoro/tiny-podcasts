@@ -61,7 +61,6 @@ p {
   color: #fff;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
 }
 
 .podcast-details img {
@@ -96,7 +95,7 @@ p {
 .spacer {
   width: 250px;
   height: 250px;
-  padding: 0 4rem;
+  padding: 0 5rem;
 }
 
 .cards li img {
@@ -175,15 +174,9 @@ p {
   animation-timeline: --li-in-and-out-of-view;
 }
 
-.cards li>img:hover {
-  cursor: pointer;
-}
-
 .podcast-episode {
   max-width: 400px;
   margin-left: 10rem;
   margin-right: 10rem;
   text-align: center;
 }
-
-.player {}

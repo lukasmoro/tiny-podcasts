@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './AudioPlayer.css';
 
-const AudioPlayer = () => {
+const AudioPlayer = (props) => {
 
-    //integrate data from chrome.storage
-    //style audioplayer
+    //implement functionality ✅
+    //integrate data from chrome.storage ✅
+    //style audioplayer 
+    //make it appear just on currently viewed cover
+    //position buttons
+    //add icons
+    //hide progress bar under cover
     //animate progressbar using react spring
     //store currentTime variable in chrome.storage
 
@@ -58,17 +63,32 @@ const AudioPlayer = () => {
         setCurrentTime(progressBar.current.value);
     }
 
+    const backThirty = () => {
+        progressBar.current.value = Number(progressBar.current.value) - 30;
+        changeRange();
+    }
+
+    const forwardThirty = () => {
+        progressBar.current.value = Number(progressBar.current.value) + 30;
+        changeRange();
+    }
+
     return (
         <div className='audio-player'>
-            {/* add logic to get data from chrome.storage.local */}
-            <audio ref={audioPlayer} src="https://media.blubrry.com/takeituneasy/content.blubrry.com/takeituneasy/lex_ai_andrew_huberman_4.mp3" preload="metadata" onLoadedMetadata={onLoadedMetadata} ></audio>
-            <button className='forward-backward'>back 30</button>
-            <button className='play-pause' onClick={togglePlayPause}>{isPlaying ? <p>play</p> : <p>pause</p>}</button>
-            <button className='forward-backward'>front 30</button>
-            <div className='current-time'>{calculateTime(currentTime)}</div>
-            <div><input className='progress-bar' type="range" defaultValue="0" ref={progressBar} onChange={changeRange} /></div>
-            {/* add logic for saving current duration to chrome.storage.local and then playing from there the next time */}
-            <div className='duration' >{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
+            <div className='player-container'>
+                <audio ref={audioPlayer} src={props.src} preload="metadata" onLoadedMetadata={onLoadedMetadata} ></audio>
+                <div className='button'>
+                    <button className='forward-backward' onClick={backThirty}>↩</button>
+                    <button className='play-pause' onClick={togglePlayPause}>{isPlaying ? <p>play</p> : <p>pause</p>}</button>
+                    <button className='forward-backward' onClick={forwardThirty}>↪</button>
+                </div>
+                <div className='progress'>
+                    <div className='current-time'>{calculateTime(currentTime)}</div>
+                    <div><input className='progress-bar' type="range" defaultValue="0" ref={progressBar} onChange={changeRange} /></div>
+                    {/* add logic for saving current duration to chrome.storage.local and then playing from there the next time */}
+                    <div className='duration' >{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
+                </div>
+            </div>
         </div >
     )
 }

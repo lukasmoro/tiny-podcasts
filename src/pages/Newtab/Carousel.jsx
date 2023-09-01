@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ReactAudioPlayer from 'react-audio-player';
 import AudioPlayer from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/components/AudioPlayer.jsx'
 import './Carousel.css';
+
+//refactor to get rid of conditional rendering
 
 // Parse RSS feed & return items to render 
 function parseRss(xml) {
@@ -34,7 +35,7 @@ function parseRss(xml) {
 const Carousel = () => {
   const [items, setItems] = useState([]);
   const [selectedPodcast, setSelectedPodcast] = useState(null);
-  const [viewMode, setViewMode] = useState('coverflow');
+
 
   // Fetching urls from chrome.storage.local 
   useEffect(() => {
@@ -56,57 +57,24 @@ const Carousel = () => {
     });
   }, []);
 
-  // Handling viewmode with click event on cover
-  const handlePodcastClick = (podcast) => {
-    setSelectedPodcast(podcast);
-    setViewMode('podcast');
-  };
-
   return (
     <div className="App">
-      {viewMode === 'coverflow' && (
-        <ul className="cards" >
-          <li className='spacer' ></li>
-          {items.map(
-            (podcast, index) =>
-              podcast && (
-                <li
-                  key={index}
-                // onClick={() => handlePodcastClick(podcast)}
-                >
-                  <div className='podcast-episode'><h2 >{podcast.episode}</h2></div>
-                  <img src={podcast.image} alt={podcast.title} />
-                  <AudioPlayer />
-                  {/* <ReactAudioPlayer className='player' src={podcast.mp3} controls /> */}
-                </li>
-              )
-          )}
-          <li className='spacer' ></li>
-        </ul>
-      )
-      }
-      {
-        viewMode === 'podcast' && selectedPodcast && (
-          <div className="podcast-view">
-            <button
-              className="back-button"
-              onClick={() => setViewMode('coverflow')}
-            >
-              Back
-            </button>
-            <div className="podcast-details">
-              <img
-                src={selectedPodcast.image}
-                alt={'Oops! Cover not loading.'}
-              ></img>
-              <h2>{selectedPodcast.title}</h2>
-              <p>{selectedPodcast.author}</p>
-              <p>{selectedPodcast.episode}</p>
-              <ReactAudioPlayer src={selectedPodcast.mp3} controls />
-            </div>
-          </div>
-        )
-      }
+      <ul className="cards" >
+        <li className='spacer' ></li>
+        {items.map(
+          (podcast, index) =>
+            podcast && (
+              <li
+                key={index}
+              >
+                <div className='podcast-episode'><h2 >{podcast.episode}</h2></div>
+                <img src={podcast.image} alt={podcast.title} />
+                <AudioPlayer src={podcast.mp3} />
+              </li>
+            )
+        )}
+        <li className='spacer' ></li>
+      </ul>
     </div >
   );
 };
