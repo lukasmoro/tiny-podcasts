@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { animated, useSpring } from '@react-spring/web'
+
 import './AudioPlayer.css';
 
 const AudioPlayer = (props) => {
@@ -7,7 +9,7 @@ const AudioPlayer = (props) => {
     //integrate data from chrome.storage ✅
     //style audioplayer 
     //make it appear just on currently viewed cover
-    //position buttons
+    //position buttons ✅
     //add icons
     //hide progress bar under cover
     //animate progressbar using react spring
@@ -21,13 +23,38 @@ const AudioPlayer = (props) => {
     const progressBar = useRef();
     const animationRef = useRef();
 
+    const [springs, api] = useSpring(() => ({
+        from: { x: 0 },
+        reverse: !isPlaying,
+    }))
+
     const togglePlayPause = () => {
         const prevValue = isPlaying;
         setIsPlaying(!prevValue);
         if (!prevValue) {
+            api.start({
+                from: {
+                    opacity: 0,
+                    y: 0,
+                },
+                to: {
+                    opacity: 1,
+                    y: 100,
+                },
+            });
             audioPlayer.current.play();
             animationRef.current = requestAnimationFrame(whilePlaying)
         } else {
+            api.start({
+                from: {
+                    opacity: 1,
+                    y: 100,
+                },
+                to: {
+                    opacity: 0,
+                    y: 0,
+                },
+            });
             audioPlayer.current.pause();
             cancelAnimationFrame(animationRef.current);
         }
@@ -78,16 +105,16 @@ const AudioPlayer = (props) => {
             <div className='player-container'>
                 <audio ref={audioPlayer} src={props.src} preload="metadata" onLoadedMetadata={onLoadedMetadata} ></audio>
                 <div className='button'>
-                    <button className='forward-backward' onClick={backThirty}>↩</button>
+                    {/* <button className='forward-backward' onClick={backThirty}>↩</button> */}
                     <button className='play-pause' onClick={togglePlayPause}>{isPlaying ? <p>play</p> : <p>pause</p>}</button>
-                    <button className='forward-backward' onClick={forwardThirty}>↪</button>
+                    {/* <button className='forward-backward' onClick={forwardThirty}>↪</button> */}
                 </div>
-                <div className='progress'>
+                <animated.div style={{ ...springs }} className='progress'>
                     <div className='current-time'>{calculateTime(currentTime)}</div>
                     <div><input className='progress-bar' type="range" defaultValue="0" ref={progressBar} onChange={changeRange} /></div>
                     {/* add logic for saving current duration to chrome.storage.local and then playing from there the next time */}
                     <div className='duration' >{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
-                </div>
+                </animated.div>
             </div>
         </div >
     )
