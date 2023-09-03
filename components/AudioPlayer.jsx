@@ -39,7 +39,7 @@ const AudioPlayer = (props) => {
                 },
                 to: {
                     opacity: 1,
-                    y: 100,
+                    y: 50,
                 },
             });
             audioPlayer.current.play();
@@ -48,7 +48,7 @@ const AudioPlayer = (props) => {
             api.start({
                 from: {
                     opacity: 1,
-                    y: 100,
+                    y: 50,
                 },
                 to: {
                     opacity: 0,

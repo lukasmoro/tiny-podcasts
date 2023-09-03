@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import AudioPlayer from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/components/AudioPlayer.jsx'
+import React, { useEffect, useState } from 'react';
+import AudioPlayer from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/components/AudioPlayer.jsx';
 import './Carousel.css';
 
-//refactor to get rid of conditional rendering
-
-// Parse RSS feed & return items to render 
+// Parse RSS feed & return items to render
 function parseRss(xml) {
   try {
     const xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
@@ -34,14 +32,12 @@ function parseRss(xml) {
 
 const Carousel = () => {
   const [items, setItems] = useState([]);
-  const [selectedPodcast, setSelectedPodcast] = useState(null);
 
-
-  // Fetching urls from chrome.storage.local 
+  // Fetching urls from chrome.storage.local
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
       if (!item.newUrls) {
-        setOnboarding(true);
+        // Handle the case when newUrls is not available (e.g., set some default state)
         return;
       }
 
@@ -59,23 +55,23 @@ const Carousel = () => {
 
   return (
     <div className="App">
-      <ul className="cards" >
-        <li className='spacer' ></li>
+      <ul className="cards">
+        <li className='spacer'></li>
+
         {items.map(
           (podcast, index) =>
             podcast && (
-              <li
-                key={index}
-              >
-                <div className='podcast-episode'><h2 >{podcast.episode}</h2></div>
+              <li key={index}>
+                <div className='podcast-episode'><h2>{podcast.episode}</h2></div>
                 <img src={podcast.image} alt={podcast.title} />
                 <AudioPlayer src={podcast.mp3} />
               </li>
             )
         )}
-        <li className='spacer' ></li>
+        <div className='blur'></div>
+        <li className='spacer'></li>
       </ul>
-    </div >
+    </div>
   );
 };
 
