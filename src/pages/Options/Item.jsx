@@ -3,7 +3,7 @@ import React from 'react';
 const Item = ({ items, removeUrl }) => {
 
   return (
-    <div>
+    <div className='items-container'>
       {items?.map((item, key) => {
         return (
           <div className="items" key={key}>

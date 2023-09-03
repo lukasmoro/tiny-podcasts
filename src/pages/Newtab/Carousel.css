@@ -175,3 +175,22 @@ p {
   margin-right: 10rem;
   text-align: center;
 }
+
+.indicators {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+
+.indicator {
+  width: .4rem;
+  height: .4rem;
+  border-radius: 100%;
+  border: none;
+  outline: none;
+  color: #d0d0d0;
+  margin: 0 0.1rem;
+  cursor: pointer;
+}

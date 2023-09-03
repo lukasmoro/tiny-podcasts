@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import AudioPlayer from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/components/AudioPlayer.jsx';
 import './Carousel.css';
 
+//scroll indicators
+//re-loading page after podcast is added
+//loading new tabs just if no previous tab open else google
+//animations pop-up & options
+//onboarding
+//icon
+//publish
+
 // Parse RSS feed & return items to render
-function parseRss(xml) {
+export function parseRss(xml) {
   try {
     const xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
     const firstItem = xmlDoc.querySelector('item');
@@ -33,6 +41,7 @@ function parseRss(xml) {
 const Carousel = () => {
   const [items, setItems] = useState([]);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
+  const [indicator, setIndicator] = useState(0);
 
   const handleClick = () => {
     setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
@@ -77,6 +86,7 @@ const Carousel = () => {
         <div className={`blur ${isBlurVisible ? 'visible' : ''}`} handleClick={handleClick}></div>
         <li className='spacer'></li>
       </ul>
+      <span className='indicators'>{items.map((__, index) => { return <button className='indicator' key={index} onClick={null}></button> })}</span>
     </div>
   );
 };
