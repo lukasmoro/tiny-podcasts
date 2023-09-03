@@ -28,6 +28,7 @@ form {
   display: flex;
   align-items: center;
 }
+
 input {
   outline: none;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -32px inset,
