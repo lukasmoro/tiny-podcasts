@@ -36,6 +36,7 @@
 }
 
 .current-time {
+    width: 2em;
     color: #d0d0d0;
     margin-right: 1rem;
     animation: linear adjust-opacity-ui both;
@@ -43,6 +44,8 @@
 }
 
 .duration {
+    margin: 0;
+    width: 2em;
     color: #d0d0d0;
     margin-left: 1rem;
     animation: linear adjust-opacity-ui both;
@@ -50,19 +53,18 @@
 }
 
 .progress-bar {
-    width: 400px;
     --bar-bg: #d0d0d0;
     --seek-before-width: 0px;
     --seek-before-color: #19a0fc;
     --knob: #FFFFFF;
-    --selectedknob: turquoise;
+    --selectedknob: #FFFFFF;
     appearance: none;
     background: var(--bar-bg);
     border-radius: 10px;
+    margin-bottom: 0.38em;
+    width: 28em;
     position: relative;
-    width: 400px;
-    height: 11px;
-    z-index: -1;
+    height: 5px;
     outline: none;
     animation: linear adjust-opacity-ui both;
     animation-timeline: --li-in-and-out-of-view;
@@ -70,16 +72,15 @@
 
 .progress-bar::before {
     content: '';
-    height: 11px;
+    height: 5px;
     width: var(--seek-before-width);
     background-color: var(--seek-before-color);
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-radius: 10px;
     position: absolute;
     top: 0;
     bottom: 0;
-    z-index: 0;
     cursor: pointer;
+    z-index: -1;
 }
 
 .progress-bar::-webkit-slider-thumb {
@@ -90,13 +91,14 @@
     border: none;
     background-color: var(--knob);
     cursor: pointer;
-    z-index: 0;
+    z-index: 100;
     box-sizing: border-box;
 }
 
 .progress-bar:active::-webkit-slider-thumb {
     transform: scale(1.2);
     background-color: var(--selectedknob);
+    z-index: 100;
 }
 
 body {

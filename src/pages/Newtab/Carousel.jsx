@@ -32,12 +32,17 @@ function parseRss(xml) {
 
 const Carousel = () => {
   const [items, setItems] = useState([]);
+  const [isBlurVisible, setIsBlurVisible] = useState(false);
+
+  const handleClick = () => {
+    setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
+    console.log('hello world');
+  };
 
   // Fetching urls from chrome.storage.local
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
       if (!item.newUrls) {
-        // Handle the case when newUrls is not available (e.g., set some default state)
         return;
       }
 
@@ -54,21 +59,22 @@ const Carousel = () => {
   }, []);
 
   return (
-    <div className="App">
-      <ul className="cards">
+    <div className='App'>
+      <ul className={`cards ${isBlurVisible ? 'visible' : ''}`}>
         <li className='spacer'></li>
-
         {items.map(
           (podcast, index) =>
             podcast && (
               <li key={index}>
                 <div className='podcast-episode'><h2>{podcast.episode}</h2></div>
                 <img src={podcast.image} alt={podcast.title} />
-                <AudioPlayer src={podcast.mp3} />
+                <div className='player-container'>
+                  <AudioPlayer src={podcast.mp3} handleClick={handleClick} />
+                </div>
               </li>
             )
         )}
-        <div className='blur'></div>
+        <div className={`blur ${isBlurVisible ? 'visible' : ''}`} handleClick={handleClick}></div>
         <li className='spacer'></li>
       </ul>
     </div>

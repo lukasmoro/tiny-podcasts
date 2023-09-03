@@ -1,19 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { animated, useSpring } from '@react-spring/web'
 
 import './AudioPlayer.css';
 
 const AudioPlayer = (props) => {
 
-    //implement functionality ✅
-    //integrate data from chrome.storage ✅
     //style audioplayer 
-    //make it appear just on currently viewed cover
-    //position buttons ✅
     //add icons
-    //hide progress bar under cover
-    //animate progressbar using react spring
     //store currentTime variable in chrome.storage
+    //blur & state handling
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
@@ -90,15 +85,15 @@ const AudioPlayer = (props) => {
         setCurrentTime(progressBar.current.value);
     }
 
-    const backThirty = () => {
-        progressBar.current.value = Number(progressBar.current.value) - 30;
-        changeRange();
-    }
+    // const backThirty = () => {
+    //     progressBar.current.value = Number(progressBar.current.value) - 30;
+    //     changeRange();
+    // }
 
-    const forwardThirty = () => {
-        progressBar.current.value = Number(progressBar.current.value) + 30;
-        changeRange();
-    }
+    // const forwardThirty = () => {
+    //     progressBar.current.value = Number(progressBar.current.value) + 30;
+    //     changeRange();
+    // }
 
     return (
         <div className='audio-player'>
@@ -106,7 +101,7 @@ const AudioPlayer = (props) => {
                 <audio ref={audioPlayer} src={props.src} preload="metadata" onLoadedMetadata={onLoadedMetadata} ></audio>
                 <div className='button'>
                     {/* <button className='forward-backward' onClick={backThirty}>↩</button> */}
-                    <button className='play-pause' onClick={togglePlayPause}>{isPlaying ? <p>play</p> : <p>pause</p>}</button>
+                    <button className='play-pause' onClick={() => { togglePlayPause(); props.handleClick(); }} >{isPlaying ? <p>play</p> : <p>pause</p>}</button>
                     {/* <button className='forward-backward' onClick={forwardThirty}>↪</button> */}
                 </div>
                 <animated.div style={{ ...springs }} className='progress'>
