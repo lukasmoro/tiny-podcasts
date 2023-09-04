@@ -194,3 +194,7 @@ p {
   margin: 0 0.1rem;
   cursor: pointer;
 }
+
+.indicator.inactive {
+  color: #19a0fc;
+}

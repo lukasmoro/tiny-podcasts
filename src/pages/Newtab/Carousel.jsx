@@ -11,7 +11,7 @@ import './Carousel.css';
 //publish
 
 // Parse RSS feed & return items to render
-export function parseRss(xml) {
+function parseRss(xml) {
   try {
     const xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
     const firstItem = xmlDoc.querySelector('item');
@@ -41,11 +41,10 @@ export function parseRss(xml) {
 const Carousel = () => {
   const [items, setItems] = useState([]);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
-  const [indicator, setIndicator] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleClick = () => {
     setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
-    console.log('hello world');
   };
 
   // Fetching urls from chrome.storage.local
@@ -83,7 +82,7 @@ const Carousel = () => {
               </li>
             )
         )}
-        <div className={`blur ${isBlurVisible ? 'visible' : ''}`} handleClick={handleClick}></div>
+        <div className={`blur ${isBlurVisible ? 'visible' : ''}`} ></div>
         <li className='spacer'></li>
       </ul>
       <span className='indicators'>{items.map((__, index) => { return <button className='indicator' key={index} onClick={null}></button> })}</span>
