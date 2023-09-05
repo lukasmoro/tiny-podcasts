@@ -8,7 +8,6 @@ const AudioPlayer = (props) => {
     //style audioplayer 
     //add icons
     //store currentTime variable in chrome.storage
-    //blur & state handling
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);

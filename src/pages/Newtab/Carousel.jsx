@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import AudioPlayer from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/components/AudioPlayer.jsx';
 import './Carousel.css';
 
-//scroll indicators
 //re-loading page after podcast is added
 //loading new tabs just if no previous tab open else google
 //animations pop-up & options
@@ -42,9 +41,16 @@ const Carousel = () => {
   const [items, setItems] = useState([]);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [indicatorIndex, setActiveIndicatorIndex] = useState(0);
 
   const handleClick = () => {
     setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
+  };
+
+  const handleScroll = () => {
+    const parentContainer = document.getElementById('parent-container');
+    const position = parentContainer.scrollLeft;
+    setScrollPosition(position);
   };
 
   // Fetching urls from chrome.storage.local
@@ -66,9 +72,26 @@ const Carousel = () => {
     });
   }, []);
 
+  // Indicator checking
+
+  useEffect(() => {
+    const parentContainer = document.getElementById('parent-container');
+    parentContainer.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      parentContainer.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const itemWidth = document.querySelector('.cards li').offsetWidth + 180;
+    const indicatorIndex = Math.floor(scrollPosition / itemWidth);
+    console.log(indicatorIndex)
+    setActiveIndicatorIndex(indicatorIndex);
+  }, [scrollPosition]);
+
   return (
     <div className='App'>
-      <ul className={`cards ${isBlurVisible ? 'visible' : ''}`}>
+      <ul id="parent-container" className={`cards ${isBlurVisible ? 'visible' : ''}`}>
         <li className='spacer'></li>
         {items.map(
           (podcast, index) =>
@@ -85,7 +108,7 @@ const Carousel = () => {
         <div className={`blur ${isBlurVisible ? 'visible' : ''}`} ></div>
         <li className='spacer'></li>
       </ul>
-      <span className='indicators'>{items.map((__, index) => { return <button className='indicator' key={index} onClick={null}></button> })}</span>
+      <span className='indicators'>{items.map((__, index) => { return <button key={index} className={`indicator ${index === indicatorIndex ? 'active' : ''}`}></button> })}</span>
     </div>
   );
 };
