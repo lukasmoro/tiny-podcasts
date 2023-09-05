@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { render } from 'react-dom';
+import React, { useEffect, useState } from 'react';
+import { useTransition, animated } from '@react-spring/web';
 import Form from './Form';
 import Item from './Item';
 
@@ -39,6 +41,9 @@ function List() {
     chrome.storage.local.set({ newUrls }, () => {
       setItems(newUrls);
       console.log(newUrls);
+      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        chrome.tabs.reload(tabs[0].id);
+      });
     });
   };
 
@@ -47,6 +52,9 @@ function List() {
     console.log(key);
     chrome.storage.local.set({ newUrls }, () => {
       setItems(newUrls);
+    });
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.reload(tabs[0].id);
     });
   };
 
