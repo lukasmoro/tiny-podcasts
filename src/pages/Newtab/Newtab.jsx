@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Renderer from './Renderer';
+import Carousel from './Carousel';
 import Onboarding from './Onboarding';
 
 const Newtab = () => {
@@ -21,7 +21,7 @@ const Newtab = () => {
           <Onboarding />
         </div>
       ) : (
-        <Renderer />
+        <Carousel />
       )}
     </div>
   );

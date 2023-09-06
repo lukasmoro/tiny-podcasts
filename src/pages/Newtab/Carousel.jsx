@@ -3,6 +3,8 @@ import AudioPlayer from '/Users/lukasmoro/Documents/React/podcasts-chrome-extens
 import './Carousel.css';
 
 //loading new tabs just if no previous tab open else google
+//compatibility airpods
+//loading behavior
 //make items draggable
 //onboarding
 //icon
@@ -43,6 +45,7 @@ const Carousel = () => {
   const [isBlurVisible, setIsBlurVisible] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [indicatorIndex, setActiveIndicatorIndex] = useState(0);
+  const [componentMounted, setComponentMounted] = useState(false);
 
   const handleClick = () => {
     setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
@@ -53,6 +56,13 @@ const Carousel = () => {
     const position = parentContainer.scrollLeft;
     setScrollPosition(position);
   };
+
+  useEffect(() => {
+    setComponentMounted(true);
+    chrome.storage.local.set({ carouselMounted: true }, () => {
+      console.log('Carousel component mounted and variable saved.');
+    });
+  }, []);
 
   // Fetching urls from chrome.storage.local
   useEffect(() => {
