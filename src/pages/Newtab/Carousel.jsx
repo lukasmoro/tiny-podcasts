@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import AudioPlayer from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/components/AudioPlayer.jsx';
 import './Carousel.css';
 
-//re-loading page after podcast is added
 //loading new tabs just if no previous tab open else google
-//animations pop-up & options
+//make items draggable
 //onboarding
 //icon
-//publish
+//fine tune
+//fix file paths
+//publish deadline 7.9. 00:00
 
 // Parse RSS feed & return items to render
 function parseRss(xml) {

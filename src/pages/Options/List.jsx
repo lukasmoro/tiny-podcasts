@@ -1,6 +1,5 @@
-import { render } from 'react-dom';
 import React, { useEffect, useState } from 'react';
-import { useTransition, animated } from '@react-spring/web';
+import { animated, useSpring } from '@react-spring/web';
 import Form from './Form';
 import Item from './Item';
 
@@ -58,12 +57,13 @@ function List() {
     });
   };
 
+
   return (
 
-    <div>
+    <animated.div>
       <Form onSubmit={addUrl} />
       <Item items={items} removeUrl={removeUrl} />
-    </div>
+    </animated.div>
   );
 }
 
