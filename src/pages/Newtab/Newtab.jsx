@@ -4,7 +4,6 @@ import Onboarding from './Onboarding';
 
 const Newtab = () => {
   const [onboarding, setOnboarding] = useState(false);
-
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
       const checker = item.newUrls.length;
