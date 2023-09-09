@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import Panel from './Panel';
-import './index.css';
+import Onboarding from './Onboarding.jsx';
+import './Onboarding.css';
 
-render(<Panel />, window.document.querySelector('#app-container'));
+render(<Onboarding />, window.document.querySelector('#app-container'));
 
 if (module.hot) module.hot.accept();

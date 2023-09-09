@@ -100,9 +100,6 @@ const Carousel = () => {
     setActiveIndicatorIndex(indicatorIndex);
   }, [scrollPosition]);
 
-  const openGoogleHomepage = () => {
-    window.open('https://www.google.com', '_blank');
-  };
 
   return (
     <div className='App'>

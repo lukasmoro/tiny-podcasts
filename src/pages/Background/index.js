@@ -1,10 +1,11 @@
-// chrome.tabs.query({ currentWindow: true }, function (tabs) {
-//     for (var i = 0; i < tabs.length; i++) {
-//         var tab = tabs[i];
-//         var tabUrl = tab.url;
-//         console.log("Tab URL: " + tabUrl);
-//         if (tab.pendingUrl === 'chrome://newtab/' || tab.url === 'chrome://newtab/') {
-//             chrome.tabs.update(tab.id, { url: 'https://google.com' });
-//         }
-//     }
-// });
+// Show onboarding on install
+chrome.runtime.onInstalled.addListener((event) => {
+    console.log('hello world');
+    console.log(event);
+
+    if (event.reason === chrome.runtime.OnInstalledReason.INSTALL || event.reason === chrome.runtime.OnInstalledReason.UPDATE) {
+        chrome.tabs.create({
+            url: chrome.runtime.getURL('panel.html')
+        });
+    }
+});
