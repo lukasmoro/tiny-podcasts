@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import AudioPlayer from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/components/AudioPlayer.jsx';
+import AudioPlayer from './AudioPlayer.jsx';
 import './Carousel.css';
 
-//loading new tabs just if no previous tab open else google
-//compatibility airpods
-//loading behavior
+//loading new tabs just if no previous tab open else google ✅
+//loading behavior 
+//darkmode
 //make items draggable
 //onboarding
 //icon
 //fine tune
-//fix file paths
-//publish deadline 7.9. 00:00
+//fix file paths ✅
+
+//compatibility airpods
 
 // Parse RSS feed & return items to render
 function parseRss(xml) {
@@ -45,7 +46,6 @@ const Carousel = () => {
   const [isBlurVisible, setIsBlurVisible] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [indicatorIndex, setActiveIndicatorIndex] = useState(0);
-  const [componentMounted, setComponentMounted] = useState(false);
 
   const handleClick = () => {
     setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
@@ -56,13 +56,6 @@ const Carousel = () => {
     const position = parentContainer.scrollLeft;
     setScrollPosition(position);
   };
-
-  useEffect(() => {
-    setComponentMounted(true);
-    chrome.storage.local.set({ carouselMounted: true }, () => {
-      console.log('Carousel component mounted and variable saved.');
-    });
-  }, []);
 
   // Fetching urls from chrome.storage.local
   useEffect(() => {
@@ -117,8 +110,8 @@ const Carousel = () => {
               </li>
             )
         )}
-        <div className={`blur ${isBlurVisible ? 'visible' : ''}`} ></div>
         <li className='spacer'></li>
+        <div className={`blur ${isBlurVisible ? 'visible' : ''}`} ></div>
       </ul>
       <span className='indicators'>{items.map((__, index) => { return <button key={index} className={`indicator ${index === indicatorIndex ? 'active' : ''}`}></button> })}</span>
     </div>

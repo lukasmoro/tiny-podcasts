@@ -31,7 +31,7 @@ function List() {
         item.text
       )
     ) {
-      alert('Please enter a valid url! You can enter up to five podcast!');
+      alert('Please enter a valid URL! You can enter up to five podcast!');
       return;
     }
 
@@ -57,12 +57,17 @@ function List() {
     });
   };
 
-
   return (
 
     <animated.div>
-      <Form onSubmit={addUrl} />
-      <Item items={items} removeUrl={removeUrl} />
+      <div className="form">
+        <Form onSubmit={addUrl} />
+      </div>
+      <div className="line"></div>
+      <div className='overflow' >
+        <Item items={items} removeUrl={removeUrl} />
+      </div>
+      <div className="line"></div>
     </animated.div>
   );
 }

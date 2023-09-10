@@ -33,10 +33,10 @@ button {
   background-color: #262626;
   border-radius: 1.5rem;
   max-width: 700px;
+  height: 600px;
   margin-top: 2.5rem;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 2rem;
 }
 
 .container {
@@ -46,9 +46,9 @@ button {
 form {
   justify-content: space-between;
   display: flex;
-  margin-bottom: 2rem;
   align-items: center;
 }
+
 input {
   outline: none;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -22px inset,
@@ -67,7 +67,7 @@ input {
   max-width: 400px;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
 }
 
 .submit,
@@ -131,7 +131,7 @@ img {
 }
 
 .greets {
-  margin-top: 2rem;
+  margin-top: 1.2rem;
 }
 
 .spacer {
@@ -139,7 +139,6 @@ img {
 }
 
 .line {
-  margin-top: 2rem;
   width: 400px;
   height: 1px;
   background: #5a5a5a;
@@ -147,9 +146,20 @@ img {
 
 .signature {
   position: absolute;
-  margin-top: 55rem;
+  margin-top: 3rem;
   left: 50%;
   transform: translate(-50%, 0);
   text-align: center;
   font-size: 0.75rem;
+}
+
+.overflow {
+  overflow: auto;
+  overscroll-behavior: contain;
+  height: 250px;
+  padding-bottom: 2rem;
+}
+
+.form {
+  margin-bottom: 1rem;
 }

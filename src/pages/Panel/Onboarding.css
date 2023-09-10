@@ -7,7 +7,7 @@
 .instructions {
   max-width: 700px;
   line-height: 2;
-  font-weight: 400;
+  font-weight: 100;
   font-size: 1rem;
   color: #d0d0d0;
   margin-top: 1.2rem;
@@ -42,7 +42,9 @@
   margin-right: auto;
   align-items: center;
 }
+
 a {
+  font-weight: 400;
   text-decoration: none;
   color: #19a0fc;
 }
@@ -50,15 +52,6 @@ a {
 ol {
   list-style-type: decimal;
   list-style-position: inside;
-}
-.signature {
-  color: #d0d0d0;
-  position: absolute;
-  margin-top: 55rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-  text-align: center;
-  font-size: 0.75rem;
 }
 
 .tooltip {
@@ -69,7 +62,9 @@ ol {
 /* Tooltip */
 
 .tooltip .tooltiptext {
+  font-size: .8rem;
   width: 80px;
+  font-weight: 100;
   bottom: 100%;
   left: 50%;
   margin-left: -40px;
@@ -86,7 +81,7 @@ ol {
 .tooltip .tooltiptext::after {
   content: ' ';
   position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
+  top: 100%;
   left: 50%;
   margin-left: -5px;
   border-width: 5px;
