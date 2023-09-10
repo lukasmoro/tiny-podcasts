@@ -1,7 +1,7 @@
 import React from 'react';
 import './Onboarding.css';
 import '../Newtab/Carousel.css';
-import Logo from './podcastslogo.png';
+import Logo from './icon.svg';
 
 function Onboarding() {
   return (
