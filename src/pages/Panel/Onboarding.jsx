@@ -1,5 +1,7 @@
 import React from 'react';
 import './Onboarding.css';
+import '../Newtab/Carousel.css';
+import Logo from './podcastslogo.png';
 
 function Onboarding() {
   return (
@@ -8,13 +10,13 @@ function Onboarding() {
         <div>
           <img
             className="logo-onboarding"
-            src={require('/Users/lukasmoro/Documents/React/podcasts-chrome-extension/src/assets/img/podcastslogo.png')}
+            src={Logo}
             alt="logo"
           />
         </div>
         <div className="textbox">
           <h1 className="head-onboarding">
-            Looks like you did not add any Podcasts, yet.
+            Hey, you did not add any podcasts, yet.
           </h1>
           <div className="instructions">
             <ol>
@@ -22,14 +24,14 @@ function Onboarding() {
                 Find{' '}
                 <div className="tooltip">
                   <a href="https://feeds.simplecast.com/eew_vyNL">
-                    RSS-Feeds <span className="tooltiptext">example</span>
+                    rss-feeds <span className="tooltiptext">example</span>
                   </a>
                 </div>{' '}
-                by searching for "Podcast's name + RSS-Feed".
+                by searching for the podcast's rss-feed URL.
               </li>
               <li>
-                Copy and paste up to 5 URLs of podcasts into the options or
-                pop-up.
+                Copy & paste up to 5 URLs of podcasts into the options or
+                pop-up window.
               </li>
               <li>
                 The podcast's latest episode will now be displayed in your new
@@ -38,11 +40,6 @@ function Onboarding() {
             </ol>
           </div>
         </div>
-        <p className="signature">
-          Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.
-          <br />
-          <a href="">Github</a> • <a href="">Privacy Policy</a>
-        </p>
       </div>
     </div>
   );
