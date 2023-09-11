@@ -8,7 +8,8 @@ import './Carousel.css';
 //loading behavior ✅
 //icon ✅
 //fix file paths ✅
-//buttons animation
+//buttons animation ✅
+//fix blur
 //reload podcast page instead of current page
 //fine tune
 
@@ -18,6 +19,7 @@ import './Carousel.css';
 //make items draggable
 //compatibility airpods
 //darkmode
+//svg animation logo
 
 function parseRss(xml) {
   try {
@@ -98,6 +100,7 @@ const Carousel = () => {
 
   return (
     <div className='App'>
+
       <ul id="parent-container" className={`cards ${isBlurVisible ? 'visible' : ''}`}>
         <li className='spacer'></li>
         {items.map(

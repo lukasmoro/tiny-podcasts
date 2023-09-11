@@ -82,6 +82,7 @@ input {
 }
 
 .remove {
+  margin-bottom: .33rem;
   color: #ff8181;
 }
 
@@ -107,6 +108,7 @@ p {
   font-weight: 400;
   font-size: 0.9rem;
   color: #d0d0d0;
+  max-width: 70%;
 }
 
 a {
@@ -133,6 +135,7 @@ img {
 .greets {
   margin-top: 1.2rem;
   text-align: center;
+  max-width: 100%;
 }
 
 .spacer {

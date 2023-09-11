@@ -19,20 +19,13 @@ const AnimatedItem = ({ item, removeUrl }) => {
     opacity: isRemoved ? 0 : 1,
     transform: isRemoved ? 'translateX(-100%)' : 'translateX(0%)',
     config: {
-      tension: 600,
+      tension: 400,
       friction: 15,
     },
     onRest: () => {
       if (isRemoved) {
         removeUrl(item.key);
       }
-    },
-  })
-
-  const removeButtonSpring = useSpring({
-    config: {
-      tension: 300,
-      friction: 10,
     },
   })
 
@@ -52,16 +45,16 @@ const AnimatedItem = ({ item, removeUrl }) => {
     <animated.div style={fadeInSprings}>
       <animated.div style={fadeOutSprings}>
         <div className="items">
-          <p>{item.text}</p>
-          <animated.button className="remove"
+          <p className={item.text.length > 50 ? 'truncate-text' : ''}>{item.text}</p>
+          <button className="remove"
             onClick={handleRemove}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
             Remove
-          </animated.button>
+          </button>
         </div>
       </animated.div>
-    </animated.div>
+    </animated.div >
   );
 };
 

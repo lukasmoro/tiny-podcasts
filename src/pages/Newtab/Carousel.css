@@ -18,9 +18,9 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(50px);
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 0;
   opacity: 0;
@@ -32,7 +32,6 @@ body {
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
 }
-
 
 h1 {
   margin-top: 1.5rem;
@@ -112,6 +111,56 @@ p {
   view-timeline-axis: inline;
 }
 
+.cards li {
+  position: relative;
+  animation: linear adjust-z-index both;
+  animation-timeline: --li-in-and-out-of-view;
+  perspective: 40rem;
+}
+
+.cards li>img:first-of-type {
+  margin-left: 5rem;
+}
+
+.cards li>img:last-of-type {
+  margin-right: 5rem;
+}
+
+.cards li>img {
+  animation: linear rotate-cover both;
+  animation-timeline: --li-in-and-out-of-view;
+}
+
+.podcast-episode {
+  max-width: 400px;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  text-align: center;
+}
+
+.indicators {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+
+.indicator {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background-color: #d0d0d0;
+  margin: 0 0.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.indicator.active {
+  background-color: #19a0fc;
+}
+
 @keyframes fadeInAnimation {
   0% {
     opacity: 0;
@@ -162,54 +211,4 @@ p {
   65% {
     transform: translateX(0) rotateY(35deg);
   }
-}
-
-.cards li {
-  position: relative;
-  animation: linear adjust-z-index both;
-  animation-timeline: --li-in-and-out-of-view;
-  perspective: 40rem;
-}
-
-.cards li>img:first-of-type {
-  margin-left: 5rem;
-}
-
-.cards li>img:last-of-type {
-  margin-right: 5rem;
-}
-
-.cards li>img {
-  animation: linear rotate-cover both;
-  animation-timeline: --li-in-and-out-of-view;
-}
-
-.podcast-episode {
-  max-width: 400px;
-  margin-left: 10rem;
-  margin-right: 10rem;
-  text-align: center;
-}
-
-.indicators {
-  display: flex;
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-}
-
-.indicator {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 50%;
-  border: none;
-  outline: none;
-  background-color: #d0d0d0;
-  margin: 0 0.1rem;
-  transition: background-color 0.3s ease;
-}
-
-.indicator.active {
-  background-color: #19a0fc;
 }

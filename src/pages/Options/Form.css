@@ -36,7 +36,12 @@ input {
 .remove {
     margin-top: 0.75rem;
     color: #ff8181;
-    transition: ease-in 0.2s;
+    transition: ease-in 0.15s;
+}
+
+.remove:hover {
+    background-color: #ff8181;
+    color: #ffffff;
 }
 
 .submit {
@@ -49,4 +54,10 @@ input {
 
 .submit:not(.hovered) {
     width: 1rem;
+}
+
+.truncate-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
