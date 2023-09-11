@@ -4,6 +4,7 @@ import { animated, useSpring } from '@react-spring/web';
 const AnimatedItem = ({ item, removeUrl }) => {
 
   const [isRemoved, setIsRemoved] = useState(false);
+  const [hover, setHover] = useState(false);
 
   const fadeInSprings = useSpring({
     from: { transform: 'translateY(-10px)' },
@@ -18,8 +19,8 @@ const AnimatedItem = ({ item, removeUrl }) => {
     opacity: isRemoved ? 0 : 1,
     transform: isRemoved ? 'translateX(-100%)' : 'translateX(0%)',
     config: {
-      tension: 300,
-      friction: 30,
+      tension: 600,
+      friction: 15,
     },
     onRest: () => {
       if (isRemoved) {
@@ -28,8 +29,23 @@ const AnimatedItem = ({ item, removeUrl }) => {
     },
   })
 
+  const removeButtonSpring = useSpring({
+    config: {
+      tension: 300,
+      friction: 10,
+    },
+  })
+
   const handleRemove = () => {
     setIsRemoved(true);
+  };
+
+  const handleMouseEnter = () => {
+    setHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHover(false);
   };
 
   return (
@@ -37,9 +53,12 @@ const AnimatedItem = ({ item, removeUrl }) => {
       <animated.div style={fadeOutSprings}>
         <div className="items">
           <p>{item.text}</p>
-          <button className="remove" onClick={handleRemove}>
+          <animated.button className="remove"
+            onClick={handleRemove}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}>
             Remove
-          </button>
+          </animated.button>
         </div>
       </animated.div>
     </animated.div>

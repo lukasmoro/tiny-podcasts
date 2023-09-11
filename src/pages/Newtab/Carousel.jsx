@@ -2,18 +2,23 @@ import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 import './Carousel.css';
 
+//BEFORE RELEASE
+
 //loading new tabs just if no previous tab open else google ✅
-//loading behavior 
-//darkmode
-//make items draggable
-//onboarding
-//icon
-//fine tune
+//loading behavior ✅
+//icon ✅
 //fix file paths ✅
+//buttons animation
+//reload podcast page instead of current page
+//fine tune
 
+//TO DO
+
+//onboarding animation
+//make items draggable
 //compatibility airpods
+//darkmode
 
-// Parse RSS feed & return items to render
 function parseRss(xml) {
   try {
     const xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
@@ -57,7 +62,6 @@ const Carousel = () => {
     setScrollPosition(position);
   };
 
-  // Fetching urls from chrome.storage.local
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
       if (!item.newUrls) {
@@ -75,8 +79,6 @@ const Carousel = () => {
         .catch((error) => console.error(error));
     });
   }, []);
-
-  // Indicator checking
 
   useEffect(() => {
     const parentContainer = document.getElementById('parent-container');

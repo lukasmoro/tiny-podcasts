@@ -1,13 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { animated, useSpring } from '@react-spring/web'
-
 import './AudioPlayer.css';
 
 const AudioPlayer = (props) => {
-
-    //style audioplayer 
-    //add icons
-    //store currentTime variable in chrome.storage
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [duration, setDuration] = useState(0);
@@ -106,7 +101,7 @@ const AudioPlayer = (props) => {
                 <animated.div style={{ ...springs }} className='progress'>
                     <div className='current-time'>{calculateTime(currentTime)}</div>
                     <div><input className='progress-bar' type="range" defaultValue="0" ref={progressBar} onChange={changeRange} /></div>
-                    {/* add logic for saving current duration to chrome.storage.local and then playing from there the next time */}
+                    {/*logic for saving current duration to chrome.storage.local and then playing from there the next time */}
                     <div className='duration' >{(duration && !isNaN(duration)) && calculateTime(duration)}</div>
                 </animated.div>
             </div>
