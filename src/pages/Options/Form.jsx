@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
+import { animated, useSpring } from '@react-spring/web';
+import './Form.css'
 
 function Form(props) {
   const [input, setInput] = useState('');
+  const [hover, setHover] = useState(false);
+
+  const addButtonSpring = useSpring({
+    width: hover ? '5rem' : '3rem',
+    scaleY: hover ? 1.1 : 1,
+    config: {
+      tension: 500,
+      friction: 20,
+    },
+  });
 
   const handleChange = (e) => {
     setInput(e.target.value);
@@ -16,17 +28,34 @@ function Form(props) {
     setInput('');
   };
 
+  const handleMouseEnter = () => {
+    setHover(true);
+  };
+
+  const handleMouseLeave = () => {
+    setHover(false);
+  };
+
+
   return (
     <form onSubmit={handleSubmit} autoComplete="off">
       <input
-        placeholder="Enter your RSS-feeds here!"
+        placeholder="Enter your RSS-feed here!"
         value={input}
         onChange={handleChange}
         name="text"
       />
-      <button className="submit" onClick={handleSubmit}>
-        Submit
-      </button>
+      <animated.button
+        className={`submit ${hover ? 'hovered' : ''}`}
+        onClick={handleSubmit}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        style={{
+          width: addButtonSpring.width,
+        }}
+      >
+        {hover ? 'Submit' : 'Add'}
+      </animated.button>
     </form>
   );
 }
