@@ -7,7 +7,6 @@ const Newtab = () => {
   const [onboarding, setOnboarding] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
-
   useEffect(() => {
     chrome.tabs.query({ currentWindow: true }, function (tabs) {
       for (var i = 0; i < tabs.length - 1; i++) {
