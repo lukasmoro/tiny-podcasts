@@ -2,7 +2,6 @@ import React from 'react';
 import './Onboarding.css';
 import '../Newtab/Carousel.css';
 import Logo from './icon.png';
-import Arrow from './arrow.svg'
 
 function Onboarding() {
   return (

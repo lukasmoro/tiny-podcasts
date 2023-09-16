@@ -115,8 +115,9 @@ const Carousel = () => {
               </li>
             )
         )}
-        <li className='spacer'></li>
         <div className={`blur ${isBlurVisible ? 'visible' : ''}`} ></div>
+        <li className='spacer'></li>
+
       </ul>
       <span className='indicators'>{items.map((__, index) => { return <button key={index} className={`indicator ${index === indicatorIndex ? 'active' : ''}`}></button> })}</span>
     </div>
