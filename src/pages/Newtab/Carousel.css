@@ -69,6 +69,13 @@ p {
   scrollbar-width: none;
   width: auto;
   height: 100%;
+
+}
+
+.cover.podcast-episode s {
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .cards.visible {

@@ -108,7 +108,7 @@ const Carousel = () => {
             podcast && (
               <li key={index}>
                 <div className='podcast-episode'><h2>{podcast.episode}</h2></div>
-                <img src={podcast.image} alt={podcast.title} />
+                <img className='cover' src={podcast.image} alt={podcast.title} />
                 <div className='player-container'>
                   <AudioPlayer src={podcast.mp3} handleClick={handleClick} />
                 </div>
