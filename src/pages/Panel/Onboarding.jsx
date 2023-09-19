@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Onboarding.css';
 import '../Newtab/Carousel.css';
 import Logo from './icon.png';
-import Arrow from './arrow.svg'
+import Lottie from 'lottie-react';
+import animationData from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/src/assets/img/arrow.json';
 
 function Onboarding() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyClick = (url) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = url;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textArea);
+    setCopied(true);
+  };
+
+  const tooltipText = copied ? "url copied" : "example";
+
   return (
     <div className="onboarding">
       <div className="container">
+        {/* <Lottie className='arrow' animationData={animationData} /> */}
         <div>
           <img
             className="logo-onboarding"
@@ -24,14 +40,21 @@ function Onboarding() {
               <li>
                 Find{' '}
                 <div className="tooltip">
-                  <a target="_blank" rel="noopener noreferrer" href="https://feeds.simplecast.com/eew_vyNL" >
-                    rss-feeds <span className="tooltiptext">example</span>
+                  <a
+                    href="https://feeds.simplecast.com/eew_vyNL"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleCopyClick("https://feeds.simplecast.com/eew_vyNL");
+                    }}
+                  >
+                    rss-feeds{' '}
+                    <span className="tooltiptext">{tooltipText}</span>
                   </a>
                 </div>{' '}
-                by searching for the podcast's rss-feed URL.
+                by searching for the podcast's rss-feed url.
               </li>
               <li>
-                Add up to 5 URLs of podcasts in the options or
+                Add up to 5 urls of podcasts in the options or
                 pop-up window.
               </li>
               <li>

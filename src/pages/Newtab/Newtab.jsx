@@ -9,12 +9,10 @@ const Newtab = () => {
 
   useEffect(() => {
     chrome.tabs.query({ currentWindow: true }, function (tabs) {
-      for (var i = 0; i < tabs.length - 1; i++) {
-        var tab = tabs[i];
-
+      for (let i = 0; i < tabs.length - 1; i++) {
+        let tab = tabs[i];
         if (tab.pendingUrl === 'chrome://newtab/' || tab.url === 'chrome://newtab/') {
           setRedirect(true);
-
         } else {
           setRedirect(false);
         }

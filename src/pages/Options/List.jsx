@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { animated, useSpring } from '@react-spring/web';
+import { animated } from '@react-spring/web';
 import Form from './Form';
 import Item from './Item';
 
@@ -31,7 +31,7 @@ function List() {
         item.text
       )
     ) {
-      alert('Please enter a valid URL! You can enter up to five podcast!');
+      alert('Please enter a valid url! You can enter up to five podcast!');
       return;
     }
 

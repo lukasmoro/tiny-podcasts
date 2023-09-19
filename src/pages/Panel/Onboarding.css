@@ -45,6 +45,9 @@ body {
   margin-left: auto;
   margin-right: auto;
   align-items: center;
+  animation: fadeInAnimation ease 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 a {
@@ -109,4 +112,15 @@ ol {
   100% {
     opacity: 1;
   }
+}
+
+.arrow {
+  position: absolute;
+  left: 84.5%;
+  top: 2%;
+  -moz-transform: scale(-1, 1);
+  -webkit-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  transform: scale(-1, 1);
 }
