@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { animated, useSpring } from '@react-spring/web'
 import './AudioPlayer.css';
+import BehaviourClick from './BehaviourClick.jsx';
 
 const AudioPlayer = (props) => {
 
@@ -95,7 +96,7 @@ const AudioPlayer = (props) => {
                 <audio ref={audioPlayer} src={props.src} preload="metadata" onLoadedMetadata={onLoadedMetadata} ></audio>
                 <div className='button'>
                     {/* <button className='forward-backward' onClick={backThirty}>↩</button> */}
-                    <button className='play-pause' onClick={() => { togglePlayPause(); props.handleClick(); }} >{isPlaying ? <p>play</p> : <p>pause</p>}</button>
+                    <BehaviourClick><button className='play-pause' onClick={() => { togglePlayPause(); props.handleClick(); }} >{isPlaying ? <p>Pause</p> : <p>Play</p>}</button></BehaviourClick>
                     {/* <button className='forward-backward' onClick={forwardThirty}>↪</button> */}
                 </div>
                 <animated.div style={{ ...springs }} className='progress'>

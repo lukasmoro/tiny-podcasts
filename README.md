@@ -6,7 +6,7 @@
 
 Spending time through browsing a big selection of podcasts is easy. «Podcasts» makes it easier to choose and enjoy podcasts from a vast selection by focusing on your top five favorites. This can help you save time & decision-making.
 
-Enjoy your podcasts! 🎧✨
+Enjoy your podcasts! 🎧
 
 The extension is open source & hosted on GitHub.
 

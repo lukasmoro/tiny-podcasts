@@ -23,10 +23,18 @@
     animation: linear adjust-opacity-ui both;
     animation-timeline: --li-in-and-out-of-view;
     cursor: pointer;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
     border: none;
+}
+
+.play-pause p {
+    margin-top: 19px;
+}
+
+button:focus {
+    outline: 0;
 }
 
 .forward-backward {

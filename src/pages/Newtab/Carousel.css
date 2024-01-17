@@ -5,6 +5,8 @@
   font-family: 'Barlow', 'Inter', Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0;
+
+
 }
 
 body {
@@ -39,7 +41,7 @@ h1 {
 h2 {
   margin: 0;
   white-space: normal;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 100;
   color: #d0d0d0;
   text-align: center;
@@ -67,9 +69,6 @@ p {
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  width: auto;
-  height: 100%;
-
 }
 
 .loader.active {
@@ -91,22 +90,21 @@ p {
   width: var(--cover-size);
   max-width: 700px;
   max-height: 700px;
-  aspect-ratio: 1;
+  aspect-ratio: 1/1;
   scroll-snap-align: center;
-  margin-top: 2rem;
 }
 
 .spacer {
   width: 0;
   height: 250px;
-  padding: 0 4rem;
+  padding: 0 9vw;
 }
 
 .cards li img {
   width: 300px;
   height: 300px;
   padding: 0 7.5rem;
-  margin-top: 10rem;
+  margin-top: 8.5rem;
 }
 
 .cards li {
@@ -147,16 +145,17 @@ p {
   align-items: center;
   justify-content: center;
   width: 100vw;
+  top: 95%;
 }
 
 .indicator {
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   border: none;
   outline: none;
   background-color: #d0d0d0;
-  margin: 0 0.1rem;
+  margin: 0 0.2rem;
   transition: background-color 0.3s ease;
 }
 
@@ -213,5 +212,56 @@ p {
 
   65% {
     transform: translateX(0) rotateY(35deg);
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .spacer {
+    padding: 0 0;
+  }
+
+}
+
+@media only screen and (min-width: 1280px) {
+  .spacer {
+    padding: 0 2vw;
+  }
+}
+
+
+
+@media only screen and (min-width: 1440px) {
+  .spacer {
+    padding: 0 5vw;
+  }
+}
+
+@media only screen and (min-width: 1680px) {
+  .spacer {
+    padding: 0 9vw;
+  }
+}
+
+@media only screen and (min-height: 720px) {
+  .cards {
+    margin-top: 3vh;
+  }
+}
+
+@media only screen and (min-height: 800px) {
+  .cards {
+    margin-top: 10vh;
+  }
+}
+
+@media only screen and (min-height: 900px) {
+  .cards {
+    margin-top: 12vh;
+  }
+}
+
+@media only screen and (min-height: 1080px) {
+  .cards {
+    margin-top: 15vh;
   }
 }

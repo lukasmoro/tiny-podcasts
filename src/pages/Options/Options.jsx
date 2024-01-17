@@ -16,7 +16,7 @@ export default function Options() {
             podcasts in the list below or in the pop-up.
           </p>
           <List />
-          <p className="greets">✨🎧 Enjoy your podcasts! 🎧✨</p>
+          <p className="greets">Enjoy your podcasts! 🎧</p>
         </div>
         <p className="signature">
           Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.

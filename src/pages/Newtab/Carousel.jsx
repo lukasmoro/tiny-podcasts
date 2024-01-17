@@ -11,8 +11,9 @@ import './Carousel.css';
 //buttons animation ✅
 //fix blur ✅
 //reload podcast page instead of current page ✅
+//media queries ✅
 //better onboarding
-//readme
+//readme 
 
 //TO DO
 
@@ -21,7 +22,6 @@ import './Carousel.css';
 //compatibility airpods
 //darkmode
 //svg animation logo
-//media queries
 //add icon to duplicate rss err message
 
 function parseRss(xml) {
@@ -81,7 +81,8 @@ const Carousel = () => {
       const newUrls = item.newUrls.map((newUrl) => newUrl.text);
 
       Promise.all(newUrls.map((url) => fetch(url)))
-        .then((responses) => Promise.all(responses.map((r) => r.text())))
+        .then((responses) =>
+          Promise.all(responses.map((r) => r.text())))
         .then((xmlStrings) => {
           const firstPodcasts = xmlStrings.map(parseRss);
           setItems(firstPodcasts);
@@ -99,7 +100,7 @@ const Carousel = () => {
   }, []);
 
   useEffect(() => {
-    const itemWidth = document.querySelector('.cards li').offsetWidth + 180;
+    const itemWidth = document.querySelector('.cards li').offsetWidth;
     const indicatorIndex = Math.floor(scrollPosition / itemWidth);
     console.log(indicatorIndex)
     setActiveIndicatorIndex(indicatorIndex);
