@@ -14,4 +14,4 @@ The extension is open source & hosted on GitHub. It is still a bit buggy, but I 
 
 ## Credits
 
-React Chrome Extension Boilerplate by [@username] (https://github.com/lxieyang)
+React Chrome Extension Boilerplate by [@MichaelXieyangLiu](https://github.com/lxieyang)
