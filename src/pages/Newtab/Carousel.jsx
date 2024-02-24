@@ -66,12 +66,6 @@ const Carousel = () => {
     setIsLoadingActive(false);
   };
 
-  const handleScroll = () => {
-    const parentContainer = document.getElementById('parent-container');
-    const position = parentContainer.scrollLeft;
-    setScrollPosition(position);
-  };
-
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
       if (!item.newUrls) {
@@ -93,18 +87,24 @@ const Carousel = () => {
 
   useEffect(() => {
     const parentContainer = document.getElementById('parent-container');
+    if (!parentContainer) return;
+
+    const handleScroll = () => {
+      const position = parentContainer.scrollLeft;
+      setScrollPosition(position);
+      const maxScrollLeft = parentContainer.scrollWidth - parentContainer.clientWidth;
+      if (maxScrollLeft === 0) return;
+      const scrollRatio = position / maxScrollLeft;
+      const currentIndex = Math.round(scrollRatio * (items.length - 1));
+      setActiveIndicatorIndex(currentIndex);
+    };
+
     parentContainer.addEventListener('scroll', handleScroll, { passive: true });
+
     return () => {
       parentContainer.removeEventListener('scroll', handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    const itemWidth = document.querySelector('.cards li').offsetWidth;
-    const indicatorIndex = Math.floor(scrollPosition / itemWidth);
-    console.log(indicatorIndex)
-    setActiveIndicatorIndex(indicatorIndex);
-  }, [scrollPosition]);
+  }, [items.length]);
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
