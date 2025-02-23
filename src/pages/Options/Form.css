@@ -104,15 +104,23 @@ input {
 .search-results div {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; 
+    text-align: left;
+    width: 100%;
 }
 
 .search-results strong {
     font-size: 14px;
+    text-align: left; 
+    width: 100%;
 }
 
 .search-results span {
     font-size: 12px;
     color: #666;
+    text-align: left; 
+    width: 100%;
 }
 
 .search-loading {
