@@ -43,11 +43,9 @@ function Form(props) {
   };
 
   const handlePodcastSelect = (podcast) => {
-    // Here you would need to implement a way to get the RSS feed URL from the podcast
-    // This might require additional API calls or a separate service
     props.onSubmit({
       key: new Date().getTime(),
-      text: podcast.feedUrl, // RSS feed URL
+      text: podcast.feedUrl,
       title: podcast.collectionName,
       artwork: podcast.artworkUrl600,
     });

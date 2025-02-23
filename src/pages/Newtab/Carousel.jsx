@@ -2,27 +2,14 @@ import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 import './Carousel.css';
 
-//BEFORE RELEASE
-
-//loading new tabs just if no previous tab open else google ✅
-//loading behavior ✅
-//icon ✅
-//fix file paths ✅
-//buttons animation ✅
-//fix blur ✅
-//reload podcast page instead of current page ✅
-//media queries ✅
-//better onboarding
-//readme
-
 //TO DO
 
-//onboarding animation
-//make items draggable
-//compatibility airpods
+//podcast name instead of rss in list ✅
+//rework carousel view
+//redesign logo
+//make ui logic work again for new search functions
+//more animations
 //darkmode
-//svg animation logo
-//add icon to duplicate rss err message
 
 function parseRss(xml) {
   try {

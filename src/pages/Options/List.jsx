@@ -10,18 +10,18 @@ function List() {
     chrome.storage.local.get(['newUrls'], (item) => {
       console.log(item.newUrls);
       const items = item.newUrls;
-      const feedItems = [...items].map((el, key) => ({
-        key: item.newUrls[key].key,
-        text: item.newUrls[key].text,
+      const feedItems = items.map((feedItem) => ({
+        key: feedItem.key,
+        text: feedItem.text,
+        podcastName: feedItem.podcastName, // Ensure this is being properly passed
       }));
       setItems(feedItems);
-      console.log(feedItems);
+      console.log('Feed Items:', feedItems); // Add more detailed logging
     });
   }, []);
 
-  const addUrl = (item) => {
+  const addUrl = async (item) => {
     const urlChecker = (url) => url.text != item.text;
-
     let check = items.every(urlChecker);
 
     if (
@@ -35,15 +35,31 @@ function List() {
       return;
     }
 
-    let newUrls = [item, ...items];
+    try {
+      const response = await fetch(item.text);
+      const text = await response.text();
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(text, 'text/xml');
+      const podcastName =
+        xml.querySelector('channel > title')?.textContent || 'Unnamed Podcast';
 
-    chrome.storage.local.set({ newUrls }, () => {
-      setItems(newUrls);
-      console.log(newUrls);
-      chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-        chrome.tabs.reload(tabs[0].id);
+      const newItem = { ...item, podcastName };
+      let newUrls = [newItem, ...items];
+
+      chrome.storage.local.set({ newUrls }, () => {
+        setItems(newUrls);
+        console.log(newUrls);
+        chrome.tabs.query(
+          { active: true, currentWindow: true },
+          function (tabs) {
+            chrome.tabs.reload(tabs[0].id);
+          }
+        );
       });
-    });
+    } catch (error) {
+      console.error('Error fetching podcast feed:', error);
+      alert('Error fetching podcast feed. Please check the URL and try again.');
+    }
   };
 
   const removeUrl = (key) => {
