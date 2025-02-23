@@ -58,13 +58,12 @@ function List() {
   };
 
   return (
-
     <animated.div>
       <div className="form">
         <Form onSubmit={addUrl} />
       </div>
       <div className="line"></div>
-      <div className='overflow' >
+      <div className="overflow">
         <Item items={items} removeUrl={removeUrl} />
       </div>
       <div className="line"></div>

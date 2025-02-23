@@ -13,7 +13,7 @@ import './Carousel.css';
 //reload podcast page instead of current page ✅
 //media queries ✅
 //better onboarding
-//readme 
+//readme
 
 //TO DO
 
@@ -75,8 +75,7 @@ const Carousel = () => {
       const newUrls = item.newUrls.map((newUrl) => newUrl.text);
 
       Promise.all(newUrls.map((url) => fetch(url)))
-        .then((responses) =>
-          Promise.all(responses.map((r) => r.text())))
+        .then((responses) => Promise.all(responses.map((r) => r.text())))
         .then((xmlStrings) => {
           const firstPodcasts = xmlStrings.map(parseRss);
           setItems(firstPodcasts);
@@ -92,7 +91,8 @@ const Carousel = () => {
     const handleScroll = () => {
       const position = parentContainer.scrollLeft;
       setScrollPosition(position);
-      const maxScrollLeft = parentContainer.scrollWidth - parentContainer.clientWidth;
+      const maxScrollLeft =
+        parentContainer.scrollWidth - parentContainer.clientWidth;
       if (maxScrollLeft === 0) return;
       const scrollRatio = position / maxScrollLeft;
       const currentIndex = Math.round(scrollRatio * (items.length - 1));
@@ -116,29 +116,48 @@ const Carousel = () => {
     };
   }, []);
 
-
   return (
-    <div className='App'>
-      <ul id="parent-container" className={`cards ${isBlurVisible ? 'visible' : ''}`}>
+    <div className="App">
+      <ul
+        id="parent-container"
+        className={`cards ${isBlurVisible ? 'visible' : ''}`}
+      >
         <div className={`loader ${isLoading ? 'active' : ''}`}>
-          <li className='spacer'></li>
+          <li className="spacer"></li>
           {items.map(
             (podcast, index) =>
               podcast && (
                 <li key={index}>
-                  <div className='podcast-episode'><h2>{podcast.episode}</h2></div>
-                  <img className='cover' src={podcast.image} alt={podcast.title} />
-                  <div className='player-container'>
+                  <div className="podcast-episode">
+                    <h2>{podcast.episode}</h2>
+                  </div>
+                  <img
+                    className="cover"
+                    src={podcast.image}
+                    alt={podcast.title}
+                  />
+                  <div className="player-container">
                     <AudioPlayer src={podcast.mp3} handleClick={handleClick} />
                   </div>
                 </li>
               )
           )}
-          <div className={`blur ${isBlurVisible ? 'visible' : ''}`} ></div>
-          <li className='spacer'></li>
+          <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
+          <li className="spacer"></li>
         </div>
       </ul>
-      <span className='indicators'>{items.map((__, index) => { return <button key={index} className={`indicator ${index === indicatorIndex ? 'active' : ''}`}></button> })}</span>
+      <span className="indicators">
+        {items.map((__, index) => {
+          return (
+            <button
+              key={index}
+              className={`indicator ${
+                index === indicatorIndex ? 'active' : ''
+              }`}
+            ></button>
+          );
+        })}
+      </span>
     </div>
   );
 };

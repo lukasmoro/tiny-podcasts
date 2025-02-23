@@ -1,18 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 const Redirect = () => {
+  useEffect(() => {
+    const openGoogleHomepage = () => {
+      window.open('https://www.google.com', '_self');
+    };
+    openGoogleHomepage();
+  }, []);
 
-    useEffect(() => {
-        const openGoogleHomepage = () => {
-            window.open('https://www.google.com', '_self');
-        };
-        openGoogleHomepage();
-    }, []);
-
-    return (
-        <div></div>
-    );
-}
+  return <div></div>;
+};
 
 export default Redirect;
-
