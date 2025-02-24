@@ -72,12 +72,12 @@ function Form(props) {
     <div className="podcast-search-container">
       <form onSubmit={handleSubmit} autoComplete="off">
         <input
-          placeholder="Search for a podcast..."
+          placeholder="Search a new podcast..."
           value={input}
           onChange={handleChange}
           name="text"
         />
-        <animated.button
+        {/* <animated.button
           className={`submit ${hover ? 'hovered' : ''}`}
           onClick={handleSubmit}
           onMouseEnter={handleMouseEnter}
@@ -87,7 +87,7 @@ function Form(props) {
           }}
         >
           {hover ? 'Search' : 'Find'}
-        </animated.button>
+        </animated.button> */}
       </form>
 
       {isSearching && <div className="search-loading">Searching...</div>}

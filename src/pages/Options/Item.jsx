@@ -43,6 +43,7 @@ const AnimatedItem = ({ item, removeUrl }) => {
     <animated.div style={fadeInSprings}>
       <animated.div style={fadeOutSprings}>
         <div className="items">
+          <img src={item.artwork} alt={item.podcastName} />
           <p className={item.podcastName?.length > 50 ? 'truncate-text' : ''}>
             {item.podcastName || 'Unnamed Podcast'}
           </p>

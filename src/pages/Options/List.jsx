@@ -14,6 +14,7 @@ function List() {
         key: feedItem.key,
         text: feedItem.text,
         podcastName: feedItem.podcastName,
+        artwork: feedItem.artwork,
       }));
       setItems(feedItems);
       console.log('Feed Items:', feedItems);
@@ -43,7 +44,7 @@ function List() {
       const podcastName =
         xml.querySelector('channel > title')?.textContent || 'Unnamed Podcast';
 
-      const newItem = { ...item, podcastName };
+      const newItem = { ...item, podcastName, artworkUrl: item.artwork };
       let newUrls = [newItem, ...items];
 
       chrome.storage.local.set({ newUrls }, () => {
