@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import './AudioPlayer.css';
 import BehaviourClick from './BehaviourClick.jsx';
+import usePlaybackPosition from '../../hooks/usePlaybackPosition.js';
 import Play from '../../assets/img/play.fill.svg';
 import Pause from '../../assets/img/pause.fill.svg';
 
@@ -9,6 +10,13 @@ const AudioPlayer = (props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+
+  const {
+    currentTime: savedTime,
+    status,
+    updatePlaybackState,
+    PLAYBACK_STATUS,
+  } = usePlaybackPosition(props.podcastId);
 
   const audioPlayer = useRef();
   const progressBar = useRef();
@@ -19,23 +27,80 @@ const AudioPlayer = (props) => {
     reverse: !isPlaying,
   }));
 
-  const togglePlayPause = () => {
-    const prevValue = isPlaying;
-    setIsPlaying(!prevValue);
-    if (!prevValue) {
-      api.start({
-        from: {
-          opacity: 0,
-          y: 0,
-        },
-        to: {
-          opacity: 1,
-          y: 50,
-        },
-      });
-      audioPlayer.current.play();
+  useEffect(() => {
+    const initializeAudioPlayer = () => {
+      if (audioPlayer.current && progressBar.current) {
+        if (savedTime > 0) {
+          audioPlayer.current.currentTime = savedTime;
+          progressBar.current.value = savedTime;
+          setCurrentTime(savedTime);
+        }
+
+        const handleLoadedMetadata = () => {
+          setDuration(Math.floor(audioPlayer.current.duration));
+          progressBar.current.max = Math.floor(audioPlayer.current.duration);
+
+          const percentage = (savedTime / audioPlayer.current.duration) * 100;
+          progressBar.current.style.setProperty(
+            '--seek-before-width',
+            `${percentage}%`
+          );
+
+          changePlayerCurrentTime();
+        };
+
+        audioPlayer.current.addEventListener(
+          'loadedmetadata',
+          handleLoadedMetadata
+        );
+        return () =>
+          audioPlayer.current?.removeEventListener(
+            'loadedmetadata',
+            handleLoadedMetadata
+          );
+      }
+    };
+
+    initializeAudioPlayer();
+  }, [savedTime]);
+
+  useEffect(() => {
+    const audio = audioPlayer.current;
+    const handlePlay = () => {
+      setIsPlaying(true);
       animationRef.current = requestAnimationFrame(whilePlaying);
+    };
+
+    const handlePause = () => {
+      setIsPlaying(false);
+      cancelAnimationFrame(animationRef.current);
+      updatePlaybackState(audio.currentTime, audio.duration);
+    };
+
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    return () => {
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      cancelAnimationFrame(animationRef.current);
+    };
+  }, []);
+
+  const togglePlayPause = () => {
+    if (!isPlaying) {
+      audioPlayer.current.play();
+      api.start({
+        from: {
+          opacity: 0,
+          y: 0,
+        },
+        to: {
+          opacity: 1,
+          y: 50,
+        },
+      });
     } else {
+      audioPlayer.current.pause();
       api.start({
         from: {
           opacity: 1,
@@ -46,42 +111,69 @@ const AudioPlayer = (props) => {
           y: 0,
         },
       });
-      audioPlayer.current.pause();
-      cancelAnimationFrame(animationRef.current);
     }
   };
 
   const whilePlaying = () => {
-    progressBar.current.value = audioPlayer.current.currentTime;
-    changePlayerCurrentTime();
-    animationRef.current = requestAnimationFrame(whilePlaying);
+    if (audioPlayer.current) {
+      const currentValue = audioPlayer.current.currentTime;
+      progressBar.current.value = currentValue;
+      setCurrentTime(currentValue);
+      changePlayerCurrentTime();
+      animationRef.current = requestAnimationFrame(whilePlaying);
+    }
   };
 
   const onLoadedMetadata = () => {
-    const seconds = Math.floor(audioPlayer.current.duration);
-    setDuration(seconds);
-    progressBar.current.max = seconds;
+    if (audioPlayer.current && progressBar.current) {
+      const seconds = Math.floor(audioPlayer.current.duration);
+      setDuration(seconds);
+      progressBar.current.max = seconds;
+
+      if (savedTime > 0) {
+        audioPlayer.current.currentTime = savedTime;
+        progressBar.current.value = savedTime;
+        setCurrentTime(savedTime);
+      } else {
+        progressBar.current.value = 0;
+        setCurrentTime(0);
+      }
+
+      changePlayerCurrentTime();
+    }
   };
 
   const changeRange = () => {
-    audioPlayer.current.currentTime = progressBar.current.value;
-    changePlayerCurrentTime();
+    if (audioPlayer.current) {
+      const newTime = Number(progressBar.current.value);
+      audioPlayer.current.currentTime = newTime;
+
+      audioPlayer.current.currentTime = progressBar.current.value;
+      setCurrentTime(newTime);
+      changePlayerCurrentTime();
+      updatePlaybackState(newTime, audioPlayer.current.duration);
+    }
   };
 
   const calculateTime = (secs) => {
     const minutes = Math.floor(secs / 60);
     const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    const seconds = secs % 60;
+    const seconds = Math.floor(secs % 60);
     const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
     return `${returnedMinutes}:${returnedSeconds}`;
   };
 
   const changePlayerCurrentTime = () => {
-    progressBar.current.style.setProperty(
-      '--seek-before-width',
-      `${(progressBar.current.value / duration) * 100}%`
-    );
-    setCurrentTime(progressBar.current.value);
+    if (progressBar.current && duration > 0) {
+      const percentage = (progressBar.current.value / duration) * 100;
+      const validPercentage = isFinite(percentage) ? percentage : 0;
+
+      progressBar.current.style.setProperty(
+        '--seek-before-width',
+        `${validPercentage}%`
+      );
+      setCurrentTime(progressBar.current.value);
+    }
   };
 
   return (
@@ -92,14 +184,14 @@ const AudioPlayer = (props) => {
           src={props.src}
           preload="metadata"
           onLoadedMetadata={onLoadedMetadata}
-        ></audio>
+        />
         <div className="button">
           <BehaviourClick>
             <button
               className="play-pause"
               onClick={() => {
                 togglePlayPause();
-                props.handleClick();
+                if (props.handleClick) props.handleClick();
               }}
             >
               <img

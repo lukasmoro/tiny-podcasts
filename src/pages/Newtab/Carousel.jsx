@@ -70,7 +70,11 @@ const Carousel = () => {
                     alt={podcast.title}
                   />
                   <div className="player-container">
-                    <AudioPlayer src={podcast.mp3} handleClick={handleClick} />
+                    <AudioPlayer
+                      src={podcast.mp3}
+                      podcastId={`${podcast.title}-${podcast.episode}`}
+                      handleClick={handleClick}
+                    />
                   </div>
                 </li>
               )
