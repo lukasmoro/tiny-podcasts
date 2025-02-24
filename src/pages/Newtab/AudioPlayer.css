@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .player-container {
@@ -13,10 +14,13 @@
 
 .progress {
     opacity: 0;
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center; 
     z-index: -1;
+    width: 100%;
 }
 
 .play-pause {
@@ -45,16 +49,25 @@ button:focus {
 }
 
 .current-time {
-    width: 2em;
+    font-size: 0.9rem;
+    font-style: monospace;
+    font-weight: 350;
+    min-width: 3em;
+    text-align: right;
     color: #d0d0d0;
+    margin-bottom: .1rem;
     margin-right: 1rem;
     animation: linear adjust-opacity-ui both;
     animation-timeline: --li-in-and-out-of-view;
 }
 
 .duration {
+    font-size: 0.9rem;
+    font-weight: 350;
     margin: 0;
-    width: 2em;
+    margin-bottom: .1rem;
+    min-width: 3em;
+    text-align: left;
     color: #d0d0d0;
     margin-left: 1rem;
     animation: linear adjust-opacity-ui both;
@@ -73,15 +86,16 @@ button:focus {
     margin-bottom: 0.38em;
     width: 28em;
     position: relative;
-    height: 5px;
+    height: 7px;
     outline: none;
+    max-width: 27em;
     animation: linear adjust-opacity-ui both;
     animation-timeline: --li-in-and-out-of-view;
 }
 
 .progress-bar::before {
     content: '';
-    height: 5px;
+    height: 7px;
     width: var(--seek-before-width);
     background-color: var(--seek-before-color);
     border-radius: 10px;
@@ -94,8 +108,8 @@ button:focus {
 
 .progress-bar::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     border: none;
     background-color: var(--knob);
@@ -105,7 +119,7 @@ button:focus {
 }
 
 .progress-bar:active::-webkit-slider-thumb {
-    transform: scale(1.2);
+    transform: scale(1.5);
     background-color: var(--selectedknob);
     z-index: 100;
 }
