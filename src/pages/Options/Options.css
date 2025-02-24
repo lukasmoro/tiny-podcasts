@@ -129,7 +129,7 @@ img {
   font-size: 0.9rem;
   margin-top: 2rem;
   max-width: 400px;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .greets {
@@ -143,6 +143,7 @@ img {
 }
 
 .line {
+  margin-top: 1.5rem;
   width: 400px;
   height: 1px;
   background: #5a5a5a;

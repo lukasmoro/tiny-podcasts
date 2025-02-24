@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 
 const AnimatedItem = ({ item, removeUrl }) => {
-
   const [isRemoved, setIsRemoved] = useState(false);
-  const [hover, setHover] = useState(false);
 
   const fadeInSprings = useSpring({
     from: { transform: 'translateY(-10px)' },
@@ -27,7 +25,7 @@ const AnimatedItem = ({ item, removeUrl }) => {
         removeUrl(item.key);
       }
     },
-  })
+  });
 
   const handleRemove = () => {
     setIsRemoved(true);
@@ -45,16 +43,21 @@ const AnimatedItem = ({ item, removeUrl }) => {
     <animated.div style={fadeInSprings}>
       <animated.div style={fadeOutSprings}>
         <div className="items">
-          <p className={item.text.length > 50 ? 'truncate-text' : ''}>{item.text}</p>
-          <button className="remove"
+          <img src={item.artwork} alt={item.podcastName} />
+          <p className={item.podcastName?.length > 50 ? 'truncate-text' : ''}>
+            {item.podcastName || 'Unnamed Podcast'}
+          </p>
+          <button
+            className="remove"
             onClick={handleRemove}
             onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}>
+            onMouseLeave={handleMouseLeave}
+          >
             Remove
           </button>
         </div>
       </animated.div>
-    </animated.div >
+    </animated.div>
   );
 };
 

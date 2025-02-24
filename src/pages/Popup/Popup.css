@@ -20,8 +20,11 @@ body {
 }
 
 .items {
-  text-align: center;
-  margin-top: 2rem;
+  display: flex;
+  max-width: 400px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1.6rem auto 0;
 }
 
 h1 {
