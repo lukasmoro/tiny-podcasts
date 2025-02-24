@@ -39,7 +39,7 @@ h1 {
 h2 {
   margin: 0;
   white-space: normal;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 100;
   color: #d0d0d0;
   text-align: center;
@@ -98,13 +98,12 @@ p {
   padding: 0 9vw;
 }
 
-.cards li img {
+.cover {
   width: 300px;
   height: 300px;
   padding: 0 7.5rem;
   margin-top: 8.5rem;
 }
-
 
 .cards li {
   view-timeline-name: --li-in-and-out-of-view;
@@ -118,24 +117,26 @@ p {
   perspective: 40rem;
 }
 
-.cards li>img:first-of-type {
+.cards li > img:first-of-type {
   margin-left: 5rem;
 }
 
-.cards li>img:last-of-type {
+.cards li > img:last-of-type {
   margin-right: 5rem;
 }
 
-.cards li>img {
+.cards li > img {
   animation: linear rotate-cover both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
 .podcast-episode {
-  max-width: 400px;
-  margin-left: 10rem;
-  margin-right: 10rem;
   text-align: center;
+}
+
+.podcast-episode h2 {
+  font-weight: 370;
+  text-transform: uppercase;
 }
 
 .indicators {
@@ -218,7 +219,6 @@ p {
   .spacer {
     padding: 0 0;
   }
-
 }
 
 @media only screen and (min-width: 1280px) {
@@ -226,8 +226,6 @@ p {
     padding: 0 2vw;
   }
 }
-
-
 
 @media only screen and (min-width: 1440px) {
   .spacer {

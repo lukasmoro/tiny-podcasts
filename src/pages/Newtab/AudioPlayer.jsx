@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { animated, useSpring } from '@react-spring/web';
 import './AudioPlayer.css';
 import BehaviourClick from './BehaviourClick.jsx';
+import Play from '../../assets/img/play.fill.svg';
+import Pause from '../../assets/img/pause.fill.svg';
 
 const AudioPlayer = (props) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -100,7 +102,10 @@ const AudioPlayer = (props) => {
                 props.handleClick();
               }}
             >
-              {isPlaying ? <p>Pause</p> : <p>Play</p>}
+              <img
+                src={isPlaying ? Pause : Play}
+                alt={isPlaying ? 'Pause' : 'Play'}
+              />
             </button>
           </BehaviourClick>
         </div>

@@ -5,18 +5,16 @@ import List from './List';
 export default function Options() {
   return (
     <div className="App">
-      <div className="head">
-      </div>
+      <div className="head"></div>
       <div className="card">
         <div className="container">
-          <h2>Managing RSS-Feeds</h2>
+          <h2>Managing Podcasts</h2>
           <h1>Options</h1>
           <p className="instructions">
-            Add & remove up to five links to rss-feeds of your favorite
-            podcasts in the list below or in the pop-up.
+            Add up to 5 Podcasts in the list below or in the pop-up window.
           </p>
           <List />
-          <p className="greets">Enjoy your podcasts! 🎧</p>
+          <p className="greets">Enjoy your Podcasts! 🎧</p>
         </div>
         <p className="signature">
           Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.

@@ -72,7 +72,7 @@ function Form(props) {
     <div className="podcast-search-container">
       <form onSubmit={handleSubmit} autoComplete="off">
         <input
-          placeholder="Search a new podcast..."
+          placeholder="Search Podcasts..."
           value={input}
           onChange={handleChange}
           name="text"
