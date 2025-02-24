@@ -96,7 +96,7 @@
 .progress-bar {
   --bar-bg: #d0d0d0;
   --seek-before-width: 0px;
-  --seek-before-color: #19a0fc;
+  --seek-before-color: #5dffb1;
   --knob: #ffffff;
   --selectedknob: #ffffff;
   appearance: none;
