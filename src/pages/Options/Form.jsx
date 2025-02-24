@@ -77,17 +77,6 @@ function Form(props) {
           onChange={handleChange}
           name="text"
         />
-        {/* <animated.button
-          className={`submit ${hover ? 'hovered' : ''}`}
-          onClick={handleSubmit}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          style={{
-            width: addButtonSpring.width,
-          }}
-        >
-          {hover ? 'Search' : 'Find'}
-        </animated.button> */}
       </form>
 
       {isSearching && <div className="search-loading">Searching...</div>}
