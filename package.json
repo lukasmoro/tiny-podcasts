@@ -15,9 +15,9 @@
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.2",
     "@react-spring/web": "^9.7.3",
+    "@use-gesture/react": "^10.3.1",
     "framer-motion": "^6.2.4",
     "lottie-react": "^2.4.0",
-    "node-sass": "^9.0.0",
     "react": "^17.0.2",
     "react-audio-player": "^0.17.0",
     "react-dom": "^17.0.2",

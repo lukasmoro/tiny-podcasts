@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
-import { animated, useSpring } from '@react-spring/web';
 import './Form.css';
 
 function Form(props) {
   const [input, setInput] = useState('');
-  const [hover, setHover] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-
-  const addButtonSpring = useSpring({
-    width: hover ? '5rem' : '3rem',
-    scaleY: hover ? 1.1 : 1,
-    config: {
-      tension: 500,
-      friction: 20,
-    },
-  });
 
   const searchPodcasts = async (query) => {
     setIsSearching(true);
@@ -60,14 +49,6 @@ function Form(props) {
     }
   };
 
-  const handleMouseEnter = () => {
-    setHover(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHover(false);
-  };
-
   return (
     <div className="podcast-search-container">
       <form onSubmit={handleSubmit} autoComplete="off">
@@ -78,8 +59,6 @@ function Form(props) {
           name="text"
         />
       </form>
-
-      {isSearching && <div className="search-loading">Searching...</div>}
 
       {searchResults.length > 0 && (
         <ul className="search-results">
