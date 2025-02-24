@@ -13,10 +13,10 @@ function List() {
       const feedItems = items.map((feedItem) => ({
         key: feedItem.key,
         text: feedItem.text,
-        podcastName: feedItem.podcastName, // Ensure this is being properly passed
+        podcastName: feedItem.podcastName,
       }));
       setItems(feedItems);
-      console.log('Feed Items:', feedItems); // Add more detailed logging
+      console.log('Feed Items:', feedItems);
     });
   }, []);
 
