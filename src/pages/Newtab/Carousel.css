@@ -67,6 +67,7 @@ p {
   -ms-overflow-style: none;
   scrollbar-width: none;
   scroll-behavior: smooth;
+  padding-top: 5rem;
 }
 
 .loader.active {
@@ -101,7 +102,7 @@ p {
 .cover {
   width: 300px;
   height: 300px;
-  margin-top: 8.5rem;
+  margin-top: 5.5rem;
   box-shadow: inset 0 0 0 1px #000;
   border-radius: 20px;
 }
@@ -122,6 +123,8 @@ p {
   perspective: 40rem;
   margin: 0 2rem;
   display: inline-block;
+  flex-direction: column;
+  align-items: center;
   width: var(--cover-size);
   max-width: 700px;
   max-height: 700px;
@@ -141,12 +144,25 @@ p {
 }
 
 .podcast-episode {
-  text-align: center;
+  top: -6rem;
+  position: absolute;
+  width: 100%;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .podcast-episode h2 {
   font-weight: 370;
   text-transform: uppercase;
+  max-width: 70%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  line-height: 1.2;
 }
 
 .indicators {
