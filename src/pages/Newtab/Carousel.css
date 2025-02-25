@@ -46,13 +46,6 @@ h2 {
   animation-timeline: --li-in-and-out-of-view;
 }
 
-p {
-  font-size: 14px;
-  color: #19a0fc;
-  margin-top: 1rem;
-  margin-bottom: 20px;
-}
-
 .content {
   text-align: center;
 }

@@ -1,0 +1,87 @@
+.info-card {
+  position: absolute;
+  top: calc(50% - 7rem);
+  left: 50%;
+  transform: translate(-50%, -50%) rotateY(0deg) translateZ(1em) scale(1.5);
+  background-color: rgba(245, 245, 245, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  height: 300px;
+  width: 300px;
+  z-index: 150;
+  opacity: 0;
+  visibility: hidden;
+  perspective: 40rem;
+  margin: 0;
+  padding: 0;
+}
+.info-card-content {
+  margin: 0;
+  padding: 16px;
+  height: calc(100% - 53px);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow: hidden;
+}
+
+.info-card-content {
+  margin: 0;
+  height: calc(100% - 53px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.info-card-content {
+  padding: 16px;
+}
+
+.episode-title {
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.info-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  gap: 5px;
+}
+
+.info-item {
+  display: flex;
+  align-items: baseline;
+  margin-right: 25px;
+}
+
+.info-label {
+  font-size: 10px;
+  color: #ffffff;
+  margin-right: 5px;
+}
+
+.info-value {
+  font-size: 10px;
+  color: #ffffff;
+}
+
+.episode-description {
+  margin-top: 10px;
+  font-size: 10px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+.cover:hover + .info-card,
+.info-card:hover {
+  opacity: 1;
+  visibility: visible;
+}
