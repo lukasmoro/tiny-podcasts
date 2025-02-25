@@ -33,6 +33,25 @@ const usePlaybackPosition = (podcastId) => {
     };
 
     loadSavedState();
+
+    // Add storage change listener
+    const handleStorageChange = (changes, namespace) => {
+      if (namespace === 'local' && changes[podcastId]) {
+        const newValue = changes[podcastId].newValue;
+        if (newValue) {
+          setCurrentTime(newValue.time || 0);
+          setStatus(newValue.status || PLAYBACK_STATUS.UNPLAYED);
+          setDuration(newValue.duration || 0);
+        }
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChange);
+
+    // Cleanup listener on unmount
+    return () => {
+      chrome.storage.onChanged.removeListener(handleStorageChange);
+    };
   }, [podcastId]);
 
   const updatePlaybackState = async (time, totalDuration) => {
@@ -55,6 +74,7 @@ const usePlaybackPosition = (podcastId) => {
       };
 
       await chrome.storage.local.set({ [podcastId]: newState });
+
       setCurrentTime(time);
       setStatus(newStatus);
       setDuration(totalDuration);

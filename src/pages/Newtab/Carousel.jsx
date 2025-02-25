@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
+import StatusIndicator from './StatusIndicator.jsx';
 import { parseRss } from '../../utils/rssParser';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import './Carousel.css';
@@ -15,6 +16,10 @@ const Carousel = () => {
 
   const handleClick = () => {
     setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
+  };
+
+  const handlePodcastEnd = () => {
+    setIsBlurVisible(false);
   };
 
   const handleLoading = () => {
@@ -43,7 +48,6 @@ const Carousel = () => {
     const loadingTimer = setTimeout(() => {
       handleLoading();
     }, 2000);
-
     return () => {
       clearTimeout(loadingTimer);
     };
@@ -64,6 +68,10 @@ const Carousel = () => {
                   <div className="podcast-episode">
                     <h2>{podcast.episode}</h2>
                   </div>
+                  <StatusIndicator
+                    status={podcast.PLAYBACK_STATUS}
+                    podcastId={`${podcast.title}-${podcast.episode}`}
+                  />
                   <img
                     className="cover"
                     src={podcast.image}
@@ -74,6 +82,7 @@ const Carousel = () => {
                       src={podcast.mp3}
                       podcastId={`${podcast.title}-${podcast.episode}`}
                       handleClick={handleClick}
+                      onEnded={handlePodcastEnd}
                     />
                   </div>
                 </li>

@@ -28,41 +28,51 @@ const AudioPlayer = (props) => {
   }));
 
   useEffect(() => {
-    const initializeAudioPlayer = () => {
-      if (audioPlayer.current && progressBar.current) {
-        if (savedTime > 0) {
-          audioPlayer.current.currentTime = savedTime;
-          progressBar.current.value = savedTime;
-          setCurrentTime(savedTime);
-        }
+    const audio = audioPlayer.current;
+    const handlePlay = () => {
+      setIsPlaying(true);
+      animationRef.current = requestAnimationFrame(whilePlaying);
+    };
 
-        const handleLoadedMetadata = () => {
-          setDuration(Math.floor(audioPlayer.current.duration));
-          progressBar.current.max = Math.floor(audioPlayer.current.duration);
+    const handlePause = () => {
+      setIsPlaying(false);
+      cancelAnimationFrame(animationRef.current);
+      updatePlaybackState(audio.currentTime, audio.duration);
+    };
 
-          const percentage = (savedTime / audioPlayer.current.duration) * 100;
-          progressBar.current.style.setProperty(
-            '--seek-before-width',
-            `${percentage}%`
-          );
+    const handleEnded = () => {
+      setIsPlaying(false);
+      cancelAnimationFrame(animationRef.current);
+      updatePlaybackState(audio.duration, audio.duration);
 
-          changePlayerCurrentTime();
-        };
+      api.start({
+        from: {
+          opacity: 1,
+          y: 50,
+        },
+        to: {
+          opacity: 0,
+          y: 0,
+        },
+      });
 
-        audioPlayer.current.addEventListener(
-          'loadedmetadata',
-          handleLoadedMetadata
-        );
-        return () =>
-          audioPlayer.current?.removeEventListener(
-            'loadedmetadata',
-            handleLoadedMetadata
-          );
+      // Call the onEnded callback if it exists
+      if (props.onEnded) {
+        props.onEnded();
       }
     };
 
-    initializeAudioPlayer();
-  }, [savedTime]);
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('ended', handleEnded);
+
+    return () => {
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('ended', handleEnded);
+      cancelAnimationFrame(animationRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const audio = audioPlayer.current;
