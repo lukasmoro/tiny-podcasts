@@ -144,9 +144,15 @@ const AudioPlayer = (props) => {
         audioPlayer.current.currentTime = savedTime;
         progressBar.current.value = savedTime;
         setCurrentTime(savedTime);
+        const percentage = (savedTime / seconds) * 100;
+        progressBar.current.style.setProperty(
+          '--seek-before-width',
+          `${percentage}%`
+        );
       } else {
         progressBar.current.value = 0;
         setCurrentTime(0);
+        progressBar.current.style.setProperty('--seek-before-width', '0%');
       }
 
       changePlayerCurrentTime();

@@ -25,6 +25,7 @@ const StatusIndicator = ({ podcastId }) => {
       title={`Status: ${playbackStatus}`}
       style={{
         backgroundColor: getStatusColor(),
+        '--outline-color': getStatusColor(),
       }}
     >
       <span className="status-dot"></span>

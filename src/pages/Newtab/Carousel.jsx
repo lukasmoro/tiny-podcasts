@@ -68,16 +68,17 @@ const Carousel = () => {
                   <div className="podcast-episode">
                     <h2>{podcast.episode}</h2>
                   </div>
-                  <StatusIndicator
-                    status={podcast.PLAYBACK_STATUS}
-                    podcastId={`${podcast.title}-${podcast.episode}`}
-                  />
+
                   <img
                     className="cover"
                     src={podcast.image}
                     alt={podcast.title}
                   />
                   <div className="player-container">
+                    <StatusIndicator
+                      status={podcast.PLAYBACK_STATUS}
+                      podcastId={`${podcast.title}-${podcast.episode}`}
+                    />
                     <AudioPlayer
                       src={podcast.mp3}
                       podcastId={`${podcast.title}-${podcast.episode}`}

@@ -1,7 +1,23 @@
 .status-indicator {
-  width: 25px;
-  height: 25px;
+  position: absolute;
+  top: 100px;
+  right: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
+  margin: 0;
+  z-index: 1;
+  animation: linear adjust-opacity-ui both;
+  animation-timeline: --li-in-and-out-of-view;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px,
+    inset 0px 0px 15px color-mix(in srgb, var(--outline-color) 85%, black),
+    0 0 5px var(--outline-color);
+  outline: 3px solid;
+  outline-color: color-mix(in srgb, var(--outline-color) 95%, white);
+  outline-offset: -3px;
 }
 
 .status-dot {
