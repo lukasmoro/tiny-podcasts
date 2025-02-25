@@ -2,18 +2,23 @@ function parseRss(xml) {
   try {
     const xmlDoc = new DOMParser().parseFromString(xml, 'text/xml');
     const firstItem = xmlDoc.querySelector('item');
-
     if (!firstItem) {
       console.log('No items found in RSS feed');
       return null;
     }
 
+    // Get essential podcast data with fallbacks
     const item = {
-      mp3: getEnclosureUrl(firstItem),
-      image: getPodcastImage(xmlDoc),
-      author: getAuthor(xmlDoc, firstItem),
-      title: getPodcastTitle(xmlDoc),
-      episode: getEpisodeTitle(firstItem),
+      mp3: getEnclosureUrl(firstItem) || null,
+      image: getPodcastImage(xmlDoc) || null,
+      author: getAuthor(xmlDoc, firstItem) || null,
+      title: getPodcastTitle(xmlDoc) || 'Unknown Podcast',
+      episode: getEpisodeTitle(firstItem) || 'Unknown Episode',
+      // New fields with fallbacks
+      releaseDate: safeExecute(() => getReleaseDate(firstItem)) || null,
+      publisher: safeExecute(() => getPublisher(xmlDoc)) || null,
+      category: safeExecute(() => getCategory(xmlDoc)) || null,
+      description: safeExecute(() => getDescription(firstItem)) || null,
     };
 
     console.log('Parsed item:', item);
@@ -24,92 +29,242 @@ function parseRss(xml) {
   }
 }
 
-function getEnclosureUrl(item) {
-  const enclosure = item.querySelector('enclosure');
-  if (enclosure) {
-    return enclosure.getAttribute('url');
+// Helper function to safely execute parsing functions
+function safeExecute(fn) {
+  try {
+    return fn();
+  } catch (error) {
+    console.log('Error in parsing function:', error);
+    return null;
   }
-  const mediaContent = item.querySelector('media\\:content, content');
-  return mediaContent ? mediaContent.getAttribute('url') : null;
+}
+
+function getEnclosureUrl(item) {
+  try {
+    const enclosure = item.querySelector('enclosure');
+    if (enclosure) {
+      return enclosure.getAttribute('url');
+    }
+    const mediaContent = item.querySelector('media\\:content, content');
+    return mediaContent ? mediaContent.getAttribute('url') : null;
+  } catch (error) {
+    console.log('Error getting enclosure URL:', error);
+    return null;
+  }
 }
 
 function getPodcastImage(xmlDoc) {
-  console.log('Searching for podcast image...');
+  try {
+    console.log('Searching for podcast image...');
+    const possibleImagePaths = [
+      'channel > itunes\\:image',
+      'channel itunes\\:image',
+      'itunes\\:image',
+      'channel > image > url',
+      'image > url',
+      'media\\:thumbnail',
+    ];
 
-  const possibleImagePaths = [
-    'channel > itunes\\:image',
-    'channel itunes\\:image',
-    'itunes\\:image',
-    'channel > image > url',
-    'image > url',
-    'media\\:thumbnail',
-  ];
+    for (const path of possibleImagePaths) {
+      const element = xmlDoc.querySelector(path);
+      if (element) {
+        console.log(`Found image element with path: ${path}`);
+        const image =
+          element.getAttribute('href') ||
+          element.getAttribute('url') ||
+          element.textContent.trim();
+        if (image) {
+          console.log(`Image URL found: ${image}`);
+          return image;
+        }
+      }
+    }
 
-  for (const path of possibleImagePaths) {
-    const element = xmlDoc.querySelector(path);
-    if (element) {
-      console.log(`Found image element with path: ${path}`);
-      const image =
-        element.getAttribute('href') ||
-        element.getAttribute('url') ||
-        element.textContent.trim();
+    const itunesImage = xmlDoc.getElementsByTagName('itunes:image')[0];
+    if (itunesImage && itunesImage.getAttribute('href')) {
+      const image = itunesImage.getAttribute('href');
+      console.log(`Found image using getElementsByTagName: ${image}`);
+      return image;
+    }
 
-      if (image) {
-        console.log(`Image URL found: ${image}`);
+    const channelImage = xmlDoc.querySelector('channel image');
+    if (channelImage) {
+      const urlElement = channelImage.querySelector('url');
+      if (urlElement) {
+        const image = urlElement.textContent.trim();
+        console.log(`Found image using channel image fallback: ${image}`);
         return image;
       }
     }
-  }
 
-  const itunesImage = xmlDoc.getElementsByTagName('itunes:image')[0];
-  if (itunesImage && itunesImage.getAttribute('href')) {
-    const image = itunesImage.getAttribute('href');
-    console.log(`Found image using getElementsByTagName: ${image}`);
-    return image;
+    console.log('No image found in the RSS feed');
+    return null;
+  } catch (error) {
+    console.log('Error getting podcast image:', error);
+    return null;
   }
-
-  const channelImage = xmlDoc.querySelector('channel image');
-  if (channelImage) {
-    const urlElement = channelImage.querySelector('url');
-    if (urlElement) {
-      const image = urlElement.textContent.trim();
-      console.log(`Found image using channel image fallback: ${image}`);
-      return image;
-    }
-  }
-
-  console.log('No image found in the RSS feed');
-  return null;
 }
 
 function getAuthor(xmlDoc, item) {
-  const possibleAuthorPaths = [
-    'author',
-    'itunes\\:author',
-    'dc\\:creator',
-    'channel > author',
-    'channel > itunes\\:author',
-  ];
+  try {
+    const possibleAuthorPaths = [
+      'author',
+      'itunes\\:author',
+      'dc\\:creator',
+      'channel > author',
+      'channel > itunes\\:author',
+    ];
 
-  for (const path of possibleAuthorPaths) {
-    const element = item.querySelector(path) || xmlDoc.querySelector(path);
-    if (element && element.textContent) {
-      return element.textContent.trim();
+    for (const path of possibleAuthorPaths) {
+      const element = item ? item.querySelector(path) : null;
+      const channelElement = xmlDoc.querySelector(path);
+      const foundElement = element || channelElement;
+
+      if (foundElement && foundElement.textContent) {
+        return foundElement.textContent.trim();
+      }
     }
+
+    return null;
+  } catch (error) {
+    console.log('Error getting author:', error);
+    return null;
   }
-  return null;
 }
 
 function getPodcastTitle(xmlDoc) {
-  const channelTitle = xmlDoc.querySelector('channel > title');
-  const rssTitle = xmlDoc.querySelector('title');
-
-  return (channelTitle || rssTitle)?.textContent.trim() || null;
+  try {
+    const channelTitle = xmlDoc.querySelector('channel > title');
+    const rssTitle = xmlDoc.querySelector('title');
+    return (channelTitle || rssTitle)?.textContent?.trim() || 'Unknown Podcast';
+  } catch (error) {
+    console.log('Error getting podcast title:', error);
+    return 'Unknown Podcast';
+  }
 }
 
 function getEpisodeTitle(item) {
-  const title = item.querySelector('title');
-  return title?.textContent.trim() || null;
+  try {
+    const title = item.querySelector('title');
+    return title?.textContent?.trim() || 'Unknown Episode';
+  } catch (error) {
+    console.log('Error getting episode title:', error);
+    return 'Unknown Episode';
+  }
+}
+
+// New functions for additional fields
+function getReleaseDate(item) {
+  const possibleDatePaths = [
+    'pubDate',
+    'dc\\:date',
+    'itunes\\:pubDate',
+    'published',
+  ];
+
+  for (const path of possibleDatePaths) {
+    try {
+      const element = item.querySelector(path);
+      if (element && element.textContent) {
+        const dateText = element.textContent.trim();
+        const date = new Date(dateText);
+
+        // Check if the date is valid
+        if (!isNaN(date.getTime())) {
+          return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          });
+        } else {
+          console.log(`Invalid date format: ${dateText}`);
+        }
+      }
+    } catch (e) {
+      console.log(`Error parsing date with path ${path}:`, e);
+    }
+  }
+
+  return null;
+}
+
+function getPublisher(xmlDoc) {
+  const possiblePublisherPaths = [
+    'channel > itunes\\:owner > itunes\\:name',
+    'channel > publisher',
+    'channel > dc\\:publisher',
+    'channel > webMaster',
+  ];
+
+  for (const path of possiblePublisherPaths) {
+    try {
+      const element = xmlDoc.querySelector(path);
+      if (element && element.textContent) {
+        return element.textContent.trim();
+      }
+    } catch (e) {
+      console.log(`Error finding publisher with path ${path}:`, e);
+    }
+  }
+
+  // Fallback to channel author if publisher not found
+  try {
+    return getAuthor(xmlDoc, null) || null;
+  } catch (e) {
+    console.log('Error getting publisher fallback:', e);
+    return null;
+  }
+}
+
+function getCategory(xmlDoc) {
+  const possibleCategoryPaths = [
+    'channel > itunes\\:category',
+    'channel > category',
+    'channel > dc\\:subject',
+  ];
+
+  for (const path of possibleCategoryPaths) {
+    try {
+      const element = xmlDoc.querySelector(path);
+      if (element) {
+        const categoryText =
+          element.getAttribute('text') || element.textContent;
+        if (categoryText) {
+          return categoryText.trim();
+        }
+      }
+    } catch (e) {
+      console.log(`Error finding category with path ${path}:`, e);
+    }
+  }
+
+  return null;
+}
+
+function getDescription(item) {
+  const possibleDescriptionPaths = [
+    'description',
+    'itunes\\:summary',
+    'content\\:encoded',
+    'media\\:description',
+  ];
+
+  for (const path of possibleDescriptionPaths) {
+    try {
+      const element = item.querySelector(path);
+      if (element && element.textContent) {
+        // Clean HTML tags if present
+        const description = element.textContent
+          .trim()
+          .replace(/<\/?[^>]+(>|$)/g, ''); // Simple HTML tag removal
+        return description;
+      }
+    } catch (e) {
+      console.log(`Error finding description with path ${path}:`, e);
+    }
+  }
+
+  return null;
 }
 
 export {
@@ -119,4 +274,9 @@ export {
   getAuthor,
   getPodcastTitle,
   getEpisodeTitle,
+  // Export new functions
+  getReleaseDate,
+  getPublisher,
+  getCategory,
+  getDescription,
 };

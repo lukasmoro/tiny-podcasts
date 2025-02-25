@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
+import StatusIndicator from './StatusIndicator.jsx';
+import InfoCard from './InfoCard.jsx';
 import { parseRss } from '../../utils/rssParser';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import './Carousel.css';
@@ -12,13 +14,23 @@ const Carousel = () => {
     'parent-container',
     items.length
   );
+  const [activeInfoCard, setActiveInfoCard] = useState(null);
 
   const handleClick = () => {
     setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
   };
 
+  const handlePodcastEnd = () => {
+    setIsBlurVisible(false);
+  };
+
   const handleLoading = () => {
     setIsLoadingActive(false);
+  };
+
+  const handleCoverClick = (index) => {
+    // Toggle info card visibility
+    setActiveInfoCard(activeInfoCard === index ? null : index);
   };
 
   useEffect(() => {
@@ -43,7 +55,6 @@ const Carousel = () => {
     const loadingTimer = setTimeout(() => {
       handleLoading();
     }, 2000);
-
     return () => {
       clearTimeout(loadingTimer);
     };
@@ -68,12 +79,19 @@ const Carousel = () => {
                     className="cover"
                     src={podcast.image}
                     alt={podcast.title}
+                    onClick={() => handleCoverClick(index)}
                   />
+                  <InfoCard podcast={podcast} />
                   <div className="player-container">
+                    <StatusIndicator
+                      status={podcast.PLAYBACK_STATUS}
+                      podcastId={`${podcast.title}-${podcast.episode}`}
+                    />
                     <AudioPlayer
                       src={podcast.mp3}
                       podcastId={`${podcast.title}-${podcast.episode}`}
                       handleClick={handleClick}
+                      onEnded={handlePodcastEnd}
                     />
                   </div>
                 </li>
