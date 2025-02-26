@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 import StatusIndicator from './StatusIndicator.jsx';
-import InfoCard from './InfoCard.jsx';
+import DraggableInfoCard from './DraggableInfocard.jsx';
+import Overlay from './Overlay.jsx';
 import { parseRss } from '../../utils/rssParser';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import './Carousel.css';
@@ -10,11 +11,12 @@ const Carousel = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoadingActive] = useState(true);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
+  const [activeInfoCard, setActiveInfoCard] = useState(null);
+
   const { scrollPosition, indicatorIndex } = useScrollPosition(
     'parent-container',
     items.length
   );
-  const [activeInfoCard, setActiveInfoCard] = useState(null);
 
   const handleClick = () => {
     setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
@@ -28,19 +30,12 @@ const Carousel = () => {
     setIsLoadingActive(false);
   };
 
-  const handleCoverClick = (index) => {
-    // Toggle info card visibility
-    setActiveInfoCard(activeInfoCard === index ? null : index);
-  };
-
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
       if (!item.newUrls) {
         return;
       }
-
       const newUrls = item.newUrls.map((newUrl) => newUrl.text);
-
       Promise.all(newUrls.map((url) => fetch(url)))
         .then((responses) => Promise.all(responses.map((r) => r.text())))
         .then((xmlStrings) => {
@@ -67,32 +62,38 @@ const Carousel = () => {
         className={`cards ${isBlurVisible ? 'visible' : ''}`}
       >
         <div className={`loader ${isLoading ? 'active' : ''}`}>
+          <Overlay />
           <li className="spacer"></li>
           {items.map(
             (podcast, index) =>
               podcast && (
                 <li key={index}>
-                  <div className="podcast-episode">
-                    <h2>{podcast.episode}</h2>
-                  </div>
-                  <img
-                    className="cover"
-                    src={podcast.image}
-                    alt={podcast.title}
-                    onClick={() => handleCoverClick(index)}
-                  />
-                  <InfoCard podcast={podcast} />
-                  <div className="player-container">
-                    <StatusIndicator
-                      status={podcast.PLAYBACK_STATUS}
-                      podcastId={`${podcast.title}-${podcast.episode}`}
+                  <div className="cover-container">
+                    <div className="podcast-episode">
+                      <h2>{podcast.title}</h2>
+                    </div>
+                    <img
+                      className="cover"
+                      src={podcast.image}
+                      alt={podcast.title}
                     />
-                    <AudioPlayer
-                      src={podcast.mp3}
-                      podcastId={`${podcast.title}-${podcast.episode}`}
-                      handleClick={handleClick}
-                      onEnded={handlePodcastEnd}
+                    <DraggableInfoCard
+                      podcast={podcast}
+                      expanded={activeInfoCard === index}
+                      setExpanded={setActiveInfoCard}
                     />
+                    <div className="player-container">
+                      <StatusIndicator
+                        status={podcast.PLAYBACK_STATUS}
+                        podcastId={`${podcast.title}-${podcast.episode}`}
+                      />
+                      <AudioPlayer
+                        src={podcast.mp3}
+                        podcastId={`${podcast.title}-${podcast.episode}`}
+                        handleClick={handleClick}
+                        onEnded={handlePodcastEnd}
+                      />
+                    </div>
                   </div>
                 </li>
               )

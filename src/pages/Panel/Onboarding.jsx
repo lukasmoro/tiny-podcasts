@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import './Onboarding.css';
 import '../Newtab/Carousel.css';
 import Logo from './icon.png';
-import Lottie from 'lottie-react';
-import animationData from '/Users/lukasmoro/Documents/React/podcasts-chrome-extension/src/assets/img/arrow.json';
 
 function Onboarding() {
   const [copied, setCopied] = useState(false);
@@ -18,18 +16,13 @@ function Onboarding() {
     setCopied(true);
   };
 
-  const tooltipText = copied ? "url copied" : "example";
+  const tooltipText = copied ? 'url copied' : 'example';
 
   return (
     <div className="onboarding">
       <div className="container">
-        {/* <Lottie className='arrow' animationData={animationData} /> */}
         <div>
-          <img
-            className="logo-onboarding"
-            src={Logo}
-            alt="logo"
-          />
+          <img className="logo-onboarding" src={Logo} alt="logo" />
         </div>
         <div className="textbox">
           <h1 className="head-onboarding">
@@ -44,22 +37,19 @@ function Onboarding() {
                     href="https://feeds.simplecast.com/eew_vyNL"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleCopyClick("https://feeds.simplecast.com/eew_vyNL");
+                      handleCopyClick('https://feeds.simplecast.com/eew_vyNL');
                     }}
                   >
-                    rss-feeds{' '}
-                    <span className="tooltiptext">{tooltipText}</span>
+                    rss-feeds <span className="tooltiptext">{tooltipText}</span>
                   </a>
                 </div>{' '}
                 by searching for the podcast's rss-feed url.
               </li>
               <li>
-                Add up to 5 urls of podcasts in the options or
-                pop-up window.
+                Add up to 5 urls of podcasts in the options or pop-up window.
               </li>
               <li>
-                The latest episodes will now be displayed in your new
-                tab!
+                The latest episodes will now be displayed in your new tab!
               </li>
             </ol>
           </div>

@@ -2,7 +2,7 @@
 @import url('https://rsms.me/inter/inter.css');
 
 * {
-  font-family: 'Barlow', 'Inter', Arial, Helvetica, sans-serif;
+  font-family: 'Barlow', 'system-ui', 'Inter', 'Arial', Helvetica, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -11,16 +11,55 @@ body {
   background-color: #262626;
 }
 
+h2 {
+  margin: 0;
+  font-weight: 400;
+  color: #d0d0d0;
+  animation: linear adjust-opacity both;
+  animation-timeline: --li-in-and-out-of-view;
+}
+
+.cards {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  list-style: none;
+  white-space: nowrap;
+  scroll-snap-type: x mandatory;
+  overflow: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.cards li {
+  position: relative;
+  width: var(--cover-size);
+  margin: 0 3.5rem;
+  aspect-ratio: 1/1;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: inline-block;
+  perspective: 40rem;
+  flex-direction: column;
+  align-items: center;
+  animation: linear adjust-z-index both;
+  animation-timeline: --li-in-and-out-of-view;
+  view-timeline-name: --li-in-and-out-of-view;
+  view-timeline-axis: inline;
+}
+
 .blur {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(20px);
-  opacity: 0;
+  backdrop-filter: blur(12px);
   pointer-events: none;
+  opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
 
@@ -29,62 +68,10 @@ body {
   transition: opacity 0.3s ease-in-out;
 }
 
-h1 {
-  margin-top: 1.5rem;
-  font-weight: 400;
-  font-size: 24px;
-  color: #d0d0d0;
-}
-
-h2 {
-  margin: 0;
-  white-space: normal;
-  font-size: 20px;
-  color: #d0d0d0;
-  text-align: center;
-  animation: linear adjust-opacity both;
-  animation-timeline: --li-in-and-out-of-view;
-}
-
-.content {
-  text-align: center;
-}
-
-.cards {
-  list-style: none;
-  white-space: nowrap;
-  scroll-snap-type: x mandatory;
-  max-width: calc(var(--cover-size) * 6);
-  max-height: 100vh;
-  overflow: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  scroll-behavior: smooth;
-  padding-top: 5rem;
-}
-
 .loader.active {
   animation: fadeInAnimation ease 2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
-}
-
-.cards.visible {
-  overflow: hidden;
-}
-
-.cards::-webkit-scrollbar {
-  display: none;
-}
-
-.cards li {
-  display: inline-block;
-  width: var(--cover-size);
-  max-width: 700px;
-  max-height: 700px;
-  aspect-ratio: 1/1;
-  scroll-snap-align: center;
-  scroll-snap-stop: always;
 }
 
 .spacer {
@@ -92,53 +79,33 @@ h2 {
   height: 15vw;
 }
 
+.cover-container {
+  position: relative;
+  animation: linear rotate-cover both;
+  animation-timeline: --li-in-and-out-of-view;
+  margin-top: 30%;
+}
+
 .cover {
-  width: 300px;
-  height: 300px;
-  margin-top: 5.5rem;
-  box-shadow: inset 0 0 0 1px #000;
-  border-radius: 20px;
+  width: 400px;
+  height: 400px;
+  border-radius: 30px;
 }
 
 .player-container {
-  height: 100vh;
-}
-
-.cards li {
-  view-timeline-name: --li-in-and-out-of-view;
-  view-timeline-axis: inline;
-}
-
-.cards li {
-  position: relative;
-  animation: linear adjust-z-index both;
-  animation-timeline: --li-in-and-out-of-view;
-  perspective: 40rem;
-  margin: 0 2rem;
-  display: inline-block;
+  position: absolute;
+  width: 100%;
+  bottom: 5px;
+  left: 0;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  width: var(--cover-size);
-  max-width: 700px;
-  max-height: 700px;
-}
-
-.cards li > img:first-of-type {
-  margin-left: 7.5rem;
-}
-
-.cards li > img:last-of-type {
-  margin-right: 7.5rem;
-}
-
-.cards li > img {
-  animation: linear rotate-cover both;
-  animation-timeline: --li-in-and-out-of-view;
+  z-index: 1000;
 }
 
 .podcast-episode {
-  top: -6rem;
   position: absolute;
+  top: -6rem;
   width: 100%;
   min-height: 80px;
   display: flex;
@@ -148,13 +115,10 @@ h2 {
 }
 
 .podcast-episode h2 {
-  font-weight: 370;
+  font-size: 20px;
   text-transform: uppercase;
   max-width: 70%;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  white-space: normal;
+  display: box;
   line-height: 1.2;
 }
 
@@ -163,7 +127,7 @@ h2 {
   position: absolute;
   align-items: center;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
   top: 95%;
 }
 
@@ -186,7 +150,6 @@ h2 {
   0% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
@@ -196,11 +159,9 @@ h2 {
   35% {
     z-index: 0;
   }
-
   50% {
     z-index: 100;
   }
-
   65% {
     z-index: 0;
   }
@@ -210,11 +171,9 @@ h2 {
   0% {
     opacity: 0;
   }
-
   50% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
   }
@@ -224,11 +183,9 @@ h2 {
   35% {
     transform: translateX(0) rotateY(-35deg);
   }
-
   50% {
-    transform: rotateY(0deg) translateZ(1em) scale(1.5);
+    transform: rotateY(0deg) translateZ(1em) scale(1.1);
   }
-
   65% {
     transform: translateX(0) rotateY(35deg);
   }

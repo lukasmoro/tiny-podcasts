@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { animated, useSpring } from '@react-spring/web';
+import { animated } from '@react-spring/web';
+import { useSpring } from '@react-spring/core';
 import './AudioPlayer.css';
 import BehaviourClick from './BehaviourClick.jsx';
 import usePlaybackPosition from '../../hooks/usePlaybackPosition.js';
@@ -11,12 +12,9 @@ const AudioPlayer = (props) => {
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
-  const {
-    currentTime: savedTime,
-    status,
-    updatePlaybackState,
-    PLAYBACK_STATUS,
-  } = usePlaybackPosition(props.podcastId);
+  const { currentTime: savedTime, updatePlaybackState } = usePlaybackPosition(
+    props.podcastId
+  );
 
   const audioPlayer = useRef();
   const progressBar = useRef();
@@ -29,6 +27,7 @@ const AudioPlayer = (props) => {
 
   useEffect(() => {
     const audio = audioPlayer.current;
+
     const handlePlay = () => {
       setIsPlaying(true);
       animationRef.current = requestAnimationFrame(whilePlaying);
@@ -56,7 +55,6 @@ const AudioPlayer = (props) => {
         },
       });
 
-      // Call the onEnded callback if it exists
       if (props.onEnded) {
         props.onEnded();
       }
@@ -70,28 +68,6 @@ const AudioPlayer = (props) => {
       audio.removeEventListener('play', handlePlay);
       audio.removeEventListener('pause', handlePause);
       audio.removeEventListener('ended', handleEnded);
-      cancelAnimationFrame(animationRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    const audio = audioPlayer.current;
-    const handlePlay = () => {
-      setIsPlaying(true);
-      animationRef.current = requestAnimationFrame(whilePlaying);
-    };
-
-    const handlePause = () => {
-      setIsPlaying(false);
-      cancelAnimationFrame(animationRef.current);
-      updatePlaybackState(audio.currentTime, audio.duration);
-    };
-
-    audio.addEventListener('play', handlePlay);
-    audio.addEventListener('pause', handlePause);
-    return () => {
-      audio.removeEventListener('play', handlePlay);
-      audio.removeEventListener('pause', handlePause);
       cancelAnimationFrame(animationRef.current);
     };
   }, []);
@@ -162,8 +138,6 @@ const AudioPlayer = (props) => {
   const changeRange = () => {
     if (audioPlayer.current) {
       const newTime = Number(progressBar.current.value);
-      audioPlayer.current.currentTime = newTime;
-
       audioPlayer.current.currentTime = progressBar.current.value;
       setCurrentTime(newTime);
       changePlayerCurrentTime();
@@ -217,7 +191,7 @@ const AudioPlayer = (props) => {
             </button>
           </BehaviourClick>
         </div>
-        <animated.div style={{ ...springs }} className="progress">
+        <animated.div style={{ ...springs }} className="progress-container">
           <div className="current-time">{calculateTime(currentTime)}</div>
           <div>
             <input
