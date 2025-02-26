@@ -2,7 +2,7 @@
 @import url('https://rsms.me/inter/inter.css');
 
 * {
-  font-family: 'Barlow', 'Inter', Arial, Helvetica, sans-serif;
+  font-family: 'Barlow', 'system-ui', 'Inter', 'Arial', Helvetica, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -11,70 +11,29 @@ body {
   background-color: #262626;
 }
 
-.blur {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(20px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.blur.visible {
-  opacity: 1;
-  transition: opacity 0.3s ease-in-out;
-}
-
-h1 {
-  margin-top: 1.5rem;
-  font-weight: 400;
-  font-size: 24px;
-  color: #d0d0d0;
-}
-
 h2 {
   margin: 0;
-  white-space: normal;
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: 400;
   color: #d0d0d0;
   text-align: center;
   animation: linear adjust-opacity both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
-.content {
-  text-align: center;
-}
-
 .cards {
   list-style: none;
   white-space: nowrap;
   scroll-snap-type: x mandatory;
-  max-width: calc(var(--cover-size) * 6);
   max-height: 100vh;
   overflow: scroll;
-  -ms-overflow-style: none;
   scrollbar-width: none;
   scroll-behavior: smooth;
   padding-top: 5rem;
 }
 
-.loader.active {
-  animation: fadeInAnimation ease 2s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-
 .cards.visible {
   overflow: hidden;
-}
-
-.cards::-webkit-scrollbar {
-  display: none;
 }
 
 .cards li {
@@ -85,6 +44,58 @@ h2 {
   aspect-ratio: 1/1;
   scroll-snap-align: center;
   scroll-snap-stop: always;
+}
+
+.cards li {
+  position: relative;
+  width: var(--cover-size);
+  max-width: 700px;
+  max-height: 700px;
+  margin: 0 2rem;
+  display: inline-block;
+  perspective: 40rem;
+  flex-direction: column;
+  align-items: center;
+  animation: linear adjust-z-index both;
+  animation-timeline: --li-in-and-out-of-view;
+  view-timeline-name: --li-in-and-out-of-view;
+  view-timeline-axis: inline;
+}
+
+.cards li > img {
+  animation: linear rotate-cover both;
+  animation-timeline: --li-in-and-out-of-view;
+}
+
+.cards li > img:first-of-type {
+  margin-left: 7.5rem;
+}
+
+.cards li > img:last-of-type {
+  margin-right: 7.5rem;
+}
+
+.blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.blur.visible {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.loader.active {
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 .spacer {
@@ -101,44 +112,12 @@ h2 {
 }
 
 .player-container {
-  height: 100vh;
-}
-
-.cards li {
-  view-timeline-name: --li-in-and-out-of-view;
-  view-timeline-axis: inline;
-}
-
-.cards li {
-  position: relative;
-  animation: linear adjust-z-index both;
-  animation-timeline: --li-in-and-out-of-view;
-  perspective: 40rem;
-  margin: 0 2rem;
-  display: inline-block;
-  flex-direction: column;
-  align-items: center;
-  width: var(--cover-size);
-  max-width: 700px;
-  max-height: 700px;
-}
-
-.cards li > img:first-of-type {
-  margin-left: 7.5rem;
-}
-
-.cards li > img:last-of-type {
-  margin-right: 7.5rem;
-}
-
-.cards li > img {
-  animation: linear rotate-cover both;
-  animation-timeline: --li-in-and-out-of-view;
+  height: fit-content;
 }
 
 .podcast-episode {
-  top: -6rem;
   position: absolute;
+  top: -6rem;
   width: 100%;
   min-height: 80px;
   display: flex;
@@ -152,8 +131,7 @@ h2 {
   text-transform: uppercase;
   max-width: 70%;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+  display: box;
   white-space: normal;
   line-height: 1.2;
 }

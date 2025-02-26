@@ -2,20 +2,14 @@ import React from 'react';
 import './InfoCard.css';
 
 const InfoCard = ({ podcast, expanded, setExpanded }) => {
-  const {
-    title,
-    episode,
-    author,
-    releaseDate,
-    publisher,
-    category,
-    description,
-  } = podcast || {};
+  // parsed podcast data
+  const { episode, author, releaseDate, publisher, category, description } =
+    podcast || {};
 
   return (
     <div className={`info-card`}>
       <div className="info-card-content">
-        <h4 className="episode-title">{title || 'Unknown Episode'}</h4>
+        <h4 className="episode-title">{episode || 'Unknown Episode'}</h4>
         <div className="info-row">
           {publisher && publisher !== author && (
             <div className="info-item">

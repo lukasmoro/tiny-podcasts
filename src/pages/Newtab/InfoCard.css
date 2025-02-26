@@ -1,23 +1,22 @@
 .info-card {
   position: absolute;
-  top: calc(50% - 7rem);
+  top: calc(50% - 2rem);
   left: 43%;
   transform: translate(-50%, -50%) rotateY(0deg) translateZ(1em) scale(1.5);
-  background-color: rgba(160, 160, 160, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
   height: 300px;
   width: 250px;
   z-index: 150;
-  opacity: 0;
-  visibility: hidden;
-  perspective: 40rem;
   margin: 0;
   padding: 0;
+  background-color: rgba(160, 160, 160, 0.65);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  perspective: 40rem;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .info-card-content {
@@ -27,22 +26,8 @@
   word-wrap: break-word;
   white-space: pre-wrap;
   overflow: hidden;
-}
-
-.info-card-content {
-  margin: 0;
-  height: calc(100% - 53px);
   overflow-y: auto;
-  scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0) transparent;
-}
-
-.episode-title {
-  text-transform: uppercase;
-  margin: 0 0 12px 0;
-  font-size: 15px;
-  font-weight: 400;
-  color: #ffffff;
 }
 
 .info-row {
@@ -58,14 +43,24 @@
   margin-right: 25px;
 }
 
+.info-value,
 .info-label {
   font-size: 10px;
   color: #ffffff;
-  margin-right: 5px;
+  margin-right: 2px;
 }
 
-.info-value {
-  font-size: 10px;
+.cover:hover + .info-card,
+.info-card:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+.episode-title {
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  font-weight: 400;
   color: #ffffff;
 }
 
@@ -75,10 +70,4 @@
   font-weight: 300;
   line-height: 1.4;
   color: #ffffff;
-}
-
-.cover:hover + .info-card,
-.info-card:hover {
-  opacity: 1;
-  visibility: visible;
 }

@@ -11,14 +11,17 @@ const Newtab = () => {
     chrome.tabs.query({ currentWindow: true }, function (tabs) {
       for (let i = 0; i < tabs.length - 1; i++) {
         let tab = tabs[i];
-        if (tab.pendingUrl === 'chrome://newtab/' || tab.url === 'chrome://newtab/') {
+        if (
+          tab.pendingUrl === 'chrome://newtab/' ||
+          tab.url === 'chrome://newtab/'
+        ) {
           setRedirect(true);
         } else {
           setRedirect(false);
         }
       }
     });
-  })
+  });
 
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item, key) => {
@@ -44,7 +47,6 @@ const Newtab = () => {
       )}
     </div>
   );
-
 };
 
 export default Newtab;

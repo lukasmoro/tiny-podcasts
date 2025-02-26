@@ -10,11 +10,11 @@ const Carousel = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoadingActive] = useState(true);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
+  const [activeInfoCard, setActiveInfoCard] = useState(null);
   const { scrollPosition, indicatorIndex } = useScrollPosition(
     'parent-container',
     items.length
   );
-  const [activeInfoCard, setActiveInfoCard] = useState(null);
 
   const handleClick = () => {
     setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
@@ -29,7 +29,6 @@ const Carousel = () => {
   };
 
   const handleCoverClick = (index) => {
-    // Toggle info card visibility
     setActiveInfoCard(activeInfoCard === index ? null : index);
   };
 
@@ -73,15 +72,20 @@ const Carousel = () => {
               podcast && (
                 <li key={index}>
                   <div className="podcast-episode">
-                    <h2>{podcast.episode}</h2>
+                    <h2>{podcast.title}</h2>
                   </div>
                   <img
-                    className="cover"
+                    className={`cover ${
+                      activeInfoCard === index ? 'active' : ''
+                    }`}
                     src={podcast.image}
                     alt={podcast.title}
                     onClick={() => handleCoverClick(index)}
                   />
-                  <InfoCard podcast={podcast} />
+                  <InfoCard
+                    podcast={podcast}
+                    isExpanded={activeInfoCard === index}
+                  />
                   <div className="player-container">
                     <StatusIndicator
                       status={podcast.PLAYBACK_STATUS}
