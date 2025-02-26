@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 import StatusIndicator from './StatusIndicator.jsx';
 import DraggableInfoCard from './DraggableInfocard.jsx';
+import Overlay from './Overlay.jsx';
 import { parseRss } from '../../utils/rssParser';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import './Carousel.css';
@@ -27,10 +28,6 @@ const Carousel = () => {
 
   const handleLoading = () => {
     setIsLoadingActive(false);
-  };
-
-  const handleCoverClick = (index) => {
-    setActiveInfoCard(activeInfoCard === index ? null : index);
   };
 
   useEffect(() => {
@@ -65,39 +62,38 @@ const Carousel = () => {
         className={`cards ${isBlurVisible ? 'visible' : ''}`}
       >
         <div className={`loader ${isLoading ? 'active' : ''}`}>
+          <Overlay />
           <li className="spacer"></li>
           {items.map(
             (podcast, index) =>
               podcast && (
                 <li key={index}>
-                  <div className="podcast-episode">
-                    <h2>{podcast.title}</h2>
-                  </div>
-                  <img
-                    className={`cover ${
-                      activeInfoCard === index ? 'active' : ''
-                    }`}
-                    src={podcast.image}
-                    alt={podcast.title}
-                    onClick={() => handleCoverClick(index)}
-                  />
-                  {/* Replace InfoCard with DraggableInfoCard */}
-                  <DraggableInfoCard
-                    podcast={podcast}
-                    expanded={activeInfoCard === index}
-                    setExpanded={setActiveInfoCard}
-                  />
-                  <div className="player-container">
-                    <StatusIndicator
-                      status={podcast.PLAYBACK_STATUS}
-                      podcastId={`${podcast.title}-${podcast.episode}`}
+                  <div className="cover-container">
+                    <div className="podcast-episode">
+                      <h2>{podcast.title}</h2>
+                    </div>
+                    <img
+                      className="cover"
+                      src={podcast.image}
+                      alt={podcast.title}
                     />
-                    <AudioPlayer
-                      src={podcast.mp3}
-                      podcastId={`${podcast.title}-${podcast.episode}`}
-                      handleClick={handleClick}
-                      onEnded={handlePodcastEnd}
+                    <DraggableInfoCard
+                      podcast={podcast}
+                      expanded={activeInfoCard === index}
+                      setExpanded={setActiveInfoCard}
                     />
+                    <div className="player-container">
+                      <StatusIndicator
+                        status={podcast.PLAYBACK_STATUS}
+                        podcastId={`${podcast.title}-${podcast.episode}`}
+                      />
+                      <AudioPlayer
+                        src={podcast.mp3}
+                        podcastId={`${podcast.title}-${podcast.episode}`}
+                        handleClick={handleClick}
+                        onEnded={handlePodcastEnd}
+                      />
+                    </div>
                   </div>
                 </li>
               )

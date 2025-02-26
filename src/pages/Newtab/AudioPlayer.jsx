@@ -191,7 +191,7 @@ const AudioPlayer = (props) => {
             </button>
           </BehaviourClick>
         </div>
-        <animated.div style={{ ...springs }} className="progress">
+        <animated.div style={{ ...springs }} className="progress-container">
           <div className="current-time">{calculateTime(currentTime)}</div>
           <div>
             <input

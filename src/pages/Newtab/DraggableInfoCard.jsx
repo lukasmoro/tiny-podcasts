@@ -3,77 +3,67 @@ import { useGesture } from '@use-gesture/react';
 import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
 import './InfoCard.css';
-const DraggableInfoCard = ({ podcast, expanded, setExpanded }) => {
-  // Parsed podcast data
+
+const DraggableInfoCard = ({ podcast }) => {
   const { episode, author, releaseDate, publisher, category, description } =
     podcast || {};
-  // Reference to the card element
   const cardRef = useRef(null);
-  // State to track if card is in front or behind
-  const [isInFront, setIsInFront] = useState(false);
-  // Spring animation for the card - removed rotateY from the animations
-  const [{ x, y, scale, opacity, zIndex }, api] = useSpring(() => ({
-    x: 0,
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const [{ x, y, scale, opacity, zIndex, height }, api] = useSpring(() => ({
+    x: -10,
     y: 0,
-    scale: 1.5,
-    opacity: 0,
-    zIndex: 1,
+    scale: 1,
+    opacity: 1,
+    zIndex: 0,
+    height: '150px',
     config: { tension: 350, friction: 40 },
   }));
-  // Update animation when isInFront changes
+
   useEffect(() => {
-    if (isInFront) {
+    if (isExpanded) {
       api.start({
-        x: 0,
-        scale: 1.5,
+        x: -10,
+        scale: 1,
         opacity: 1,
         zIndex: 150,
+        height: '300px',
       });
     } else {
       api.start({
         x: -10,
         scale: 1,
-        opacity: 0.7,
+        opacity: 1,
         zIndex: 0,
+        height: '150px',
       });
     }
-  }, [isInFront, api]);
-  // Set up the drag gesture
+  }, [isExpanded, api]);
+
   const bind = useGesture({
     onDrag: ({ event, movement: [mx], velocity: [vx], last, cancel }) => {
-      // Prevent default to ensure touch events don't cause unwanted behavior
       event?.preventDefault();
-      // Immediately ignore any rightward dragging attempt
+
       if (mx > 0) {
-        // Cancel the gesture and reset
         cancel();
         api.start({ x: 0 });
         return;
       }
-      // Now we know mx is negative or zero
-      // Process drag movement for leftward motion only
+
       if (!last) {
         api.start({ x: mx });
         return;
       }
-      // When drag ends:
-      // If velocity is too low, reset to original position
+
       if (Math.abs(vx) < 0.2) {
         api.start({ x: 0 });
         return;
       }
-      // Toggle the card state on swipe left with sufficient velocity
-      setIsInFront(!isInFront);
-    },
-    onHover: ({ hovering }) => {
-      // Show card on hover
-      if (hovering) {
-        api.start({ opacity: 1 });
-      } else if (!isInFront) {
-        api.start({ opacity: 0.7 });
-      }
+
+      setIsExpanded(!isExpanded);
     },
   });
+
   return (
     <animated.div
       ref={cardRef}
@@ -85,6 +75,7 @@ const DraggableInfoCard = ({ podcast, expanded, setExpanded }) => {
         scale,
         opacity,
         zIndex,
+        height,
         touchAction: 'none',
         cursor: 'grab',
       }}
@@ -111,7 +102,8 @@ const DraggableInfoCard = ({ podcast, expanded, setExpanded }) => {
             </div>
           )}
         </div>
-        {description && (
+
+        {isExpanded && description && (
           <div className="episode-description">
             <p>{description}</p>
           </div>
@@ -120,4 +112,5 @@ const DraggableInfoCard = ({ podcast, expanded, setExpanded }) => {
     </animated.div>
   );
 };
+
 export default DraggableInfoCard;
