@@ -12,7 +12,6 @@ const Carousel = () => {
   const [isLoading, setIsLoadingActive] = useState(true);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
-
   const { scrollPosition, indicatorIndex } = useScrollPosition(
     'parent-container',
     items.length
@@ -63,44 +62,46 @@ const Carousel = () => {
       >
         <div className={`loader ${isLoading ? 'active' : ''}`}>
           <Overlay />
-          <li className="spacer"></li>
-          {items.map(
-            (podcast, index) =>
-              podcast && (
-                <li key={index}>
-                  <div className="cover-container">
-                    <div className="podcast-episode">
+        </div>
+        <li className="spacer"></li>
+        {items.map(
+          (podcast, index) =>
+            podcast && (
+              <li key={index}>
+                <div className="cover-container">
+                  <div className="podcast-episode">
+                    <div className="podcast-title-container">
                       <h2>{podcast.title}</h2>
-                    </div>
-                    <img
-                      className="cover"
-                      src={podcast.image}
-                      alt={podcast.title}
-                    />
-                    <DraggableInfoCard
-                      podcast={podcast}
-                      expanded={activeInfoCard === index}
-                      setExpanded={setActiveInfoCard}
-                    />
-                    <div className="player-container">
                       <StatusIndicator
                         status={podcast.PLAYBACK_STATUS}
                         podcastId={`${podcast.title}-${podcast.episode}`}
                       />
-                      <AudioPlayer
-                        src={podcast.mp3}
-                        podcastId={`${podcast.title}-${podcast.episode}`}
-                        handleClick={handleClick}
-                        onEnded={handlePodcastEnd}
-                      />
                     </div>
                   </div>
-                </li>
-              )
-          )}
-          <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
-          <li className="spacer"></li>
-        </div>
+                  <img
+                    className="cover"
+                    src={podcast.image}
+                    alt={podcast.title}
+                  />
+                  <DraggableInfoCard
+                    podcast={podcast}
+                    expanded={activeInfoCard === index}
+                    setExpanded={setActiveInfoCard}
+                  />
+                  <div className="player-container">
+                    <AudioPlayer
+                      src={podcast.mp3}
+                      podcastId={`${podcast.title}-${podcast.episode}`}
+                      handleClick={handleClick}
+                      onEnded={handlePodcastEnd}
+                    />
+                  </div>
+                </div>
+              </li>
+            )
+        )}
+        <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
+        <li className="spacer"></li>
       </ul>
       <span className="indicators">
         {items.map((__, index) => (

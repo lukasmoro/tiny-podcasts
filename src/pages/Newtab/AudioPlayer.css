@@ -45,7 +45,7 @@ body {
 .current-time,
 .duration {
   color: #d0d0d0;
-  font-size: 0.9rem;
+  font-size: 13px;
   font-family: monospace;
   margin: 0;
   animation: linear adjust-opacity-ui both;

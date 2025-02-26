@@ -103,6 +103,16 @@ h2 {
   z-index: 1000;
 }
 
+.podcast-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 auto;
+  max-width: 100%;
+  white-space: normal;
+}
+
 .podcast-episode {
   position: absolute;
   top: -6rem;
@@ -117,9 +127,9 @@ h2 {
 .podcast-episode h2 {
   font-size: 20px;
   text-transform: uppercase;
-  max-width: 70%;
-  display: box;
+  display: inline; /* Changed from box to inline */
   line-height: 1.2;
+  text-align: right; /* Align text right to be closer to indicator */
 }
 
 .indicators {

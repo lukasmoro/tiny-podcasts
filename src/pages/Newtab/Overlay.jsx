@@ -33,7 +33,7 @@ const Overlay = () => {
       <h2 className="corner bottom-left">→ PODCASTS FOR CHROME</h2>
       <h2 className="corner top-right">🌙 </h2>
       <h2 className="corner top-left">{formatDate(currentTime)}</h2>
-      <h2 className="corner bottom-right">STOCKHOLM, SWEDEN</h2>
+      <h2 className="corner bottom-right">MADE IN STOCKHOLM, SWEDEN</h2>
     </div>
   );
 };
