@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 import StatusIndicator from './StatusIndicator.jsx';
-import InfoCard from './InfoCard.jsx';
+import DraggableInfoCard from './DraggableInfocard.jsx';
 import { parseRss } from '../../utils/rssParser';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import './Carousel.css';
@@ -11,6 +11,7 @@ const Carousel = () => {
   const [isLoading, setIsLoadingActive] = useState(true);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
+
   const { scrollPosition, indicatorIndex } = useScrollPosition(
     'parent-container',
     items.length
@@ -37,9 +38,7 @@ const Carousel = () => {
       if (!item.newUrls) {
         return;
       }
-
       const newUrls = item.newUrls.map((newUrl) => newUrl.text);
-
       Promise.all(newUrls.map((url) => fetch(url)))
         .then((responses) => Promise.all(responses.map((r) => r.text())))
         .then((xmlStrings) => {
@@ -82,9 +81,11 @@ const Carousel = () => {
                     alt={podcast.title}
                     onClick={() => handleCoverClick(index)}
                   />
-                  <InfoCard
+                  {/* Replace InfoCard with DraggableInfoCard */}
+                  <DraggableInfoCard
                     podcast={podcast}
-                    isExpanded={activeInfoCard === index}
+                    expanded={activeInfoCard === index}
+                    setExpanded={setActiveInfoCard}
                   />
                   <div className="player-container">
                     <StatusIndicator

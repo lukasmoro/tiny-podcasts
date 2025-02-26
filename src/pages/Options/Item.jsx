@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { animated, useSpring } from '@react-spring/web';
+import { animated } from '@react-spring/web';
+import { useSpring } from '@react-spring/core';
 
 const AnimatedItem = ({ item, removeUrl }) => {
   const [isRemoved, setIsRemoved] = useState(false);

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { animated, useSpring } from '@react-spring/web';
+import { animated } from '@react-spring/web';
+import { useSpring } from '@react-spring/core';
 import './AudioPlayer.css';
 import BehaviourClick from './BehaviourClick.jsx';
 import usePlaybackPosition from '../../hooks/usePlaybackPosition.js';

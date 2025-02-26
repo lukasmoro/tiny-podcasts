@@ -1,11 +1,9 @@
 .info-card {
   position: absolute;
-  top: calc(50% - 2rem);
-  left: 43%;
-  transform: translate(-50%, -50%) rotateY(0deg) translateZ(1em) scale(1.5);
+  top: calc(50% - 11.5rem);
+  left: 0%;
   height: 300px;
   width: 250px;
-  z-index: 150;
   margin: 0;
   padding: 0;
   background-color: rgba(160, 160, 160, 0.65);
@@ -13,10 +11,22 @@
   border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  visibility: hidden;
-  opacity: 0;
   perspective: 40rem;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  touch-action: none;
+  will-change: transform, opacity;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+}
+
+.info-card *:not(input):not(textarea) {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
 }
 
 .info-card-content {
@@ -50,10 +60,9 @@
   margin-right: 2px;
 }
 
-.cover:hover + .info-card,
-.info-card:hover {
+/* Update hover behavior to work with gesture system */
+.cover:hover + .info-card {
   opacity: 1;
-  visibility: visible;
 }
 
 .episode-title {
@@ -70,4 +79,17 @@
   font-weight: 300;
   line-height: 1.4;
   color: #ffffff;
+}
+
+/* Add drag indicator to make it more intuitive */
+.info-card::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
 }
