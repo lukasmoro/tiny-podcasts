@@ -6,7 +6,7 @@
 
 .info-card {
   position: absolute;
-  top: 0;
+  top: -10px;
   left: 0;
   width: 250px;
   margin: 0;
@@ -81,7 +81,7 @@
 
 .episode-description {
   margin-top: 15px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 300;
   line-height: 1.4;
   color: #ffffff;
