@@ -23,6 +23,46 @@
 .top-right {
   top: 0;
   right: 0;
+  display: flex;
+  align-items: center;
+}
+
+.circles-container {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  margin-left: -10px;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: 3px solid #d4d4d4;
+  border-radius: 50%;
+}
+
+.circle:last-child {
+  margin-left: -10px;
+}
+
+.top-center {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: 3px solid #d4d4d4;
+  border-radius: 50%;
+}
+
+.top-right img {
+  width: 20px;
+  height: 20px;
 }
 
 .bottom-left {

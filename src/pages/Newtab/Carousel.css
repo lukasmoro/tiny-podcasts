@@ -83,7 +83,7 @@ h2 {
   position: relative;
   animation: linear rotate-cover both;
   animation-timeline: --li-in-and-out-of-view;
-  margin-top: 30%;
+  margin-top: 34%;
 }
 
 .cover {
@@ -95,7 +95,7 @@ h2 {
 .player-container {
   position: absolute;
   width: 100%;
-  bottom: 5px;
+  bottom: 2px;
   left: 0;
   display: flex;
   flex-direction: column;
@@ -127,9 +127,9 @@ h2 {
 .podcast-episode h2 {
   font-size: 20px;
   text-transform: uppercase;
-  display: inline; /* Changed from box to inline */
+  display: inline;
   line-height: 1.2;
-  text-align: right; /* Align text right to be closer to indicator */
+  text-align: right;
 }
 
 .indicators {
