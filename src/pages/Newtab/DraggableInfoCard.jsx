@@ -10,26 +10,24 @@ const DraggableInfoCard = ({ podcast }) => {
   const cardRef = useRef(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Define consistent position constants
-  const COLLAPSED_POSITION = -170; // Position behind the cover with handle visible
-  const EXPANDED_POSITION = -410; // Position fully visible to the left of cover
+  const COLLAPSED_POSITION = -170;
+  const EXPANDED_POSITION = -410;
 
   const [{ x, y, scale, opacity, zIndex, height }, api] = useSpring(() => ({
     x: COLLAPSED_POSITION,
-    y: 15,
+    y: 30,
     scale: 1,
     opacity: 1,
-    zIndex: 10, // Behind the cover (cover has z-index 100)
+    zIndex: 10,
     height: '150px',
     immediate: true,
     config: { tension: 350, friction: 40 },
   }));
 
   useEffect(() => {
-    // Apply the appropriate position based on expansion state
     api.start({
       x: isExpanded ? EXPANDED_POSITION : COLLAPSED_POSITION,
-      y: 15,
+      y: 30,
       scale: 1,
       opacity: 1,
       zIndex: isExpanded ? 150 : 10,
@@ -49,48 +47,38 @@ const DraggableInfoCard = ({ podcast }) => {
     }) => {
       event?.preventDefault();
 
-      // If trying to drag right when in collapsed state, cancel
       if (!isExpanded && mx > 0) {
         cancel();
         return;
       }
 
-      // If trying to drag left when in expanded state, cancel
       if (isExpanded && mx < 0) {
         cancel();
         return;
       }
 
       if (!last) {
-        // During drag, apply the movement
         const basePosition = isExpanded
           ? EXPANDED_POSITION
           : COLLAPSED_POSITION;
         api.start({
           x: basePosition + mx,
-          // Gradually increase z-index as user drags left
           zIndex: isExpanded ? 150 : mx < -50 ? 150 : 10,
         });
         return;
       }
-
-      // On release, determine if we should snap to expanded or collapsed state
-      const threshold = 100; // Pixels to determine threshold for state change
+      const threshold = 100;
 
       if (isExpanded) {
-        // If already expanded, check if dragged right enough to collapse
         if (mx > threshold || (dx > 0 && vx > 0.5)) {
           setIsExpanded(false);
         } else {
-          // Not enough movement, return to expanded state
           api.start({ x: EXPANDED_POSITION, zIndex: 150 });
         }
       } else {
-        // If collapsed, check if dragged left enough to expand
         if (mx < -threshold || (dx < 0 && vx > 0.5)) {
           setIsExpanded(true);
         } else {
-          // Not enough movement, return to collapsed state
           api.start({ x: COLLAPSED_POSITION, zIndex: 10 });
         }
       }
@@ -114,7 +102,6 @@ const DraggableInfoCard = ({ podcast }) => {
         willChange: 'transform, opacity, height, z-index',
       }}
     >
-      {/* Add a visible handle indicator */}
       <div className="card-handle"></div>
 
       <div className="info-card-content">

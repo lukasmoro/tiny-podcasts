@@ -85,8 +85,13 @@ h2 {
   border-radius: 30px;
   z-index: 100;
   position: relative;
-  transform: translateZ(0); /* Create a stacking context */
+  transform: translateZ(0);
   will-change: transform;
+  animation: linear adjust-opacity both;
+  animation-timeline: --li-in-and-out-of-view;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .cover-container {
