@@ -19,19 +19,10 @@
   cursor: default;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
-  /* Always ensure it's behind cover */
   z-index: 10 !important;
   transform: translateZ(-1px);
+  cursor: grab;
 }
-
-/* Remove the force z-index priority when expanded 
-   to ensure it always stays behind the cover */
-/* 
-.info-card[style*='z-index: 150'] {
-  z-index: 150 !important;
-  transform: translateZ(0);
-}
-*/
 
 .info-card *:not(input):not(textarea) {
   user-select: none;
@@ -44,14 +35,13 @@
 .card-handle {
   position: absolute;
   top: 50%;
-  left: 5px;
+  left: 8px;
   transform: translateY(-50%);
   width: 5px;
   height: 50px;
   background: rgba(255, 255, 255, 0.7);
   border-radius: 5px;
-  cursor: grab;
-  z-index: 15; /* Keep handle clickable but below cover */
+  z-index: 15;
 }
 
 .info-card-content {

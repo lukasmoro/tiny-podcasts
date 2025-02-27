@@ -73,7 +73,12 @@ const Carousel = () => {
                   <div className="header-container">
                     <div className="header-content">
                       <div className="podcast-title-container">
-                        <h2 className="podcast-title">{podcast.title}</h2>
+                        <h2 className="podcast-title">
+                          {String(index + 1).padStart(2, '0')}.{' '}
+                          {podcast.title.length > 25
+                            ? `${podcast.title.substring(0, 25)}...`
+                            : podcast.title}
+                        </h2>
                         <StatusIndicator
                           status={podcast.PLAYBACK_STATUS}
                           podcastId={`${podcast.title}-${podcast.episode}`}
@@ -86,6 +91,7 @@ const Carousel = () => {
                       </h2>
                     </div>
                   </div>
+                  <div className="cover-mask"></div>
                   <img
                     className="cover"
                     src={podcast.image}

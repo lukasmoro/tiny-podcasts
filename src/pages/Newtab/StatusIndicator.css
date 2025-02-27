@@ -12,23 +12,17 @@
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px,
     inset 0px 0px 15px color-mix(in srgb, var(--outline-color) 85%, black),
     0 0 5px var(--outline-color);
-  outline: 3px solid;
+  outline: 2px solid;
   outline-color: color-mix(in srgb, var(--outline-color) 95%, white);
-  outline-offset: -3px;
+  outline-offset: -1px;
+  animation: linear adjust-opacity both;
+  animation-timeline: --li-in-and-out-of-view;
 }
 
 .status-dot {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-}
-
-.status-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 10px;
-  margin-right: 0;
 }
 
 .status-icon {
@@ -39,12 +33,4 @@
   transform: translate(-50%, -50%);
   width: 10px;
   height: 10px;
-}
-
-.podcast-title-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
-  flex-direction: row;
 }
