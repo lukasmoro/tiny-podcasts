@@ -140,10 +140,24 @@ const AudioPlayer = (props) => {
       // Update progress bar
       if (progressBar.current && isFinite(audioDuration) && audioDuration > 0) {
         progressBar.current.value = currentValue;
+
         const percentage = (currentValue / audioDuration) * 100;
+
+        // Fix for the border radius at small values - add a minimum visible width
+        const minVisibleWidth =
+          currentValue > 0 ? Math.max(percentage, 0.5) : 0;
+
+        // Remove right border radius when near the thumb/handle
+        const rightRadius = percentage >= 66.67 ? '3.5px' : '0px';
+        progressBar.current.style.setProperty('--right-radius', rightRadius);
+
+        // ADD THIS LINE: Set width adjustment based on the percentage
+        const widthAdjust = percentage >= 66.67 ? '0px' : '1px';
+        progressBar.current.style.setProperty('--width-adjust', widthAdjust);
+
         progressBar.current.style.setProperty(
           '--seek-before-width',
-          `${percentage}%`
+          `${minVisibleWidth}%`
         );
       }
 

@@ -1,6 +1,7 @@
 body {
   view-timeline-name: --li-in-and-out-of-view;
   view-timeline-axis: inline;
+  z-index: 0;
 }
 
 .button {
@@ -48,6 +49,8 @@ body {
   font-size: 13px;
   font-family: monospace;
   margin: 0;
+  max-width: 40px; /* Fixed width to accommodate "99:99" */
+  text-align: center; /* Center the text within the fixed width */
 }
 
 .current-time {
@@ -68,8 +71,19 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  z-index: 0;
 }
 
+/* Wrapper for progress bar to maintain consistent width */
+.progress-bar-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 22em;
+  z-index: 0;
+}
+
+/* Progress bar container */
 .progress-bar {
   position: relative;
   width: 22em;
@@ -81,28 +95,38 @@ body {
   --seek-before-color: #5dffb1;
   --knob: #ffffff;
   --selectedknob: #ffffff;
+  --right-radius: 3.5px;
+  --width-adjust: 1px;
   appearance: none;
   background: var(--bar-bg);
-  border-radius: 10px;
+  border-radius: 3.5px;
   outline: none;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
+/* Progress fill (green part) */
 .progress-bar::before {
   content: '';
   height: 7px;
-  width: var(--seek-before-width);
+  width: calc(var(--seek-before-width) + var(--width-adjust));
   background-color: var(--seek-before-color);
-  border-radius: 10px;
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   cursor: pointer;
-  z-index: -1;
+  z-index: 1;
+  /* Border radius on both sides, but we'll mask the right side when needed */
+  border-radius: 3.5px;
+  /* Create a special case for near-100% width */
+  border-top-right-radius: var(--right-radius, 3.5px);
+  border-bottom-right-radius: var(--right-radius, 3.5px);
+  /* Offset to start perfectly aligned with the slider thumb */
+  transform: translateX(0);
 }
 
+/* Slider thumb (handle) */
 .progress-bar::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 15px;
@@ -111,14 +135,48 @@ body {
   border: none;
   background-color: var(--knob);
   cursor: pointer;
-  z-index: 100;
+  z-index: 3;
   box-sizing: border-box;
+  /* Add a subtle shadow for depth */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  /* Position adjustment to ensure proper alignment */
+  margin-top: 0;
+  position: relative;
 }
 
+/* Active state for the thumb */
 .progress-bar:active::-webkit-slider-thumb {
-  transform: scale(1.5);
+  transform: scale(1.2);
   background-color: var(--selectedknob);
-  z-index: 100;
+}
+
+/* Special case for Firefox */
+.progress-bar::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--knob);
+  cursor: pointer;
+  z-index: 3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar:active::-moz-range-thumb {
+  transform: scale(1.2);
+  background-color: var(--selectedknob);
+}
+
+/* Fix for Edge/IE */
+.progress-bar::-ms-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--knob);
+  cursor: pointer;
+  z-index: 3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes adjust-opacity-ui {
