@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moonIcon from '../../assets/img/moon.fill.svg';
 import './Overlay.css';
 
 const Overlay = () => {
@@ -31,9 +32,15 @@ const Overlay = () => {
   return (
     <div className="corner-overlay">
       <h2 className="corner bottom-left">→ PODCASTS FOR CHROME</h2>
-      <h2 className="corner top-right">🌙 </h2>
+      <div className="circles-container">
+        <div className="circle"></div>
+        <div className="circle"></div>
+      </div>
+      <h2 className="corner top-right">
+        <img src={moonIcon} alt="Moon icon" />
+      </h2>
       <h2 className="corner top-left">{formatDate(currentTime)}</h2>
-      <h2 className="corner bottom-right">STOCKHOLM, SWEDEN</h2>
+      <h2 className="corner bottom-right">MADE IN STOCKHOLM, SWEDEN</h2>
     </div>
   );
 };

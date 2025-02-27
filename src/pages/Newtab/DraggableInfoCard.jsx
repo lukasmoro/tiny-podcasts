@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useGesture } from '@use-gesture/react';
 import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
-import './InfoCard.css';
+import './DraggableInfoCard.css';
 
 const DraggableInfoCard = ({ podcast }) => {
   const { episode, author, releaseDate, publisher, category, description } =
@@ -10,57 +10,76 @@ const DraggableInfoCard = ({ podcast }) => {
   const cardRef = useRef(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const [{ x, y, scale, opacity, zIndex, height }, api] = useSpring(() => ({
-    x: -10,
-    y: 0,
+  const COLLAPSED_POSITION = -170;
+  const EXPANDED_POSITION = -410;
+
+  // Always set zIndex to a lower value than the cover image (which has z-index: 100)
+  const [{ x, y, scale, opacity, height }, api] = useSpring(() => ({
+    x: COLLAPSED_POSITION,
+    y: 30,
     scale: 1,
     opacity: 1,
-    zIndex: 0,
     height: '150px',
+    immediate: true,
     config: { tension: 350, friction: 40 },
   }));
 
   useEffect(() => {
-    if (isExpanded) {
-      api.start({
-        x: -10,
-        scale: 1,
-        opacity: 1,
-        zIndex: 150,
-        height: '300px',
-      });
-    } else {
-      api.start({
-        x: -10,
-        scale: 1,
-        opacity: 1,
-        zIndex: 0,
-        height: '150px',
-      });
-    }
+    api.start({
+      x: isExpanded ? EXPANDED_POSITION : COLLAPSED_POSITION,
+      y: 30,
+      scale: 1,
+      opacity: 1,
+      height: isExpanded ? '300px' : '150px',
+      immediate: false,
+    });
   }, [isExpanded, api]);
 
   const bind = useGesture({
-    onDrag: ({ event, movement: [mx], velocity: [vx], last, cancel }) => {
+    onDrag: ({
+      event,
+      movement: [mx],
+      velocity: [vx],
+      direction: [dx],
+      last,
+      cancel,
+    }) => {
       event?.preventDefault();
 
-      if (mx > 0) {
+      if (!isExpanded && mx > 0) {
         cancel();
-        api.start({ x: 0 });
+        return;
+      }
+
+      if (isExpanded && mx < 0) {
+        cancel();
         return;
       }
 
       if (!last) {
-        api.start({ x: mx });
+        const basePosition = isExpanded
+          ? EXPANDED_POSITION
+          : COLLAPSED_POSITION;
+        api.start({
+          x: basePosition + mx,
+        });
         return;
       }
+      const threshold = 100;
 
-      if (Math.abs(vx) < 0.2) {
-        api.start({ x: 0 });
-        return;
+      if (isExpanded) {
+        if (mx > threshold || (dx > 0 && vx > 0.5)) {
+          setIsExpanded(false);
+        } else {
+          api.start({ x: EXPANDED_POSITION });
+        }
+      } else {
+        if (mx < -threshold || (dx < 0 && vx > 0.5)) {
+          setIsExpanded(true);
+        } else {
+          api.start({ x: COLLAPSED_POSITION });
+        }
       }
-
-      setIsExpanded(!isExpanded);
     },
   });
 
@@ -74,12 +93,14 @@ const DraggableInfoCard = ({ podcast }) => {
         y,
         scale,
         opacity,
-        zIndex,
         height,
         touchAction: 'none',
         cursor: 'grab',
+        willChange: 'transform, opacity, height',
       }}
     >
+      <div className="card-handle"></div>
+
       <div className="info-card-content">
         <h4 className="episode-title">{episode || 'Unknown Episode'}</h4>
         <div className="info-row">
@@ -102,7 +123,6 @@ const DraggableInfoCard = ({ podcast }) => {
             </div>
           )}
         </div>
-
         {isExpanded && description && (
           <div className="episode-description">
             <p>{description}</p>

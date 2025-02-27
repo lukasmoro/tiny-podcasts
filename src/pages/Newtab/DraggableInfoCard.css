@@ -1,37 +1,58 @@
-* {
-  font-family: 'Barlow', 'system-ui', 'Inter', 'Arial', Helvetica, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
 .info-card {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   width: 250px;
   margin: 0;
   padding: 0;
   background-color: rgba(160, 160, 160, 0.65);
   backdrop-filter: blur(12px);
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
   overflow: hidden;
+  touch-action: none;
   will-change: transform, opacity, height;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
+  z-index: 10 !important;
+  transform: translateZ(-1px);
+  cursor: grab;
+}
+
+.info-card *:not(input):not(textarea) {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: default;
+}
+
+.card-handle {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+  z-index: 15;
 }
 
 .info-card-content {
   margin: 0;
   padding: 25px;
-  padding-bottom: 45px; /* Added extra padding at bottom to make room for button */
   height: 100%;
   word-wrap: break-word;
   white-space: pre-wrap;
   overflow: hidden;
   overflow-y: auto;
   scrollbar-color: rgba(0, 0, 0, 0) transparent;
-  position: relative;
 }
 
 .info-row {
@@ -54,10 +75,6 @@
   margin-right: 2px;
 }
 
-.cover:hover + .info-card {
-  opacity: 1;
-}
-
 .episode-title {
   text-transform: uppercase;
   margin: 0 0 12px 0;
@@ -75,41 +92,6 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.button-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 10px 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
-  z-index: 10;
-}
-
-.toggle-button {
-  width: 80%;
-  padding: 8px 0;
-  background-color: #ffffff;
-  color: #000000;
-  border: 2px solid #000000;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.2s ease;
-  z-index: 10;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.toggle-button:hover {
-  background-color: #000000;
-  color: #ffffff;
-  transform: scale(1.05);
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -118,5 +100,3 @@
     opacity: 1;
   }
 }
-
-/* Removed the drag indicator since we're using a button now */

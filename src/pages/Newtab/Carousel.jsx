@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 import StatusIndicator from './StatusIndicator.jsx';
-import DraggableInfoCard from './DraggableInfocard.jsx';
+import DraggableInfoCard from './DraggableInfoCard.jsx';
 import Overlay from './Overlay.jsx';
 import { parseRss } from '../../utils/rssParser';
 import useScrollPosition from '../../hooks/useScrollPosition';
@@ -63,44 +63,59 @@ const Carousel = () => {
       >
         <div className={`loader ${isLoading ? 'active' : ''}`}>
           <Overlay />
-          <li className="spacer"></li>
-          {items.map(
-            (podcast, index) =>
-              podcast && (
-                <li key={index}>
-                  <div className="cover-container">
-                    <div className="podcast-episode">
-                      <h2>{podcast.title}</h2>
-                    </div>
-                    <img
-                      className="cover"
-                      src={podcast.image}
-                      alt={podcast.title}
-                    />
-                    <DraggableInfoCard
-                      podcast={podcast}
-                      expanded={activeInfoCard === index}
-                      setExpanded={setActiveInfoCard}
-                    />
-                    <div className="player-container">
-                      <StatusIndicator
-                        status={podcast.PLAYBACK_STATUS}
-                        podcastId={`${podcast.title}-${podcast.episode}`}
-                      />
-                      <AudioPlayer
-                        src={podcast.mp3}
-                        podcastId={`${podcast.title}-${podcast.episode}`}
-                        handleClick={handleClick}
-                        onEnded={handlePodcastEnd}
-                      />
+        </div>
+        <li className="spacer"></li>
+        {items.map(
+          (podcast, index) =>
+            podcast && (
+              <li key={index}>
+                <div className="cover-container">
+                  <div className="header-container">
+                    <div className="header-content">
+                      <div className="podcast-title-container">
+                        <h2 className="podcast-title">
+                          {String(index + 1).padStart(2, '0')}.{' '}
+                          {podcast.title.length > 25
+                            ? `${podcast.title.substring(0, 25)}...`
+                            : podcast.title}
+                        </h2>
+                        <StatusIndicator
+                          status={podcast.PLAYBACK_STATUS}
+                          podcastId={`${podcast.title}-${podcast.episode}`}
+                        />
+                      </div>
+                      <h2 className="podcast-episode">
+                        {podcast.episode.length > 45
+                          ? `${podcast.episode.substring(0, 45)}...`
+                          : podcast.episode}
+                      </h2>
                     </div>
                   </div>
-                </li>
-              )
-          )}
-          <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
-          <li className="spacer"></li>
-        </div>
+                  <div className="cover-mask"></div>
+                  <img
+                    className="cover"
+                    src={podcast.image}
+                    alt={podcast.title}
+                  />
+                  <DraggableInfoCard
+                    podcast={podcast}
+                    expanded={activeInfoCard === index}
+                    setExpanded={setActiveInfoCard}
+                  />
+                  <div className="player-container">
+                    <AudioPlayer
+                      src={podcast.mp3}
+                      podcastId={`${podcast.title}-${podcast.episode}`}
+                      handleClick={handleClick}
+                      onEnded={handlePodcastEnd}
+                    />
+                  </div>
+                </div>
+              </li>
+            )
+        )}
+        <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
+        <li className="spacer"></li>
       </ul>
       <span className="indicators">
         {items.map((__, index) => (
