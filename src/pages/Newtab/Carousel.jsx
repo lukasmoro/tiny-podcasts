@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 import StatusIndicator from './StatusIndicator.jsx';
-import DraggableInfoCard from './DraggableInfocard.jsx';
+import DraggableInfoCard from './DraggableInfoCard.jsx';
 import Overlay from './Overlay.jsx';
 import { parseRss } from '../../utils/rssParser';
 import useScrollPosition from '../../hooks/useScrollPosition';

@@ -10,57 +10,90 @@ const DraggableInfoCard = ({ podcast }) => {
   const cardRef = useRef(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Define consistent position constants
+  const COLLAPSED_POSITION = -170; // Position behind the cover with handle visible
+  const EXPANDED_POSITION = -410; // Position fully visible to the left of cover
+
   const [{ x, y, scale, opacity, zIndex, height }, api] = useSpring(() => ({
-    x: -10,
-    y: 0,
+    x: COLLAPSED_POSITION,
+    y: 15,
     scale: 1,
     opacity: 1,
-    zIndex: 0,
+    zIndex: 10, // Behind the cover (cover has z-index 100)
     height: '150px',
+    immediate: true,
     config: { tension: 350, friction: 40 },
   }));
 
   useEffect(() => {
-    if (isExpanded) {
-      api.start({
-        x: -10,
-        scale: 1,
-        opacity: 1,
-        zIndex: 150,
-        height: '300px',
-      });
-    } else {
-      api.start({
-        x: -10,
-        scale: 1,
-        opacity: 1,
-        zIndex: 0,
-        height: '150px',
-      });
-    }
+    // Apply the appropriate position based on expansion state
+    api.start({
+      x: isExpanded ? EXPANDED_POSITION : COLLAPSED_POSITION,
+      y: 15,
+      scale: 1,
+      opacity: 1,
+      zIndex: isExpanded ? 150 : 10,
+      height: isExpanded ? '300px' : '150px',
+      immediate: false,
+    });
   }, [isExpanded, api]);
 
   const bind = useGesture({
-    onDrag: ({ event, movement: [mx], velocity: [vx], last, cancel }) => {
+    onDrag: ({
+      event,
+      movement: [mx],
+      velocity: [vx],
+      direction: [dx],
+      last,
+      cancel,
+    }) => {
       event?.preventDefault();
 
-      if (mx > 0) {
+      // If trying to drag right when in collapsed state, cancel
+      if (!isExpanded && mx > 0) {
         cancel();
-        api.start({ x: 0 });
+        return;
+      }
+
+      // If trying to drag left when in expanded state, cancel
+      if (isExpanded && mx < 0) {
+        cancel();
         return;
       }
 
       if (!last) {
-        api.start({ x: mx });
+        // During drag, apply the movement
+        const basePosition = isExpanded
+          ? EXPANDED_POSITION
+          : COLLAPSED_POSITION;
+        api.start({
+          x: basePosition + mx,
+          // Gradually increase z-index as user drags left
+          zIndex: isExpanded ? 150 : mx < -50 ? 150 : 10,
+        });
         return;
       }
 
-      if (Math.abs(vx) < 0.2) {
-        api.start({ x: 0 });
-        return;
-      }
+      // On release, determine if we should snap to expanded or collapsed state
+      const threshold = 100; // Pixels to determine threshold for state change
 
-      setIsExpanded(!isExpanded);
+      if (isExpanded) {
+        // If already expanded, check if dragged right enough to collapse
+        if (mx > threshold || (dx > 0 && vx > 0.5)) {
+          setIsExpanded(false);
+        } else {
+          // Not enough movement, return to expanded state
+          api.start({ x: EXPANDED_POSITION, zIndex: 150 });
+        }
+      } else {
+        // If collapsed, check if dragged left enough to expand
+        if (mx < -threshold || (dx < 0 && vx > 0.5)) {
+          setIsExpanded(true);
+        } else {
+          // Not enough movement, return to collapsed state
+          api.start({ x: COLLAPSED_POSITION, zIndex: 10 });
+        }
+      }
     },
   });
 
@@ -78,8 +111,12 @@ const DraggableInfoCard = ({ podcast }) => {
         height,
         touchAction: 'none',
         cursor: 'grab',
+        willChange: 'transform, opacity, height, z-index',
       }}
     >
+      {/* Add a visible handle indicator */}
+      <div className="card-handle"></div>
+
       <div className="info-card-content">
         <h4 className="episode-title">{episode || 'Unknown Episode'}</h4>
         <div className="info-row">
@@ -102,7 +139,6 @@ const DraggableInfoCard = ({ podcast }) => {
             </div>
           )}
         </div>
-
         {isExpanded && description && (
           <div className="episode-description">
             <p>{description}</p>
