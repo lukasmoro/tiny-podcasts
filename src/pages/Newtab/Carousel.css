@@ -8,13 +8,13 @@
 }
 
 body {
-  background-color: #262626;
+  background-color: var(--background-color);
 }
 
 h2 {
   margin: 0;
   font-weight: 400;
-  color: #d0d0d0;
+  color: var(--primary-text-color);
   animation: linear adjust-opacity both;
   animation-timeline: --li-in-and-out-of-view;
 }
@@ -101,7 +101,7 @@ h2 {
   border-radius: 30px;
   z-index: 90;
   pointer-events: none;
-  background-color: #262626;
+  background-color: var(--background-color);
 }
 
 .cover-container {
@@ -163,7 +163,7 @@ h2 {
 .podcast-episode {
   font-size: 16px;
   text-align: left;
-  color: #a0a0a0;
+  color: var(--secondary-text-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -185,13 +185,13 @@ h2 {
   border-radius: 50%;
   border: none;
   outline: none;
-  background-color: #d0d0d0;
+  background-color: var(--background-color-ui);
   margin: 0 0.2rem;
   transition: background-color 0.3s ease;
 }
 
 .indicator.active {
-  background-color: #5dffb1;
+  background-color: var(--primary-accent-color);
 }
 
 @keyframes fadeInAnimation {

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { ThemeProvider } from './ThemeProvider.jsx';
 import Carousel from './Carousel';
 import Onboarding from '../Panel/Onboarding.jsx';
 import Redirect from './Redirect';
+import '../../root/Root.css';
 
 const Newtab = () => {
   const [onboarding, setOnboarding] = useState(false);
@@ -33,19 +35,21 @@ const Newtab = () => {
   }, []);
 
   return (
-    <div>
-      {onboarding ? (
-        <div>
-          <Onboarding />
-        </div>
-      ) : redirect ? (
-        <div>
-          <Redirect />
-        </div>
-      ) : (
-        <Carousel />
-      )}
-    </div>
+    <ThemeProvider>
+      <div>
+        {onboarding ? (
+          <div>
+            <Onboarding />
+          </div>
+        ) : redirect ? (
+          <div>
+            <Redirect />
+          </div>
+        ) : (
+          <Carousel />
+        )}
+      </div>
+    </ThemeProvider>
   );
 };
 

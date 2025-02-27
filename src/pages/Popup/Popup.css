@@ -8,7 +8,7 @@
 }
 
 body {
-  background-color: #262626;
+  background-color: var(--background-color);
 }
 
 .App {
@@ -31,23 +31,23 @@ body {
 h1 {
   font-weight: 400;
   font-size: 24px;
-  color: #d0d0d0;
+  color: var(--primary-text-color);
   margin-top: 0.5rem;
 }
 
 h2 {
   font-size: 0.9rem;
   font-weight: 400;
-  color: #a5a5a5;
+  color: var(--secondary-text-color);
 }
 
 p {
   font-weight: 400;
   font-size: 0.9rem;
-  color: #d0d0d0;
+  color: var(--primary-text-color);
 }
 
 a {
   text-decoration: none;
-  color: #19a0fc;
+  color: var(--link-text-color);
 }

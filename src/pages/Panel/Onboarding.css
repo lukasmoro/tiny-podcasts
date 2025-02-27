@@ -7,7 +7,7 @@
 }
 
 body {
-  background-color: #262626;
+  background-color: var(--background-color);
 }
 
 .onboarding {
@@ -21,7 +21,7 @@ body {
   line-height: 2;
   font-weight: 100;
   font-size: 1rem;
-  color: #d0d0d0;
+  color: var(--primary-text-color);
   margin-top: 1.2rem;
   margin-bottom: 0;
   padding-bottom: 0;
@@ -61,7 +61,7 @@ body {
 a {
   font-weight: 400;
   text-decoration: none;
-  color: #19a0fc;
+  color: var(--link-text-color);
 }
 
 ol {
@@ -82,8 +82,7 @@ ol {
   left: 50%;
   margin-left: -40px;
   visibility: hidden;
-  background-color: black;
-  color: #d0d0d0;
+  color: var(--primary-text-color);
   text-align: center;
   padding: 1px 0;
   border-radius: 6px;
@@ -100,7 +99,7 @@ ol {
   border-width: 5px;
   border-style: solid;
   border-color: black transparent transparent transparent;
-  background-color: #262626;
+  background-color: var(--background-color);
 }
 
 .tooltip:hover .tooltiptext {
