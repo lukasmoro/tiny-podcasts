@@ -7,12 +7,14 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
+  animation: linear adjust-opacity both;
+  animation-timeline: --li-in-and-out-of-view;
 }
 
 .play-pause {
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   cursor: pointer;
   border-radius: 50%;
   border: none;
