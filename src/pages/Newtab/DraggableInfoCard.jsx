@@ -13,12 +13,12 @@ const DraggableInfoCard = ({ podcast }) => {
   const COLLAPSED_POSITION = -170;
   const EXPANDED_POSITION = -410;
 
-  const [{ x, y, scale, opacity, zIndex, height }, api] = useSpring(() => ({
+  // Always set zIndex to a lower value than the cover image (which has z-index: 100)
+  const [{ x, y, scale, opacity, height }, api] = useSpring(() => ({
     x: COLLAPSED_POSITION,
     y: 30,
     scale: 1,
     opacity: 1,
-    zIndex: 10,
     height: '150px',
     immediate: true,
     config: { tension: 350, friction: 40 },
@@ -30,7 +30,6 @@ const DraggableInfoCard = ({ podcast }) => {
       y: 30,
       scale: 1,
       opacity: 1,
-      zIndex: isExpanded ? 150 : 10,
       height: isExpanded ? '300px' : '150px',
       immediate: false,
     });
@@ -63,7 +62,6 @@ const DraggableInfoCard = ({ podcast }) => {
           : COLLAPSED_POSITION;
         api.start({
           x: basePosition + mx,
-          zIndex: isExpanded ? 150 : mx < -50 ? 150 : 10,
         });
         return;
       }
@@ -73,13 +71,13 @@ const DraggableInfoCard = ({ podcast }) => {
         if (mx > threshold || (dx > 0 && vx > 0.5)) {
           setIsExpanded(false);
         } else {
-          api.start({ x: EXPANDED_POSITION, zIndex: 150 });
+          api.start({ x: EXPANDED_POSITION });
         }
       } else {
         if (mx < -threshold || (dx < 0 && vx > 0.5)) {
           setIsExpanded(true);
         } else {
-          api.start({ x: COLLAPSED_POSITION, zIndex: 10 });
+          api.start({ x: COLLAPSED_POSITION });
         }
       }
     },
@@ -95,11 +93,10 @@ const DraggableInfoCard = ({ podcast }) => {
         y,
         scale,
         opacity,
-        zIndex,
         height,
         touchAction: 'none',
         cursor: 'grab',
-        willChange: 'transform, opacity, height, z-index',
+        willChange: 'transform, opacity, height',
       }}
     >
       <div className="card-handle"></div>

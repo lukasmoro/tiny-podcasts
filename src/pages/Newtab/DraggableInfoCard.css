@@ -7,11 +7,11 @@
   padding: 0;
   background-color: rgba(160, 160, 160, 0.65);
   backdrop-filter: blur(12px);
-  border-radius: 30px;
+  border-radius: 20px;
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
   overflow: hidden;
   touch-action: none;
-  will-change: transform, opacity, height, z-index;
+  will-change: transform, opacity, height;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -19,16 +19,19 @@
   cursor: default;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
-  /* Ensure it's behind cover initially */
+  /* Always ensure it's behind cover */
   z-index: 10 !important;
   transform: translateZ(-1px);
 }
 
-/* Force the z-index priority when expanded */
+/* Remove the force z-index priority when expanded 
+   to ensure it always stays behind the cover */
+/* 
 .info-card[style*='z-index: 150'] {
   z-index: 150 !important;
   transform: translateZ(0);
 }
+*/
 
 .info-card *:not(input):not(textarea) {
   user-select: none;
@@ -48,7 +51,7 @@
   background: rgba(255, 255, 255, 0.7);
   border-radius: 5px;
   cursor: grab;
-  z-index: 120; /* Make sure the handle is always clickable */
+  z-index: 15; /* Keep handle clickable but below cover */
 }
 
 .info-card-content {
