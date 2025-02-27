@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useGesture } from '@use-gesture/react';
 import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
-import './InfoCard.css';
+import './DraggableInfoCard.css';
 
 const DraggableInfoCard = ({ podcast }) => {
   const { episode, author, releaseDate, publisher, category, description } =

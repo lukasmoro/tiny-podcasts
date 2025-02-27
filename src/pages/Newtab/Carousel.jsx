@@ -12,6 +12,7 @@ const Carousel = () => {
   const [isLoading, setIsLoadingActive] = useState(true);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
+
   const { scrollPosition, indicatorIndex } = useScrollPosition(
     'parent-container',
     items.length
@@ -69,13 +70,20 @@ const Carousel = () => {
             podcast && (
               <li key={index}>
                 <div className="cover-container">
-                  <div className="podcast-episode">
-                    <div className="podcast-title-container">
-                      <h2>{podcast.title}</h2>
-                      <StatusIndicator
-                        status={podcast.PLAYBACK_STATUS}
-                        podcastId={`${podcast.title}-${podcast.episode}`}
-                      />
+                  <div className="header-container">
+                    <div className="header-content">
+                      <div className="podcast-title-container">
+                        <h2 className="podcast-title">{podcast.title}</h2>
+                        <StatusIndicator
+                          status={podcast.PLAYBACK_STATUS}
+                          podcastId={`${podcast.title}-${podcast.episode}`}
+                        />
+                      </div>
+                      <h2 className="podcast-episode">
+                        {podcast.episode.length > 45
+                          ? `${podcast.episode.substring(0, 45)}...`
+                          : podcast.episode}
+                      </h2>
                     </div>
                   </div>
                   <img
