@@ -30,8 +30,6 @@ body {
   outline-offset: -3px;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
-  animation: linear rotate-cover both;
-  animation-timeline: --li-in-and-out-of-view;
 }
 
 .play-pause img {
@@ -50,8 +48,6 @@ body {
   font-size: 13px;
   font-family: monospace;
   margin: 0;
-  animation: linear adjust-opacity-ui both;
-  animation-timeline: --li-in-and-out-of-view;
 }
 
 .current-time {
