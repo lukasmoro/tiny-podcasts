@@ -9,13 +9,13 @@ form {
 }
 
 input {
+  font-size: var(--font-size-medium);
+  background: var(--background-color-input);
   outline: none;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -32px inset,
     rgba(0, 0, 0, 0.3) 0px 18px 36px -38px inset;
   border: none;
-  font-size: 0.9rem;
   border-radius: 5rem;
-  background: var(--background-color-input);
   width: 100%;
   padding-left: 0.85rem;
   height: 2.22rem;
@@ -59,9 +59,9 @@ input {
 
 .submit,
 .remove {
+  font-size: var(--font-size-medium);
   border: none;
   cursor: pointer;
-  font-size: 0.9rem;
   height: 100%;
   border-radius: 5rem;
   padding: 0.6rem;
@@ -69,8 +69,8 @@ input {
 }
 
 .remove {
-  margin-top: 0.75rem;
   color: var(--tertiary-accent-color);
+  margin-top: 0.75rem;
   transition: ease-in 0.15s;
 }
 
@@ -146,7 +146,7 @@ input {
 }
 
 .search-results strong {
-  font-size: 14px;
+  font-size: var(--font-size-medium);
   text-align: left;
   width: 100%;
 }

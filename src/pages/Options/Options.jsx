@@ -8,11 +8,11 @@ export default function Options() {
   return (
     <div className="App">
       <ThemeProvider>
-        <div className="head"></div>
+        <div className="spacer"></div>
         <div className="card">
           <div className="container">
-            <h2>Managing Podcasts</h2>
-            <h1>Options</h1>
+            <h2 className="sub-header">Managing Podcasts</h2>
+            <h1 className="header">Options</h1>
             <p className="instructions">
               Add up to 5 Podcasts in the list below or in the pop-up window.
             </p>

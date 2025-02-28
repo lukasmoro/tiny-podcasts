@@ -72,25 +72,25 @@
 
 .info-value,
 .info-label {
-  font-size: 10px;
+  font-size: var(--font-size-small);
   color: var(--tertiary-text-color);
   margin-right: 2px;
 }
 
 .episode-title {
+  font-size: var(--font-size-large);
+  font-weight: var(--font-weight-bold);
+  color: var(--tertiary-text-color);
   text-transform: uppercase;
   margin: 0 0 12px 0;
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--tertiary-text-color);
 }
 
 .episode-description {
-  margin-top: 15px;
-  font-size: 12px;
-  font-weight: 300;
-  line-height: 1.4;
   color: var(--tertiary-text-color);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-regular);
+  margin-top: 15px;
+  line-height: 1.4;
   animation: fadeIn 0.3s ease-in-out;
 }
 

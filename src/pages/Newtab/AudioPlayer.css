@@ -50,8 +50,8 @@ body {
 .current-time,
 .duration {
   color: var(--primary-text-color);
-  font-size: 13px;
-  font-family: monospace;
+  font-size: var(--font-size-small);
+  font-family: var(--font-family-mono);
   margin: 0;
   max-width: 40px;
   text-align: center;

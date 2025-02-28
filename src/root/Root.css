@@ -1,4 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@100;200;300;400;500;700&display=swap');
+@import url('https://rsms.me/inter/inter.css');
+
+* {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+h1 {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xxlarge);
+  color: var(--primary-text-color);
+}
+
+h2 {
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-text-color);
+}
+
+p {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-medium);
+  color: var(--primary-text-color);
+}
+
+a {
+  text-decoration: none;
+  color: var(--link-text-color);
+}
+
 :root {
+  /* colors */
   --background-color: #262626;
   --background-color-play: #cacaca;
   --background-color-ui: #d0d0d0;
@@ -16,6 +52,29 @@
   --quarternary-accent-color: #bdffdf;
   --outline-color: #ffffff1a;
   --outline-color-info: #a0a0a0a6;
+
+  /* font family */
+  --font-family: 'Barlow', 'system-ui', 'Inter', 'Arial', Helvetica, sans-serif;
+  --font-family-mono: monospace;
+
+  /* font size */
+  --font-size-xxlarge: 1.5rem;
+  --font-size-xlarge: 1.25rem;
+  --font-size-large: 1rem;
+  --font-size-medium: 0.875rem;
+  --font-size-small: 0.75rem;
+
+  /* font weight */
+  --font-weight-bold: 400;
+  --font-weight-regular: 200;
+
+  /* spacing */
+  --spacing-s: 8px;
+  --spacing-m: 16px;
+  --spacing-l: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 64px;
+  --spacing-xxxl: 128px;
 }
 
 [data-theme='light'] {

@@ -9,11 +9,11 @@
 }
 
 .corner {
+  font-size: var(--font-size-small);
+  color: var(--primary-text-color);
   position: absolute;
-  font-size: 12px;
   padding: 25px;
   text-transform: uppercase;
-  color: var(--primary-text-color);
 }
 
 .top-left {
@@ -39,10 +39,10 @@
 }
 
 .circle {
+  border: 3px solid var(--background-color-detail);
   width: 20px;
   height: 20px;
   background-color: transparent;
-  border: 3px solid var(--background-color-detail);
   border-radius: 50%;
 }
 
@@ -51,6 +51,7 @@
 }
 
 .top-center {
+  border: 3px solid var(--background-color-detail);
   position: absolute;
   top: 20px;
   left: 50%;
@@ -58,7 +59,6 @@
   width: 30px;
   height: 30px;
   background-color: transparent;
-  border: 3px solid var(--background-color-detail);
   border-radius: 50%;
 }
 

@@ -1,27 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@100;400;500;700&display=swap');
-@import url('https://rsms.me/inter/inter.css');
-
-* {
-  font-family: 'Barlow', 'system-ui', 'Inter', 'Arial', Helvetica, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background-color: var(--background-color);
-}
-
-button {
-  width: 70px;
-}
-
 .App {
   display: flex;
   flex-direction: column;
   justify-content: start;
 }
+.sub-header {
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  color: var(--secondary-text-color);
+}
 
-.head {
+.header {
+  margin-top: 0.5rem;
+}
+
+.spacer {
   text-align: center;
   margin-top: 3rem;
   margin-left: auto;
@@ -34,7 +26,7 @@ button {
   background-color: var(--background-color);
   border-radius: 1.5rem;
   max-width: 700px;
-  height: 600px;
+  height: fit-content;
   margin-top: 2.5rem;
   margin-left: auto;
   margin-right: auto;
@@ -50,113 +42,39 @@ form {
   align-items: center;
 }
 
-input {
-  outline: none;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -22px inset,
-    rgba(0, 0, 0, 0.3) 0px 18px 36px -28px inset;
-  border: none;
-  font-size: 0.9rem;
-  border-radius: 5rem;
-  background: #ffffff;
-  width: 50%;
-  height: 2.22rem;
-  padding-left: 0.85rem;
-}
-
 .items {
-  display: flex;
-  max-width: 400px;
-  justify-content: space-between;
-  align-items: center;
   margin-top: 1.6rem;
 }
 
-.submit,
-.remove {
-  border: none;
-  cursor: pointer;
-  font-size: 0.9rem;
-  height: 100%;
-  border-radius: 5rem;
-  padding: 0.6rem;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-}
-
-.remove {
-  margin-bottom: 0.33rem;
-  color: var(--tertiary-accent-color);
-}
-
-.submit {
-  background-color: var(--quarternary-accent-color);
-  margin-left: 5px;
-}
-
-h1 {
-  font-weight: 400;
-  font-size: 24px;
-  color: var(--primary-text-color);
-  margin-top: 0.5rem;
-}
-
-h2 {
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--secondary-text-color);
-}
-
-p {
-  font-weight: 400;
-  font-size: 0.9rem;
-  color: var(--primary-text-color);
-  max-width: 70%;
-}
-
-a {
-  text-decoration: none;
-  color: var(--link-text-color);
-}
-
-img {
-  display: flex;
-  justify-content: flex-end;
-  width: auto;
-  height: 6rem;
-  margin-left: auto;
-  margin-right: auto;
+input {
+  margin-bottom: 1rem;
 }
 
 .instructions {
-  font-size: 0.9rem;
   margin-top: 2rem;
   max-width: 400px;
   margin-bottom: 1.5rem;
 }
 
 .greets {
-  margin-top: 1.2rem;
+  margin-top: 1.5rem;
   text-align: center;
   max-width: 100%;
 }
 
-.spacer {
-  width: 400px;
-}
-
 .line {
-  margin-top: 1.5rem;
+  background: var(--background-color-detail);
   width: 400px;
   height: 1px;
-  background: #5a5a5a;
 }
 
 .signature {
+  font-size: var(--font-size-small);
   position: absolute;
-  margin-top: 3rem;
+  margin-top: 3.5rem;
   left: 50%;
   transform: translate(-50%, 0);
   text-align: center;
-  font-size: 0.75rem;
 }
 
 .overflow {
@@ -164,6 +82,10 @@ img {
   overscroll-behavior: contain;
   height: 250px;
   padding-bottom: 2rem;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
 }
 
 .form {
