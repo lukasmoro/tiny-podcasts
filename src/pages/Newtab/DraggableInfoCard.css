@@ -79,13 +79,12 @@
 
 .episode-title {
   font-size: var(--font-size-large);
-  font-weight: var(--font-weight-bold);
   color: var(--tertiary-text-color);
   text-transform: uppercase;
   margin: 0 0 12px 0;
 }
 
-.episode-description {
+.episode-description p {
   color: var(--tertiary-text-color);
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-regular);

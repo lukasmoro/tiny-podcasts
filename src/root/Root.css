@@ -20,12 +20,21 @@ h1 {
 h2 {
   font-weight: var(--font-weight-bold);
   color: var(--primary-text-color);
+  letter-spacing: var(--letter-spacing-h2);
+}
+
+h3 {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-large);
+  color: var(--secondary-text-color);
+  letter-spacing: var(--letter-spacing-h3);
 }
 
 p {
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-medium);
   color: var(--primary-text-color);
+  letter-spacing: var(--letter-spacing-p);
 }
 
 a {
@@ -69,12 +78,9 @@ a {
   --font-weight-regular: 200;
 
   /* spacing */
-  --spacing-s: 8px;
-  --spacing-m: 16px;
-  --spacing-l: 24px;
-  --spacing-xl: 32px;
-  --spacing-xxl: 64px;
-  --spacing-xxxl: 128px;
+  --letter-spacing-h2: auto;
+  --letter-spacing-h3: -0.01em;
+  --letter-spacing-p: 0em;
 }
 
 [data-theme='light'] {

@@ -13,7 +13,6 @@ const DraggableInfoCard = ({ podcast }) => {
   const COLLAPSED_POSITION = -170;
   const EXPANDED_POSITION = -410;
 
-  // Always set zIndex to a lower value than the cover image (which has z-index: 100)
   const [{ x, y, scale, opacity, height }, api] = useSpring(() => ({
     x: COLLAPSED_POSITION,
     y: 30,
@@ -102,7 +101,7 @@ const DraggableInfoCard = ({ podcast }) => {
       <div className="card-handle"></div>
 
       <div className="info-card-content">
-        <h4 className="episode-title">{episode || 'Unknown Episode'}</h4>
+        <h2 className="episode-title">{episode || 'Unknown Episode'}</h2>
         <div className="info-row">
           {publisher && publisher !== author && (
             <div className="info-item">

@@ -154,8 +154,6 @@ h2 {
 }
 
 .podcast-episode {
-  font-size: var(--font-size-large);
-  color: var(--secondary-text-color);
   text-align: left;
   white-space: nowrap;
   overflow: hidden;

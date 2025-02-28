@@ -84,11 +84,11 @@ const Carousel = () => {
                           podcastId={`${podcast.title}-${podcast.episode}`}
                         />
                       </div>
-                      <h2 className="podcast-episode">
+                      <h3 className="podcast-episode">
                         {podcast.episode.length > 45
                           ? `${podcast.episode.substring(0, 45)}...`
                           : podcast.episode}
-                      </h2>
+                      </h3>
                     </div>
                   </div>
                   <div className="cover-mask"></div>
