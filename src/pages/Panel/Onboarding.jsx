@@ -31,21 +31,6 @@ function Onboarding() {
           <div className="instructions">
             <ol>
               <li>
-                Find{' '}
-                <div className="tooltip">
-                  <a
-                    href="https://feeds.simplecast.com/eew_vyNL"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleCopyClick('https://feeds.simplecast.com/eew_vyNL');
-                    }}
-                  >
-                    rss-feeds <span className="tooltiptext">{tooltipText}</span>
-                  </a>
-                </div>{' '}
-                by searching for the podcast's rss-feed url.
-              </li>
-              <li>
                 Add up to 5 urls of podcasts in the options or pop-up window.
               </li>
               <li>
