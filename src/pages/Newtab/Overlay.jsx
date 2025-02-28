@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Moon from '../../assets/img/moon.fill.svg';
+import Sun from '../../assets/img/sun.max.fill.svg';
 import './Overlay.css';
 
 const Overlay = () => {
@@ -49,7 +50,7 @@ const Overlay = () => {
       </div>
       <h2 className="corner top-right">
         <img
-          src={Moon}
+          src={isDarkMode ? Moon : Sun}
           alt={isDarkMode ? 'Light mode' : 'Dark mode'}
           onClick={handleThemeToggle}
           className="theme-toggle"

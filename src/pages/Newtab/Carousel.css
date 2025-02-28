@@ -9,6 +9,11 @@
 
 body {
   background-color: var(--background-color);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
 }
 
 h2 {
@@ -125,7 +130,6 @@ h2 {
   z-index: 1000;
 }
 
-/* Updated header container and its children */
 .header-container {
   position: absolute;
   top: -6rem;
@@ -267,24 +271,24 @@ h2 {
 
 @media only screen and (min-height: 720px) {
   .cards {
-    margin-top: 3vh;
+    padding-top: 3vh;
   }
 }
 
 @media only screen and (min-height: 800px) {
   .cards {
-    margin-top: 10vh;
+    padding-top: 10vh;
   }
 }
 
 @media only screen and (min-height: 900px) {
   .cards {
-    margin-top: 12vh;
+    padding-top: 12vh;
   }
 }
 
 @media only screen and (min-height: 1080px) {
   .cards {
-    margin-top: 15vh;
+    padding-top: 15vh;
   }
 }
