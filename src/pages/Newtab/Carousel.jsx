@@ -74,9 +74,9 @@ const Carousel = () => {
                     <div className="header-content">
                       <div className="podcast-title-container">
                         <h2 className="podcast-title">
-                          {String(index + 1).padStart(2, '0')}.{' '}
-                          {podcast.title.length > 25
-                            ? `${podcast.title.substring(0, 25)}...`
+                          {/* {String(index + 1).padStart(2, '0')}.{' '} */}
+                          {podcast.title.length > 30
+                            ? `${podcast.title.substring(0, 30)}...`
                             : podcast.title}
                         </h2>
                         <StatusIndicator
@@ -84,11 +84,11 @@ const Carousel = () => {
                           podcastId={`${podcast.title}-${podcast.episode}`}
                         />
                       </div>
-                      <h2 className="podcast-episode">
+                      <h3 className="podcast-episode">
                         {podcast.episode.length > 45
                           ? `${podcast.episode.substring(0, 45)}...`
                           : podcast.episode}
-                      </h2>
+                      </h3>
                     </div>
                   </div>
                   <div className="cover-mask"></div>

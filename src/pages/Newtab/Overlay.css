@@ -9,8 +9,9 @@
 }
 
 .corner {
+  font-size: var(--font-size-small);
+  color: var(--primary-text-color);
   position: absolute;
-  font-size: 12px;
   padding: 25px;
   text-transform: uppercase;
 }
@@ -25,6 +26,7 @@
   right: 0;
   display: flex;
   align-items: center;
+  pointer-events: auto;
 }
 
 .circles-container {
@@ -37,10 +39,10 @@
 }
 
 .circle {
+  border: 3px solid var(--background-color-detail);
   width: 20px;
   height: 20px;
   background-color: transparent;
-  border: 3px solid #d4d4d4;
   border-radius: 50%;
 }
 
@@ -49,6 +51,7 @@
 }
 
 .top-center {
+  border: 3px solid var(--background-color-detail);
   position: absolute;
   top: 20px;
   left: 50%;
@@ -56,13 +59,13 @@
   width: 30px;
   height: 30px;
   background-color: transparent;
-  border: 3px solid #d4d4d4;
   border-radius: 50%;
 }
 
 .top-right img {
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 
 .bottom-left {
@@ -73,4 +76,15 @@
 .bottom-right {
   bottom: 0;
   right: 0;
+}
+
+.theme-toggle {
+  cursor: pointer;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.theme-toggle:hover {
+  opacity: 0.8;
 }

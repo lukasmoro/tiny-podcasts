@@ -23,35 +23,37 @@ body {
   justify-content: center;
   padding: 0;
   margin: 0 auto;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px,
-    inset 0px 0px 15px rgba(0, 0, 0, 0.2);
-  background-color: #f1f1f1;
-  outline: 5px solid #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+  background-color: var(--background-color-play);
+  outline: 5px solid var(--secondary-accent-color);
   outline-offset: -3px;
   animation: linear adjust-opacity-ui both;
-  animation-timeline: --li-in-and-out-of-view;
-  animation: linear rotate-cover both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
 .play-pause img {
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 25px;
   height: 25px;
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.8));
+  animation: linear adjust-opacity-ui both;
+  animation-timeline: --li-in-and-out-of-view;
 }
 
 .current-time,
 .duration {
-  color: #d0d0d0;
-  font-size: 13px;
-  font-family: monospace;
+  color: var(--primary-text-color);
+  font-size: var(--font-size-small);
+  font-family: var(--font-family-mono);
   margin: 0;
-  animation: linear adjust-opacity-ui both;
-  animation-timeline: --li-in-and-out-of-view;
+  max-width: 40px;
+  text-align: center;
 }
 
 .current-time {
@@ -74,37 +76,50 @@ body {
   justify-content: center;
 }
 
+.progress-bar-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  max-width: 22em;
+}
+
 .progress-bar {
   position: relative;
   width: 22em;
   max-width: 25em;
   height: 7px;
   margin-bottom: 0.38em;
-  --bar-bg: #d0d0d0;
+  --bar-bg: var(--background-color-ui);
   --seek-before-width: 0px;
-  --seek-before-color: #5dffb1;
-  --knob: #ffffff;
-  --selectedknob: #ffffff;
+  --seek-before-color: var(--primary-accent-color);
+  --knob: var(--secondary-accent-color);
+  --selectedknob: var(--secondary-accent-color);
+  --right-radius: 3.5px;
+  --width-adjust: 1px;
   appearance: none;
   background: var(--bar-bg);
-  border-radius: 10px;
+  border-radius: 3.5px;
   outline: none;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 }
 
 .progress-bar::before {
   content: '';
   height: 7px;
-  width: var(--seek-before-width);
+  width: calc(var(--seek-before-width) + var(--width-adjust));
   background-color: var(--seek-before-color);
-  border-radius: 10px;
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   cursor: pointer;
-  z-index: -1;
+  z-index: 1;
+  border-radius: 3.5px;
+  border-top-right-radius: var(--right-radius, 3.5px);
+  border-bottom-right-radius: var(--right-radius, 3.5px);
+  transform: translateX(0);
 }
 
 .progress-bar::-webkit-slider-thumb {
@@ -115,14 +130,43 @@ body {
   border: none;
   background-color: var(--knob);
   cursor: pointer;
-  z-index: 100;
+  z-index: 3;
   box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-top: 0;
+  position: relative;
 }
 
 .progress-bar:active::-webkit-slider-thumb {
-  transform: scale(1.5);
+  transform: scale(1.2);
   background-color: var(--selectedknob);
-  z-index: 100;
+}
+
+.progress-bar::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--knob);
+  cursor: pointer;
+  z-index: 3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar:active::-moz-range-thumb {
+  transform: scale(1.2);
+  background-color: var(--selectedknob);
+}
+
+.progress-bar::-ms-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--knob);
+  cursor: pointer;
+  z-index: 3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes adjust-opacity-ui {
