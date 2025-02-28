@@ -1,22 +1,21 @@
 .status-indicator {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
+  position: absolute;
+  top: 37%;
+  transform: translateY(-50%);
+  right: 0;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
-  margin-left: 10px;
   vertical-align: middle;
+  align-self: center;
   z-index: 1;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px,
-    inset 0px 0px 15px color-mix(in srgb, var(--outline-color) 85%, black),
-    0 0 5px var(--outline-color);
   outline: 2px solid;
-  outline-color: color-mix(in srgb, var(--outline-color) 95%, white);
+  outline-color: color-mix(in srgb, var(--outline-color) 70%, white);
   outline-offset: -1px;
   animation: linear adjust-opacity both;
   animation-timeline: --li-in-and-out-of-view;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px,
+    rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
 }
 
 .status-dot {
