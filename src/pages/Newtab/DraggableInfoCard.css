@@ -16,12 +16,11 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  cursor: default;
+  cursor: grab;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
   z-index: 10 !important;
   transform: translateZ(-1px);
-  cursor: grab;
   outline: 1px solid var(--outline-color-info);
   outline-offset: -1px;
   box-shadow: #0e3f7e0f 0px 0px 0px 1px, #2a334608 0px 1px 1px -0.5px,
@@ -35,7 +34,6 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  cursor: default;
 }
 
 .card-handle {
