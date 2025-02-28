@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
 import './AudioPlayer.css';

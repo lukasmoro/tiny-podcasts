@@ -89,6 +89,8 @@ h2 {
   will-change: transform;
   animation: linear adjust-opacity both;
   animation-timeline: --li-in-and-out-of-view;
+  outline: 2px solid var(--outline-color);
+  outline-offset: -2px;
   -webkit-user-drag: none;
   -webkit-user-select: none;
   user-select: none;

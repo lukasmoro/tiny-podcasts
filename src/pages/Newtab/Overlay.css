@@ -77,9 +77,11 @@
   right: 0;
 }
 
-/* Theme toggle styles */
 .theme-toggle {
   cursor: pointer;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .theme-toggle:hover {

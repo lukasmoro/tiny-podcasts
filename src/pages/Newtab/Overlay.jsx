@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import moonIcon from '../../assets/img/moon.fill.svg';
+import Moon from '../../assets/img/moon.fill.svg';
 import './Overlay.css';
 
 const Overlay = () => {
@@ -15,7 +15,6 @@ const Overlay = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Apply theme when it changes
   useEffect(() => {
     document.documentElement.setAttribute(
       'data-theme',
@@ -50,14 +49,14 @@ const Overlay = () => {
       </div>
       <h2 className="corner top-right">
         <img
-          src={moonIcon}
+          src={Moon}
           alt={isDarkMode ? 'Light mode' : 'Dark mode'}
           onClick={handleThemeToggle}
           className="theme-toggle"
         />
       </h2>
       <h2 className="corner top-left">{formatDate(currentTime)}</h2>
-      <h2 className="corner bottom-right">MADE IN STOCKHOLM, SWEDEN</h2>
+      <h2 className="corner bottom-right">0.0.2 · MADE IN STOCKHOLM, SWEDEN</h2>
     </div>
   );
 };

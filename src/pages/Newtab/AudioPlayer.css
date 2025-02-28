@@ -26,13 +26,16 @@ body {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px,
     inset 0px 0px 15px rgba(0, 0, 0, 0.2);
   background-color: var(--background-color-ui);
-  outline: 5px solid #ffffff;
+  outline: 5px solid var(--secondary-accent-color);
   outline-offset: -3px;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
 .play-pause img {
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
   position: absolute;
   top: 50%;
   left: 50%;
