@@ -74,9 +74,9 @@ const Carousel = () => {
                     <div className="header-content">
                       <div className="podcast-title-container">
                         <h2 className="podcast-title">
-                          {String(index + 1).padStart(2, '0')}.{' '}
-                          {podcast.title.length > 25
-                            ? `${podcast.title.substring(0, 25)}...`
+                          {/* {String(index + 1).padStart(2, '0')}.{' '} */}
+                          {podcast.title.length > 30
+                            ? `${podcast.title.substring(0, 30)}...`
                             : podcast.title}
                         </h2>
                         <StatusIndicator

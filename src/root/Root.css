@@ -1,5 +1,6 @@
 :root {
   --background-color: #262626;
+  --background-color-play: #cacaca;
   --background-color-ui: #d0d0d0;
   --background-color-detail: #d4d4d4;
   --background-color-info: #a0a0a0a6;
@@ -14,22 +15,25 @@
   --tertiary-accent-color: #ff8181;
   --quarternary-accent-color: #bdffdf;
   --outline-color: #ffffff1a;
+  --outline-color-info: #a0a0a0a6;
 }
 
 [data-theme='light'] {
   --background-color: #eeedec;
-  --background-color-ui: #9995b4;
-  --background-color-detail: #d4d4d4;
-  --background-color-info: #434451a6;
+  --background-color-play: #d9d4fe;
+  --background-color-ui: #d7d1ff;
+  --background-color-detail: #978f7e;
+  --background-color-info: #777891a6;
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #463000;
-  --secondary-text-color: #463000;
-  --tertiary-text-color: #ffffff;
+  --secondary-text-color: #978f7e;
+  --tertiary-text-color: #181720;
   --link-text-color: #19a0fc;
   --primary-accent-color: #ffa81c;
   --secondary-accent-color: #ffffff;
-  --tertiary-accent-color: #ff8181;
+  --tertiary-accent-color: #c1bce4;
   --quarternary-accent-color: #bdffdf;
   --outline-color: #4630000f;
+  --outline-color-info: #a5a5a5a6;
 }

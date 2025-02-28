@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* Block most interactions */
+  pointer-events: none;
   z-index: 1000;
 }
 
@@ -13,6 +13,7 @@
   font-size: 12px;
   padding: 25px;
   text-transform: uppercase;
+  color: var(--primary-text-color);
 }
 
 .top-left {
@@ -25,7 +26,7 @@
   right: 0;
   display: flex;
   align-items: center;
-  pointer-events: auto; /* Re-enable pointer events for this corner */
+  pointer-events: auto;
 }
 
 .circles-container {

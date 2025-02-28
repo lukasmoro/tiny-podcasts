@@ -22,7 +22,7 @@
   z-index: 10 !important;
   transform: translateZ(-1px);
   cursor: grab;
-  outline: 1px solid var(--background-color-info);
+  outline: 1px solid var(--outline-color-info);
   outline-offset: -1px;
 }
 
