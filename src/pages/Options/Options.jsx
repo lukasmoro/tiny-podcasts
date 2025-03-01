@@ -22,7 +22,10 @@ export default function Options() {
           <p className="signature">
             Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.
             <br />
-            <a href="">Github</a> • <a href="">Privacy Policy</a>
+            <a href="https://github.com/lukasmoro/podcasts-chrome-extension">
+              Github
+            </a>{' '}
+            • <a href="">Privacy Policy</a>
           </p>
         </div>
       </ThemeProvider>
