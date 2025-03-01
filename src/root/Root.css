@@ -55,12 +55,16 @@ a {
   --secondary-text-color: #a0a0a0;
   --tertiary-text-color: #ffffff;
   --link-text-color: #19a0fc;
+  --button-text-color: #5dffb1;
   --primary-accent-color: #5dffb1;
   --secondary-accent-color: #ffffff;
   --tertiary-accent-color: #ff8181;
   --quarternary-accent-color: #bdffdf;
   --outline-color: #ffffff1a;
   --outline-color-info: #a0a0a0a6;
+  --button-color-positive: #5dffb1;
+  --button-color-negative: #ff8181;
+  --button-text-color: #181720;
 
   /* font family */
   --font-family: 'Barlow', 'system-ui', 'Inter', 'Arial', Helvetica, sans-serif;

@@ -77,29 +77,17 @@
 
 .podcast-remove-btn:hover {
   background-color: var(--tertiary-accent-color);
-  color: #ffffff;
+  color: var(--secondary-accent-color);
 }
 
 .podcast-add-btn {
-  color: var(--secondary-accent-color, #4caf50);
+  color: var(--button-text-color);
   transition: ease-in 0.15s;
 }
 
 .podcast-add-btn:hover {
-  background-color: var(--secondary-accent-color, #4caf50);
-  color: #ffffff;
-}
-
-.podcast-submit-btn {
-  background-color: var(--quartenary-accent-color);
-}
-
-.podcast-submit-btn.hovered {
-  width: 5rem;
-}
-
-.podcast-submit-btn:not(.hovered) {
-  width: 1rem;
+  background-color: var(--button-color-positive);
+  color: var(--secondary-accent-color);
 }
 
 .podcast-truncate-text {
@@ -123,6 +111,7 @@
   left: 0;
   right: 0;
   border-radius: 10px;
+  background-color: var(--background-color);
   box-shadow: #0000001a 0px 0px 5px 0px, #0000001a 0px 0px 1px 0px;
   max-height: 300px;
   overflow-y: auto;
