@@ -85,6 +85,18 @@ a {
   --letter-spacing-h2: auto;
   --letter-spacing-h3: -0.01em;
   --letter-spacing-p: 0em;
+
+  /*elevation*/
+  --primary-shadow: #0e3f7e0f 0px 0px 0px 1px, #2a334608 0px 1px 1px -0.5px,
+    #2a33460a 0px 2px 2px -1px, #2a33460a 0px 3px 3px -1.5px,
+    #2a334608 0px 5px 5px -2.5px, #2a334608 0px 10px 10px -5px,
+    #2a334608 0px 24px 24px -8px;
+  --secondary-shadow: #0000001a 0px 0px 5px 0px, #0000001a 0px 0px 1px 0px;
+  --primary-inner-shadow: #0000000f 0px 2px 4px 0px inset;
+  --input-inner-shadow: #32325d40 0px 30px 60px -32px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -38px inset;
+  --button-shadow: #00000030 0px 10px 20px, #0000003b 0px 6px 6px;
+  --progress-bar-shadow: 0 1px 3px #0000001a;
 }
 
 [data-theme='light'] {

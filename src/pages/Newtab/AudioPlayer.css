@@ -12,6 +12,8 @@ body {
 }
 
 .play-pause {
+  background-color: var(--background-color-play);
+  outline: 5px solid var(--secondary-accent-color);
   position: relative;
   width: 55px;
   height: 55px;
@@ -23,9 +25,7 @@ body {
   justify-content: center;
   padding: 0;
   margin: 0 auto;
-  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
-  background-color: var(--background-color-play);
-  outline: 5px solid var(--secondary-accent-color);
+  box-shadow: #0000000f 0px 2px 4px 0px inset;
   outline-offset: -3px;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
@@ -84,6 +84,7 @@ body {
 }
 
 .progress-bar {
+  box-shadow: var(--primary-inner-shadow);
   position: relative;
   width: 22em;
   max-width: 25em;
@@ -102,14 +103,15 @@ body {
   outline: none;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
-  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
 }
 
 .progress-bar::before {
-  content: '';
-  height: 7px;
+  border-top-right-radius: var(--right-radius, 3.5px);
+  border-bottom-right-radius: var(--right-radius, 3.5px);
   width: calc(var(--seek-before-width) + var(--width-adjust));
   background-color: var(--seek-before-color);
+  content: '';
+  height: 7px;
   position: absolute;
   left: 0;
   top: 0;
@@ -117,32 +119,31 @@ body {
   cursor: pointer;
   z-index: 1;
   border-radius: 3.5px;
-  border-top-right-radius: var(--right-radius, 3.5px);
-  border-bottom-right-radius: var(--right-radius, 3.5px);
   transform: translateX(0);
 }
 
 .progress-bar::-webkit-slider-thumb {
+  box-shadow: var(--progress-bar-shadow);
+  background-color: var(--knob);
   -webkit-appearance: none;
   width: 15px;
   height: 15px;
   border-radius: 50%;
   border: none;
-  background-color: var(--knob);
   cursor: pointer;
   z-index: 3;
   box-sizing: border-box;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin-top: 0;
   position: relative;
 }
 
 .progress-bar:active::-webkit-slider-thumb {
-  transform: scale(1.2);
   background-color: var(--selectedknob);
+  transform: scale(1.2);
 }
 
 .progress-bar::-moz-range-thumb {
+  box-shadow: var(--progress-bar-shadow);
   width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -150,23 +151,22 @@ body {
   background-color: var(--knob);
   cursor: pointer;
   z-index: 3;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .progress-bar:active::-moz-range-thumb {
-  transform: scale(1.2);
   background-color: var(--selectedknob);
+  transform: scale(1.2);
 }
 
 .progress-bar::-ms-thumb {
+  background-color: var(--knob);
+  box-shadow: var(--progress-bar-shadow);
   width: 15px;
   height: 15px;
   border-radius: 50%;
   border: none;
-  background-color: var(--knob);
   cursor: pointer;
   z-index: 3;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes adjust-opacity-ui {

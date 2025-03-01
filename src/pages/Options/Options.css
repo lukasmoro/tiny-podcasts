@@ -22,8 +22,8 @@
 }
 
 .card {
-  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
-  background-color: var(--background-color);
+  box-shadow: var(--primary-shadow);
+  background-color: var(--background-color-info);
   border-radius: 1.5rem;
   max-width: 700px;
   height: fit-content;
