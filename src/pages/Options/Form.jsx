@@ -12,10 +12,10 @@ function Form(props) {
       const response = await fetch(
         `https://itunes.apple.com/search?term=${encodeURIComponent(
           query
-        )}&entity=podcast`
+        )}&entity=podcast&limit=5`
       );
       const data = await response.json();
-      setSearchResults(data.results);
+      setSearchResults(data.results.slice(0, 3));
     } catch (error) {
       console.error('Error searching podcasts:', error);
     }
@@ -63,21 +63,28 @@ function Form(props) {
       {searchResults.length > 0 && (
         <ul className="search-results">
           {searchResults.map((podcast) => (
-            <li
-              className="search-result-item"
-              key={podcast.collectionId}
-              onClick={() => handlePodcastSelect(podcast)}
-            >
-              <img
-                className="result-thumbnail"
-                src={podcast.artworkUrl60}
-                alt={podcast.collectionName}
-              />
-              <div className="result-details">
-                <strong className="result-title">
-                  {podcast.collectionName}
-                </strong>
-                <span className="result-artist">{podcast.artistName}</span>
+            <li className="search-result-item" key={podcast.collectionId}>
+              <div className="podcast-items">
+                <img
+                  className="podcast-item-thumbnail"
+                  src={podcast.artworkUrl60}
+                  alt={podcast.collectionName}
+                />
+                <p
+                  className={
+                    podcast.collectionName?.length > 50
+                      ? 'podcast-item-title podcast-truncate-text'
+                      : 'podcast-item-title'
+                  }
+                >
+                  {podcast.collectionName || 'Unnamed Podcast'}
+                </p>
+                <button
+                  className="podcast-add-btn"
+                  onClick={() => handlePodcastSelect(podcast)}
+                >
+                  Add
+                </button>
               </div>
             </li>
           ))}

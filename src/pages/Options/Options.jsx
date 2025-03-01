@@ -14,7 +14,7 @@ export default function Options() {
             <h2 className="sub-header">Managing Podcasts</h2>
             <h1 className="header">Options</h1>
             <p className="instructions">
-              Add up to 5 Podcasts in the list below or in the pop-up window.
+              Manage podcasts here or in the pop-up window.
             </p>
             <List />
             <p className="greets">Enjoy your Podcasts! 🎧</p>
