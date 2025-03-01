@@ -14,7 +14,7 @@ export default function Options() {
             <h2 className="sub-header">Managing Podcasts</h2>
             <h1 className="header">Options</h1>
             <p className="instructions">
-              Add up to 5 Podcasts in the list below or in the pop-up window.
+              Manage podcasts here or in the pop-up window.
             </p>
             <List />
             <p className="greets">Enjoy your Podcasts! 🎧</p>
@@ -22,7 +22,10 @@ export default function Options() {
           <p className="signature">
             Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.
             <br />
-            <a href="">Github</a> • <a href="">Privacy Policy</a>
+            <a href="https://github.com/lukasmoro/podcasts-chrome-extension">
+              Github
+            </a>{' '}
+            • <a href="">Privacy Policy</a>
           </p>
         </div>
       </ThemeProvider>

@@ -24,7 +24,6 @@ function List() {
   const addUrl = async (item) => {
     const urlChecker = (url) => url.text != item.text;
     let check = items.every(urlChecker);
-
     if (
       items.length > 4 ||
       !check ||
@@ -43,10 +42,8 @@ function List() {
       const xml = parser.parseFromString(text, 'text/xml');
       const podcastName =
         xml.querySelector('channel > title')?.textContent || 'Unnamed Podcast';
-
       const newItem = { ...item, podcastName, artworkUrl: item.artwork };
       let newUrls = [newItem, ...items];
-
       chrome.storage.local.set({ newUrls }, () => {
         setItems(newUrls);
         console.log(newUrls);
@@ -75,15 +72,15 @@ function List() {
   };
 
   return (
-    <animated.div>
-      <div className="form">
+    <animated.div className="podcast-container">
+      <div className="podcast-form-container">
         <Form onSubmit={addUrl} />
       </div>
-      <div className="line"></div>
-      <div className="overflow">
+      <div className="podcast-divider"></div>
+      <div className="podcast-list-overflow">
         <Item items={items} removeUrl={removeUrl} />
       </div>
-      <div className="line"></div>
+      <div className="podcast-divider"></div>
     </animated.div>
   );
 }

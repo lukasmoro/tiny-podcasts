@@ -1,47 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
+import List from '../../pages/Options/List.jsx';
+import { ThemeProvider } from '../Newtab/ThemeProvider';
 import './Onboarding.css';
-import '../Newtab/Carousel.css';
-import Logo from './icon.png';
+import '../../root/Root.css';
 
-function Onboarding() {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyClick = (url) => {
-    const textArea = document.createElement('textarea');
-    textArea.value = url;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    setCopied(true);
-  };
-
-  const tooltipText = copied ? 'url copied' : 'example';
-
+export default function Onboarding() {
   return (
-    <div className="onboarding">
-      <div className="container">
-        <div>
-          <img className="logo-onboarding" src={Logo} alt="logo" />
-        </div>
-        <div className="textbox">
-          <h1 className="head-onboarding">
-            You did not add any podcasts, yet.
-          </h1>
-          <div className="instructions">
-            <ol>
-              <li>
-                Add up to 5 urls of podcasts in the options or pop-up window.
-              </li>
-              <li>
-                The latest episodes will now be displayed in your new tab!
-              </li>
-            </ol>
+    <div className="App">
+      <ThemeProvider>
+        <div className="spacer"></div>
+        <div className="card">
+          <div className="container">
+            <h2 className="sub-header">Onboarding</h2>
+            <h1 className="header">Hey there! 👋</h1>
+            <p className="instructions">
+              Happy you are here.
+              <br />
+              <br />
+              Simply search for a podcast or pick a recommendation...
+            </p>
+            <List />
+            <p className="greets">Enjoy your Podcasts! 🎧</p>
           </div>
         </div>
-      </div>
+      </ThemeProvider>
     </div>
   );
 }
-
-export default Onboarding;

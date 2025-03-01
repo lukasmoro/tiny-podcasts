@@ -4,6 +4,7 @@ import { useSpring } from '@react-spring/core';
 
 const AnimatedItem = ({ item, removeUrl }) => {
   const [isRemoved, setIsRemoved] = useState(false);
+  const [hover, setHover] = useState(false);
 
   const fadeInSprings = useSpring({
     from: { transform: 'translateY(-10px)' },
@@ -43,13 +44,23 @@ const AnimatedItem = ({ item, removeUrl }) => {
   return (
     <animated.div style={fadeInSprings}>
       <animated.div style={fadeOutSprings}>
-        <div className="items">
-          <img src={item.artwork} alt={item.podcastName} />
-          <p className={item.podcastName?.length > 50 ? 'truncate-text' : ''}>
+        <div className="podcast-items">
+          <img
+            className="podcast-item-thumbnail"
+            src={item.artwork}
+            alt={item.podcastName}
+          />
+          <p
+            className={
+              item.podcastName?.length > 50
+                ? 'podcast-item-title podcast-truncate-text'
+                : 'podcast-item-title'
+            }
+          >
             {item.podcastName || 'Unnamed Podcast'}
           </p>
           <button
-            className="remove"
+            className="podcast-remove-btn"
             onClick={handleRemove}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -64,9 +75,9 @@ const AnimatedItem = ({ item, removeUrl }) => {
 
 const Item = ({ items, removeUrl }) => {
   return (
-    <div className="items-container">
-      {items.map((item, key) => (
-        <AnimatedItem key={item.key} h item={item} removeUrl={removeUrl} />
+    <div className="podcast-items-container">
+      {items.map((item) => (
+        <AnimatedItem key={item.key} item={item} removeUrl={removeUrl} />
       ))}
     </div>
   );

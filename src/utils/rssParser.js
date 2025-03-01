@@ -14,7 +14,6 @@ function parseRss(xml) {
       author: getAuthor(xmlDoc, firstItem) || null,
       title: getPodcastTitle(xmlDoc) || 'Unknown Podcast',
       episode: getEpisodeTitle(firstItem) || 'Unknown Episode',
-      // New fields with fallbacks
       releaseDate: safeExecute(() => getReleaseDate(firstItem)) || null,
       publisher: safeExecute(() => getPublisher(xmlDoc)) || null,
       category: safeExecute(() => getCategory(xmlDoc)) || null,
@@ -29,7 +28,6 @@ function parseRss(xml) {
   }
 }
 
-// Helper function to safely execute parsing functions
 function safeExecute(fn) {
   try {
     return fn();
@@ -153,7 +151,6 @@ function getEpisodeTitle(item) {
   }
 }
 
-// New functions for additional fields
 function getReleaseDate(item) {
   const possibleDatePaths = [
     'pubDate',
@@ -169,7 +166,6 @@ function getReleaseDate(item) {
         const dateText = element.textContent.trim();
         const date = new Date(dateText);
 
-        // Check if the date is valid
         if (!isNaN(date.getTime())) {
           return date.toLocaleDateString('en-US', {
             year: 'numeric',
@@ -207,7 +203,6 @@ function getPublisher(xmlDoc) {
     }
   }
 
-  // Fallback to channel author if publisher not found
   try {
     return getAuthor(xmlDoc, null) || null;
   } catch (e) {
@@ -253,10 +248,9 @@ function getDescription(item) {
     try {
       const element = item.querySelector(path);
       if (element && element.textContent) {
-        // Clean HTML tags if present
         const description = element.textContent
           .trim()
-          .replace(/<\/?[^>]+(>|$)/g, ''); // Simple HTML tag removal
+          .replace(/<\/?[^>]+(>|$)/g, '');
         return description;
       }
     } catch (e) {
@@ -274,7 +268,6 @@ export {
   getAuthor,
   getPodcastTitle,
   getEpisodeTitle,
-  // Export new functions
   getReleaseDate,
   getPublisher,
   getCategory,

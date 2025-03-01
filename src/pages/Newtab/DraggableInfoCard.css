@@ -43,7 +43,7 @@
   transform: translateY(-50%);
   width: 5px;
   height: 50px;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--secondary-accent-color);
   border-radius: 5px;
   z-index: 15;
 }
@@ -52,11 +52,10 @@
   margin: 0;
   padding: 25px;
   height: 100%;
-  word-wrap: break-word;
   white-space: pre-wrap;
   overflow: hidden;
   overflow-y: auto;
-  scrollbar-color: rgba(0, 0, 0, 0) transparent;
+  scrollbar-color: #00000000 transparent;
 }
 
 .info-row {
@@ -91,6 +90,7 @@
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-regular);
   margin-top: 15px;
+  padding-bottom: 50px;
   line-height: 1.4;
   animation: fadeIn 0.3s ease-in-out;
 }

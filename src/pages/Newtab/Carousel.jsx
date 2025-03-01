@@ -31,18 +31,19 @@ const Carousel = () => {
   };
 
   useEffect(() => {
-    chrome.storage.local.get(['newUrls'], (item, key) => {
-      if (!item.newUrls) {
-        return;
+    chrome.storage.local.get(['latestPodcasts', 'newUrls'], (items) => {
+      if (items.latestPodcasts && items.latestPodcasts.length > 0) {
+        setItems(items.latestPodcasts);
+      } else if (items.newUrls) {
+        const newUrls = items.newUrls.map((newUrl) => newUrl.text);
+        Promise.all(newUrls.map((url) => fetch(url)))
+          .then((responses) => Promise.all(responses.map((r) => r.text())))
+          .then((xmlStrings) => {
+            const firstPodcasts = xmlStrings.map(parseRss);
+            setItems(firstPodcasts);
+          })
+          .catch((error) => console.error(error));
       }
-      const newUrls = item.newUrls.map((newUrl) => newUrl.text);
-      Promise.all(newUrls.map((url) => fetch(url)))
-        .then((responses) => Promise.all(responses.map((r) => r.text())))
-        .then((xmlStrings) => {
-          const firstPodcasts = xmlStrings.map(parseRss);
-          setItems(firstPodcasts);
-        })
-        .catch((error) => console.error(error));
     });
   }, []);
 
@@ -117,14 +118,18 @@ const Carousel = () => {
         <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
         <li className="spacer"></li>
       </ul>
-      <span className="indicators">
-        {items.map((__, index) => (
-          <button
-            key={index}
-            className={`indicator ${index === indicatorIndex ? 'active' : ''}`}
-          ></button>
-        ))}
-      </span>
+      {items.length > 1 && (
+        <span className="indicators">
+          {items.map((__, index) => (
+            <button
+              key={index}
+              className={`indicator ${
+                index === indicatorIndex ? 'active' : ''
+              }`}
+            ></button>
+          ))}
+        </span>
+      )}
     </div>
   );
 };

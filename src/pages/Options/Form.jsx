@@ -12,10 +12,10 @@ function Form(props) {
       const response = await fetch(
         `https://itunes.apple.com/search?term=${encodeURIComponent(
           query
-        )}&entity=podcast`
+        )}&entity=podcast&limit=5`
       );
       const data = await response.json();
-      setSearchResults(data.results);
+      setSearchResults(data.results.slice(0, 3));
     } catch (error) {
       console.error('Error searching podcasts:', error);
     }
@@ -51,26 +51,40 @@ function Form(props) {
 
   return (
     <div className="podcast-search-container">
-      <form onSubmit={handleSubmit} autoComplete="off">
+      <form className="podcast-form" onSubmit={handleSubmit} autoComplete="off">
         <input
+          className="podcast-input"
           placeholder="Search Podcasts..."
           value={input}
           onChange={handleChange}
           name="text"
         />
       </form>
-
       {searchResults.length > 0 && (
         <ul className="search-results">
           {searchResults.map((podcast) => (
-            <li
-              key={podcast.collectionId}
-              onClick={() => handlePodcastSelect(podcast)}
-            >
-              <img src={podcast.artworkUrl60} alt={podcast.collectionName} />
-              <div>
-                <strong>{podcast.collectionName}</strong>
-                <span>{podcast.artistName}</span>
+            <li className="search-result-item" key={podcast.collectionId}>
+              <div className="podcast-items">
+                <img
+                  className="podcast-item-thumbnail"
+                  src={podcast.artworkUrl60}
+                  alt={podcast.collectionName}
+                />
+                <p
+                  className={
+                    podcast.collectionName?.length > 50
+                      ? 'podcast-item-title podcast-truncate-text'
+                      : 'podcast-item-title'
+                  }
+                >
+                  {podcast.collectionName || 'Unnamed Podcast'}
+                </p>
+                <button
+                  className="podcast-add-btn"
+                  onClick={() => handlePodcastSelect(podcast)}
+                >
+                  Add
+                </button>
               </div>
             </li>
           ))}
