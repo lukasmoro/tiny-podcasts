@@ -61,6 +61,7 @@
 .podcast-remove-btn,
 .podcast-add-btn {
   font-size: var(--font-size-medium);
+  color: var(--tertiary-text-color);
   border: none;
   cursor: pointer;
   height: 100%;
@@ -121,9 +122,8 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: white;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: #0000001a 0px 0px 5px 0px, #0000001a 0px 0px 1px 0px;
   max-height: 300px;
   overflow-y: auto;
   z-index: 1000;
@@ -150,6 +150,7 @@
   display: flex;
   align-items: center;
   height: 50px;
+  color: var(--tertiary-text-color);
 }
 
 .podcast-items button.podcast-remove-btn,
