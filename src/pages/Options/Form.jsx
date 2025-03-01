@@ -51,26 +51,33 @@ function Form(props) {
 
   return (
     <div className="podcast-search-container">
-      <form onSubmit={handleSubmit} autoComplete="off">
+      <form className="podcast-form" onSubmit={handleSubmit} autoComplete="off">
         <input
+          className="podcast-input"
           placeholder="Search Podcasts..."
           value={input}
           onChange={handleChange}
           name="text"
         />
       </form>
-
       {searchResults.length > 0 && (
         <ul className="search-results">
           {searchResults.map((podcast) => (
             <li
+              className="search-result-item"
               key={podcast.collectionId}
               onClick={() => handlePodcastSelect(podcast)}
             >
-              <img src={podcast.artworkUrl60} alt={podcast.collectionName} />
-              <div>
-                <strong>{podcast.collectionName}</strong>
-                <span>{podcast.artistName}</span>
+              <img
+                className="result-thumbnail"
+                src={podcast.artworkUrl60}
+                alt={podcast.collectionName}
+              />
+              <div className="result-details">
+                <strong className="result-title">
+                  {podcast.collectionName}
+                </strong>
+                <span className="result-artist">{podcast.artistName}</span>
               </div>
             </li>
           ))}

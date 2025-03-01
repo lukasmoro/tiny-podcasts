@@ -1,14 +1,14 @@
-button {
+.podcast-button {
   min-width: 2.22rem;
 }
 
-form {
+.podcast-form {
   justify-content: space-between;
   display: flex;
   align-items: center;
 }
 
-input {
+.podcast-input {
   font-size: var(--font-size-medium);
   background: var(--background-color-input);
   outline: none;
@@ -21,14 +21,15 @@ input {
   height: 2.22rem;
 }
 
-.items {
+.podcast-items {
   display: flex;
   align-items: center;
   gap: 1rem;
   width: 100%;
+  position: relative;
 }
 
-.items img {
+.podcast-item-thumbnail {
   flex-shrink: 0;
   width: 50px;
   height: 50px;
@@ -36,29 +37,30 @@ input {
   object-fit: cover;
 }
 
-.items p {
+.podcast-item-title {
   flex: 1;
   margin: 0;
 }
 
-.items .remove {
+.podcast-remove-btn {
   margin: 0;
   flex-shrink: 0;
   height: 2.22rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
 }
 
-.items-container {
+.podcast-items-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   width: 100%;
 }
 
-.submit,
-.remove {
+.podcast-submit-btn,
+.podcast-remove-btn {
   font-size: var(--font-size-medium);
   border: none;
   cursor: pointer;
@@ -68,30 +70,30 @@ input {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
-.remove {
+.podcast-remove-btn {
   color: var(--tertiary-accent-color);
   margin-top: 0.75rem;
   transition: ease-in 0.15s;
 }
 
-.remove:hover {
+.podcast-remove-btn:hover {
   background-color: var(--tertiary-accent-color);
   color: #ffffff;
 }
 
-.submit {
+.podcast-submit-btn {
   background-color: var(--quartenary-accent-color);
 }
 
-.submit.hovered {
+.podcast-submit-btn.hovered {
   width: 5rem;
 }
 
-.submit:not(.hovered) {
+.podcast-submit-btn:not(.hovered) {
   width: 1rem;
 }
 
-.truncate-text {
+.podcast-truncate-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -100,6 +102,10 @@ input {
 .podcast-search-container {
   position: relative;
   width: 100%;
+}
+
+.podcast-list-overflow {
+  padding: 1.5rem 0;
 }
 
 .search-results {
@@ -118,25 +124,25 @@ input {
   list-style: none;
 }
 
-.search-results li {
+.search-result-item {
   display: flex;
   align-items: center;
   padding: 8px 12px;
   cursor: pointer;
 }
 
-.search-results li:hover {
+.search-result-item:hover {
   background-color: var(--background-color-detail);
 }
 
-.search-results img {
+.result-thumbnail {
   width: 40px;
   height: 40px;
   border-radius: 4px;
   margin-right: 12px;
 }
 
-.search-results div {
+.result-details {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -145,8 +151,35 @@ input {
   width: 100%;
 }
 
-.search-results strong {
+.result-title {
   font-size: var(--font-size-medium);
   text-align: left;
   width: 100%;
+}
+
+.result-artist {
+  font-size: var(--font-size-small, 0.9rem);
+}
+
+.podcast-remove-btn {
+  margin-top: 0 !important;
+}
+
+.podcast-items-container > animated-div {
+  display: flex;
+  align-items: center;
+}
+
+.podcast-item-title {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+.podcast-items button.podcast-remove-btn {
+  margin: 0;
+  align-self: center;
+  position: relative;
+  top: 0;
+  transform: translateY(0);
 }

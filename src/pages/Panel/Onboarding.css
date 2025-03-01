@@ -1,58 +1,75 @@
-.onboarding {
+.App {
   display: flex;
   flex-direction: column;
   justify-content: start;
 }
+.sub-header {
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  color: var(--secondary-text-color);
+}
 
-.instructions {
+.header {
+  margin-top: 0.5rem;
+}
+
+.spacer {
+  text-align: center;
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+}
+
+.card {
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  background-color: var(--background-color);
+  border-radius: 1.5rem;
   max-width: 700px;
-  line-height: 2;
-  font-weight: var(--font-weight-regular);
-  font-size: var(--font-size-large);
-  color: var(--primary-text-color);
-  margin-top: 1.2rem;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
-.textbox {
-  margin-left: 2rem;
-}
-
-.logo-onboarding {
-  max-width: 10rem;
-  height: auto;
-  margin: 0;
-}
-
-.head-onboarding {
-  margin-top: 0;
-  max-width: 1000px;
+  height: fit-content;
+  margin-top: 2.5rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .container {
-  margin: 0;
-  display: flex;
-  margin-top: 20%;
-  margin-left: auto;
-  margin-right: auto;
-  align-items: center;
-  animation: fadeInAnimation ease 3s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
+  padding: 2rem;
 }
 
-ol {
-  list-style-type: decimal;
-  list-style-position: inside;
+.instructions {
+  margin-top: 2rem;
+  max-width: 400px;
+  margin-bottom: 1.5rem;
 }
 
-@keyframes fadeInAnimation {
-  0% {
-    opacity: 0;
-  }
+.greets {
+  margin-top: 1.5rem;
+  text-align: center;
+  max-width: 100%;
+}
 
-  100% {
-    opacity: 1;
-  }
+.line {
+  background: var(--background-color-detail);
+  width: 400px;
+  height: 1px;
+}
+
+.signature {
+  font-size: var(--font-size-small);
+  position: absolute;
+  margin-top: 3.5rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  text-align: center;
+}
+
+.overflow {
+  overflow: auto;
+  overscroll-behavior: contain;
+  height: 250px;
+  padding-bottom: 2rem;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
 }

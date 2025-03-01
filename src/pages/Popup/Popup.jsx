@@ -8,7 +8,9 @@ const Popup = () => {
   return (
     <div className="App">
       <ThemeProvider>
-        <List />
+        <div className="list-container">
+          <List />
+        </div>
       </ThemeProvider>
     </div>
   );
