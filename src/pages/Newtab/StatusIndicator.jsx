@@ -1,7 +1,7 @@
 import React from 'react';
 import usePlaybackPosition from '../../hooks/usePlaybackPosition';
 import './StatusIndicator.css';
-import Finished from '../../assets/img/checkmark.svg';
+import { CheckIcon } from '../Icons/CheckIcon';
 
 const StatusIndicator = ({ podcastId }) => {
   const { status: playbackStatus, PLAYBACK_STATUS } =
@@ -27,7 +27,7 @@ const StatusIndicator = ({ podcastId }) => {
       case PLAYBACK_STATUS.IN_PROGRESS:
         return null;
       case PLAYBACK_STATUS.FINISHED:
-        return <img src={Finished} alt="Finished" className="status-icon" />;
+        return <CheckIcon className="status-icon" />;
       default:
         return null;
     }

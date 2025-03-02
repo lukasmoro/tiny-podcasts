@@ -38,7 +38,7 @@ body {
   transform: translate(-50%, -50%);
   width: 25px;
   height: 25px;
-  color: var(--background-color-playicon);
+  color: var(--background-color-icons);
   filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.8));
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;

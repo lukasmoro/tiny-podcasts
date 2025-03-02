@@ -25,10 +25,11 @@
 
 .status-icon {
   position: absolute;
-  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 10px;
   height: 10px;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.5));
+  color: var(--background-color-icons);
 }
