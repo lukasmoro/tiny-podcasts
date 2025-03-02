@@ -51,7 +51,6 @@
 }
 
 .top-center {
-  border: 3px solid var(--background-color-detail);
   position: absolute;
   top: 20px;
   left: 50%;
@@ -60,12 +59,6 @@
   height: 30px;
   background-color: transparent;
   border-radius: 50%;
-}
-
-.top-right img {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
 }
 
 .bottom-left {
@@ -79,10 +72,13 @@
 }
 
 .theme-toggle {
+  width: 20px;
+  height: 20px;
   cursor: pointer;
   -webkit-user-drag: none;
   -webkit-user-select: none;
   user-select: none;
+  color: var(--background-color-detail);
 }
 
 .theme-toggle:hover {
