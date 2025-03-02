@@ -60,6 +60,7 @@
 .podcast-remove-btn,
 .podcast-add-btn {
   font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-regular);
   color: var(--tertiary-text-color);
   box-shadow: var(--button-shadow);
   border: none;

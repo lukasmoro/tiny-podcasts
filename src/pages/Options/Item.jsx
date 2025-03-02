@@ -10,7 +10,7 @@ const AnimatedItem = ({ item, removeUrl }) => {
     from: { transform: 'translateY(-10px)' },
     to: { transform: 'translateY(0px)' },
     config: {
-      tension: 300,
+      tension: 100,
       friction: 10,
     },
   });
@@ -19,8 +19,8 @@ const AnimatedItem = ({ item, removeUrl }) => {
     opacity: isRemoved ? 0 : 1,
     transform: isRemoved ? 'translateX(-100%)' : 'translateX(0%)',
     config: {
-      tension: 400,
-      friction: 15,
+      tension: 100,
+      friction: 10,
     },
     onRest: () => {
       if (isRemoved) {
