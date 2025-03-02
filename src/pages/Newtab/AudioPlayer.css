@@ -52,6 +52,7 @@ body {
   font-size: var(--font-size-small);
   font-family: var(--font-family-mono);
   margin: 0;
+  margin-bottom: 0.265rem;
   max-width: 40px;
   text-align: center;
 }
