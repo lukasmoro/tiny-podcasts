@@ -7,9 +7,8 @@
 .podcast-input {
   font-size: var(--font-size-medium);
   background: var(--background-color-input);
+  box-shadow: var(--input-inner-shadow);
   outline: none;
-  box-shadow: #32325d40 0px 30px 60px -32px inset,
-    rgba(0, 0, 0, 0.3) 0px 18px 36px -38px inset;
   border: none;
   border-radius: 5rem;
   width: 100%;
@@ -61,13 +60,14 @@
 .podcast-remove-btn,
 .podcast-add-btn {
   font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-regular);
   color: var(--tertiary-text-color);
+  box-shadow: var(--button-shadow);
   border: none;
   cursor: pointer;
   height: 100%;
   border-radius: 5rem;
   padding: 0.6rem;
-  box-shadow: #00000030 0px 10px 20px, #0000003b 0px 6px 6px;
 }
 
 .podcast-remove-btn {
@@ -77,29 +77,17 @@
 
 .podcast-remove-btn:hover {
   background-color: var(--tertiary-accent-color);
-  color: #ffffff;
+  color: var(--secondary-accent-color);
 }
 
 .podcast-add-btn {
-  color: var(--secondary-accent-color, #4caf50);
+  color: var(--button-text-color);
   transition: ease-in 0.15s;
 }
 
 .podcast-add-btn:hover {
-  background-color: var(--secondary-accent-color, #4caf50);
-  color: #ffffff;
-}
-
-.podcast-submit-btn {
-  background-color: var(--quartenary-accent-color);
-}
-
-.podcast-submit-btn.hovered {
-  width: 5rem;
-}
-
-.podcast-submit-btn:not(.hovered) {
-  width: 1rem;
+  background-color: var(--button-color-positive);
+  color: var(--secondary-accent-color);
 }
 
 .podcast-truncate-text {
@@ -118,12 +106,13 @@
 }
 
 .search-results {
+  background-color: var(--background-color);
+  box-shadow: var(--secondary-shadow);
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   border-radius: 10px;
-  box-shadow: #0000001a 0px 0px 5px 0px, #0000001a 0px 0px 1px 0px;
   max-height: 300px;
   overflow-y: auto;
   z-index: 1000;
@@ -147,10 +136,10 @@
 }
 
 .podcast-item-title {
+  color: var(--tertiary-text-color);
   display: flex;
   align-items: center;
   height: 50px;
-  color: var(--tertiary-text-color);
 }
 
 .podcast-items button.podcast-remove-btn,

@@ -4,8 +4,8 @@ import { useSpring } from '@react-spring/core';
 import './AudioPlayer.css';
 import BehaviourClick from './BehaviourClick.jsx';
 import usePlaybackPosition from '../../hooks/usePlaybackPosition.js';
-import Play from '../../assets/img/play.fill.svg';
-import Pause from '../../assets/img/pause.fill.svg';
+import { PlayIcon } from '../Icons/PlayIcon';
+import { PauseIcon } from '../Icons/PauseIcon';
 
 const AudioPlayer = (props) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -293,16 +293,17 @@ const AudioPlayer = (props) => {
                 if (props.handleClick) props.handleClick();
               }}
             >
-              <img
-                src={isPlaying ? Pause : Play}
-                alt={isPlaying ? 'Pause' : 'Play'}
-              />
+              {isPlaying ? (
+                <PauseIcon className="player-icon" />
+              ) : (
+                <PlayIcon className="player-icon" />
+              )}
             </button>
           </BehaviourClick>
         </div>
         <animated.div style={springs} className="progress-container">
           <div className="current-time">{calculateTime(currentTime)}</div>
-          <div>
+          <div className="progress-bar-wrapper">
             <input
               className="progress-bar"
               type="range"

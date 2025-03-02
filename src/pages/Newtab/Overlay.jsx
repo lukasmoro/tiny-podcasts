@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Moon from '../../assets/img/moon.fill.svg';
-import Sun from '../../assets/img/sun.max.fill.svg';
+import { SunIcon } from '../Icons/SunIcon';
+import { MoonIcon } from '../Icons/MoonIcon';
 import './Overlay.css';
 
 const Overlay = () => {
@@ -48,13 +48,13 @@ const Overlay = () => {
         <div className="circle"></div>
         <div className="circle"></div>
       </div>
+      <div className="top-center"></div>
       <h2 className="corner top-right">
-        <img
-          src={isDarkMode ? Moon : Sun}
-          alt={isDarkMode ? 'Light mode' : 'Dark mode'}
-          onClick={handleThemeToggle}
-          className="theme-toggle"
-        />
+        {isDarkMode ? (
+          <MoonIcon className="theme-toggle" onClick={handleThemeToggle} />
+        ) : (
+          <SunIcon className="theme-toggle" onClick={handleThemeToggle} />
+        )}
       </h2>
       <h2 className="corner top-left">{formatDate(currentTime)}</h2>
       <h2 className="corner bottom-right">0.0.2 · MADE IN STOCKHOLM, SWEDEN</h2>
