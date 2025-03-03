@@ -17,8 +17,8 @@ function BuyMeACoffeeButton() {
     >
       <img
         style={{
-          paddingTop: '0.6rem',
-          height: '45px',
+          paddingTop: '1rem',
+          height: '40px',
           userSelect: 'none',
           WebkitUserDrag: 'none',
           KhtmlUserDrag: 'none',
