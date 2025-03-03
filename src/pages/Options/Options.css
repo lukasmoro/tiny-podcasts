@@ -24,7 +24,7 @@
 .card {
   box-shadow: var(--primary-shadow);
   background-color: var(--background-color-info);
-  border-radius: 1.5rem;
+  border-radius: var(--border-radius-large);
   max-width: 700px;
   height: fit-content;
   margin-top: 2.5rem;
@@ -57,7 +57,7 @@ input {
 }
 
 .greets {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   text-align: center;
   max-width: 100%;
 }

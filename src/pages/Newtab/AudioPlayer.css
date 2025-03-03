@@ -14,11 +14,11 @@ body {
 .play-pause {
   background-color: var(--background-color-play);
   outline: 5px solid var(--secondary-accent-color);
+  border-radius: var(--border-radius-circle);
   position: relative;
   width: 55px;
   height: 55px;
   cursor: pointer;
-  border-radius: 50%;
   border: none;
   display: flex;
   align-items: center;
@@ -96,19 +96,25 @@ body {
   --seek-before-color: var(--primary-accent-color);
   --knob: var(--secondary-accent-color);
   --selectedknob: var(--secondary-accent-color);
-  --right-radius: 3.5px;
+  --right-radius: var(--border-radius-progressbar);
   --width-adjust: 1px;
   appearance: none;
   background: var(--bar-bg);
-  border-radius: 3.5px;
+  border-radius: var(--border-radius-progressbar);
   outline: none;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
 .progress-bar::before {
-  border-top-right-radius: var(--right-radius, 3.5px);
-  border-bottom-right-radius: var(--right-radius, 3.5px);
+  border-top-right-radius: var(
+    --right-radius,
+    var(--border-radius-progressbar)
+  );
+  border-bottom-right-radius: var(
+    --right-radius,
+    var(--border-radius-progressbar)
+  );
   width: calc(var(--seek-before-width) + var(--width-adjust));
   background-color: var(--seek-before-color);
   content: '';
@@ -119,7 +125,7 @@ body {
   bottom: 0;
   cursor: pointer;
   z-index: 1;
-  border-radius: 3.5px;
+  border-radius: var(--border-radius-progressbar);
   transform: translateX(0);
 }
 
@@ -129,7 +135,7 @@ body {
   -webkit-appearance: none;
   width: 15px;
   height: 15px;
-  border-radius: 50%;
+  border-radius: var(--border-radius-circle);
   border: none;
   cursor: pointer;
   z-index: 3;
@@ -147,7 +153,7 @@ body {
   box-shadow: var(--progress-bar-shadow);
   width: 15px;
   height: 15px;
-  border-radius: 50%;
+  border-radius: var(--border-radius-circle);
   border: none;
   background-color: var(--knob);
   cursor: pointer;
@@ -164,7 +170,7 @@ body {
   box-shadow: var(--progress-bar-shadow);
   width: 15px;
   height: 15px;
-  border-radius: 50%;
+  border-radius: var(--border-radius-circle);
   border: none;
   cursor: pointer;
   z-index: 3;

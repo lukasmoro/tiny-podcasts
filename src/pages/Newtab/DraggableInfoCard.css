@@ -2,6 +2,7 @@
   background-color: var(--background-color-info);
   outline: 1px solid var(--outline-color-info);
   box-shadow: var(--info-card-shadow);
+  border-radius: var(--border-radius-medium);
   position: absolute;
   top: 0;
   right: 0;
@@ -9,7 +10,6 @@
   margin: 0;
   padding: 0;
   backdrop-filter: blur(12px);
-  border-radius: 20px;
   overflow: hidden;
   touch-action: none;
   will-change: transform, opacity, height;
@@ -40,7 +40,7 @@
   width: 5px;
   height: 50px;
   background: var(--secondary-accent-color);
-  border-radius: 5px;
+  border-radius: var(--border-radius-small);
   z-index: 15;
 }
 
