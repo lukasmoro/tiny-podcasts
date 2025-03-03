@@ -25,7 +25,7 @@
   box-shadow: var(--primary-shadow);
   background-color: var(--background-color-info);
   border-radius: var(--border-radius-large);
-  max-width: 700px;
+  max-width: 400px;
   height: fit-content;
   margin-top: 2.5rem;
   margin-left: auto;
@@ -90,4 +90,10 @@ input {
 
 .form {
   margin-bottom: 1rem;
+}
+
+.podcast-truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

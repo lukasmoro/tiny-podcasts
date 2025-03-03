@@ -52,7 +52,7 @@ const AnimatedItem = ({ item, removeUrl }) => {
           />
           <p
             className={
-              item.podcastName?.length > 50
+              item.podcastName?.length > 10
                 ? 'podcast-item-title podcast-truncate-text'
                 : 'podcast-item-title'
             }

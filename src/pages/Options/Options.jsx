@@ -1,8 +1,8 @@
 import React from 'react';
 import List from './List';
-
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import './Options.css';
+import './Form.css';
 import '../../root/Root.css';
 
 export default function Options() {
