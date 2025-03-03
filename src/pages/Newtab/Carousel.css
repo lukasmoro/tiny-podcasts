@@ -6,6 +6,10 @@ body {
   -ms-overflow-style: none;
 }
 
+body.no-scroll {
+  overflow: hidden;
+}
+
 h2 {
   animation: linear adjust-opacity both;
   animation-timeline: --li-in-and-out-of-view;
@@ -24,6 +28,11 @@ h2 {
   overflow: scroll;
   scrollbar-width: none;
   scroll-behavior: smooth;
+}
+
+.cards.visible {
+  overflow: hidden;
+  touch-action: none;
 }
 
 .cards li {
@@ -58,6 +67,7 @@ h2 {
 .blur.visible {
   opacity: 1;
   transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
 }
 
 .loader.active {
@@ -116,6 +126,15 @@ h2 {
   flex-direction: column;
   align-items: center;
   z-index: 1000;
+}
+
+.cards.visible .cover-container {
+  pointer-events: auto;
+}
+
+.visible .player-container {
+  pointer-events: auto;
+  z-index: 1001;
 }
 
 .header-container {

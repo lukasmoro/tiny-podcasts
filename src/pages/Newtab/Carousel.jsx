@@ -30,6 +30,20 @@ const Carousel = () => {
     setIsLoadingActive(false);
   };
 
+  // Apply or remove no-scroll class to body element when blur visibility changes
+  useEffect(() => {
+    if (isBlurVisible) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    // Clean up function to ensure class is removed if component unmounts
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [isBlurVisible]);
+
   useEffect(() => {
     chrome.storage.local.get(['latestPodcasts', 'newUrls'], (items) => {
       if (items.latestPodcasts && items.latestPodcasts.length > 0) {
@@ -74,7 +88,6 @@ const Carousel = () => {
                       <div className="header-content">
                         <div className="podcast-title-container">
                           <h2 className="podcast-title">
-                            {/* {String(index + 1).padStart(2, '0')}.{' '} */}
                             {podcast.title.length > 30
                               ? `${podcast.title.substring(0, 30)}...`
                               : podcast.title}
