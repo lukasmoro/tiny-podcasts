@@ -35,7 +35,7 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  margin-left: -10px;
+  justify-content: center;
 }
 
 .circle {

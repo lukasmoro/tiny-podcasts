@@ -41,11 +41,11 @@ export default function Options() {
 
             <div className="card right-card">
               <div className="container">
-                <h2 className="sub-header">Support Podcasts</h2>
-                <h1 className="header">Feedback & Donation</h1>
+                <h2 className="sub-header">Enjoy Podcasts?</h2>
+                <h1 className="header">Support</h1>
                 <p className="instructions">
-                  Enjoy podcasts? Please consider supporting. This will help
-                  creating more tiny products in the future.
+                  Please consider supporting. This will help creating more tiny
+                  products in the future. Thank you!
                 </p>
                 <div className="items">
                   <p></p>
