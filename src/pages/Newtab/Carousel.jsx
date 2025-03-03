@@ -30,6 +30,20 @@ const Carousel = () => {
     setIsLoadingActive(false);
   };
 
+  // Apply or remove no-scroll class to body element when blur visibility changes
+  useEffect(() => {
+    if (isBlurVisible) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+
+    // Clean up function to ensure class is removed if component unmounts
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [isBlurVisible]);
+
   useEffect(() => {
     chrome.storage.local.get(['latestPodcasts', 'newUrls'], (items) => {
       if (items.latestPodcasts && items.latestPodcasts.length > 0) {
@@ -62,61 +76,60 @@ const Carousel = () => {
         id="parent-container"
         className={`cards ${isBlurVisible ? 'visible' : ''}`}
       >
+        <Overlay />
         <div className={`loader ${isLoading ? 'active' : ''}`}>
-          <Overlay />
-        </div>
-        <li className="spacer"></li>
-        {items.map(
-          (podcast, index) =>
-            podcast && (
-              <li key={index}>
-                <div className="cover-container">
-                  <div className="header-container">
-                    <div className="header-content">
-                      <div className="podcast-title-container">
-                        <h2 className="podcast-title">
-                          {/* {String(index + 1).padStart(2, '0')}.{' '} */}
-                          {podcast.title.length > 30
-                            ? `${podcast.title.substring(0, 30)}...`
-                            : podcast.title}
-                        </h2>
-                        <StatusIndicator
-                          status={podcast.PLAYBACK_STATUS}
-                          podcastId={`${podcast.title}-${podcast.episode}`}
-                        />
+          <li className="spacer"></li>
+          {items.map(
+            (podcast, index) =>
+              podcast && (
+                <li key={index}>
+                  <div className="cover-container">
+                    <div className="header-container">
+                      <div className="header-content">
+                        <div className="podcast-title-container">
+                          <h2 className="podcast-title">
+                            {podcast.title.length > 30
+                              ? `${podcast.title.substring(0, 30)}...`
+                              : podcast.title}
+                          </h2>
+                          <StatusIndicator
+                            status={podcast.PLAYBACK_STATUS}
+                            podcastId={`${podcast.title}-${podcast.episode}`}
+                          />
+                        </div>
+                        <h3 className="podcast-episode">
+                          {podcast.episode.length > 45
+                            ? `${podcast.episode.substring(0, 45)}...`
+                            : podcast.episode}
+                        </h3>
                       </div>
-                      <h3 className="podcast-episode">
-                        {podcast.episode.length > 45
-                          ? `${podcast.episode.substring(0, 45)}...`
-                          : podcast.episode}
-                      </h3>
+                    </div>
+                    <div className="cover-mask"></div>
+                    <img
+                      className="cover"
+                      src={podcast.image}
+                      alt={podcast.title}
+                    />
+                    <DraggableInfoCard
+                      podcast={podcast}
+                      expanded={activeInfoCard === index}
+                      setExpanded={setActiveInfoCard}
+                    />
+                    <div className="player-container">
+                      <AudioPlayer
+                        src={podcast.mp3}
+                        podcastId={`${podcast.title}-${podcast.episode}`}
+                        handleClick={handleClick}
+                        onEnded={handlePodcastEnd}
+                      />
                     </div>
                   </div>
-                  <div className="cover-mask"></div>
-                  <img
-                    className="cover"
-                    src={podcast.image}
-                    alt={podcast.title}
-                  />
-                  <DraggableInfoCard
-                    podcast={podcast}
-                    expanded={activeInfoCard === index}
-                    setExpanded={setActiveInfoCard}
-                  />
-                  <div className="player-container">
-                    <AudioPlayer
-                      src={podcast.mp3}
-                      podcastId={`${podcast.title}-${podcast.episode}`}
-                      handleClick={handleClick}
-                      onEnded={handlePodcastEnd}
-                    />
-                  </div>
-                </div>
-              </li>
-            )
-        )}
-        <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
-        <li className="spacer"></li>
+                </li>
+              )
+          )}
+          <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
+          <li className="spacer"></li>
+        </div>
       </ul>
       {items.length > 1 && (
         <span className="indicators">

@@ -2,7 +2,46 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
+  align-items: center;
 }
+
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 5rem;
+  max-width: 820px;
+  width: 100%;
+}
+
+.left-card {
+  margin-top: 5.5rem;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: calc(50% - 10px);
+}
+
+.left-card .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.right-cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 5.5rem;
+  height: 540px;
+  flex: 1;
+  max-width: calc(50% - 10px);
+}
+
 .sub-header {
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
@@ -24,16 +63,35 @@
 .card {
   box-shadow: var(--primary-shadow);
   background-color: var(--background-color-info);
-  border-radius: 1.5rem;
-  max-width: 700px;
-  height: fit-content;
-  margin-top: 2.5rem;
-  margin-left: auto;
-  margin-right: auto;
+  border-radius: var(--border-radius-large);
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.right-card {
+  height: calc(50% - 10px);
+}
+
+.right-card:first-child {
+  margin-bottom: 20px;
 }
 
 .container {
   padding: 2rem;
+  box-sizing: border-box;
+}
+
+.right-card .container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.left-card .overflow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
 }
 
 form {
@@ -43,7 +101,8 @@ form {
 }
 
 .items {
-  margin-top: 1.6rem;
+  margin-top: 1rem;
+  flex: 1;
 }
 
 input {
@@ -51,37 +110,36 @@ input {
 }
 
 .instructions {
-  margin-top: 2rem;
-  max-width: 400px;
-  margin-bottom: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 .greets {
-  margin-top: 1.5rem;
+  margin-top: auto;
   text-align: center;
   max-width: 100%;
+  padding-top: 1rem;
 }
 
 .line {
   background: var(--background-color-detail);
-  width: 400px;
+  width: 100%;
   height: 1px;
 }
 
 .signature {
   font-size: var(--font-size-small);
   position: absolute;
-  margin-top: 3.5rem;
+  bottom: 0;
   left: 50%;
   transform: translate(-50%, 0);
   text-align: center;
+  width: 100%;
 }
 
 .overflow {
   overflow: auto;
   overscroll-behavior: contain;
-  height: 250px;
-  padding-bottom: 2rem;
   scrollbar-width: none;
   scroll-behavior: smooth;
   overflow-y: auto;
@@ -90,4 +148,10 @@ input {
 
 .form {
   margin-bottom: 1rem;
+}
+
+.podcast-truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

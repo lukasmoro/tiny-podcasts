@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Podcasts",
-  "description": "Add your favorite podcasts with RSS-Feeds and play them from a new tab.",
-  "version": "0.0.0.1",
+  "name": "Tiny Podcasts",
+  "description": "Simple podcast player for chome.",
+  "version": "0.0.2",
   "options_page": "options.html",
   "background": {
     "service_worker": "background.bundle.js"

@@ -35,15 +35,15 @@
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  margin-left: -10px;
+  justify-content: center;
 }
 
 .circle {
   border: 3px solid var(--background-color-detail);
+  border-radius: var(--border-radius-circle);
   width: 20px;
   height: 20px;
   background-color: transparent;
-  border-radius: 50%;
 }
 
 .circle:last-child {
@@ -51,6 +51,7 @@
 }
 
 .top-center {
+  border-radius: var(--border-radius-circle);
   position: absolute;
   top: 20px;
   left: 50%;
@@ -58,7 +59,6 @@
   width: 30px;
   height: 30px;
   background-color: transparent;
-  border-radius: 50%;
 }
 
 .bottom-left {
@@ -72,13 +72,13 @@
 }
 
 .theme-toggle {
+  color: var(--background-color-detail);
   width: 20px;
   height: 20px;
   cursor: pointer;
   -webkit-user-drag: none;
   -webkit-user-select: none;
   user-select: none;
-  color: var(--background-color-detail);
 }
 
 .theme-toggle:hover {

@@ -31,7 +31,7 @@ function List() {
         item.text
       )
     ) {
-      alert('Please enter a valid url! You can enter up to five podcast!');
+      alert('This podcast has already been added! 👀');
       return;
     }
 

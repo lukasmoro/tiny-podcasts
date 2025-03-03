@@ -98,6 +98,16 @@ a {
     rgba(0, 0, 0, 0.3) 0px 18px 36px -38px inset;
   --button-shadow: #00000030 0px 10px 20px, #0000003b 0px 6px 6px;
   --progress-bar-shadow: 0 1px 3px #0000001a;
+  --info-card-shadow: #110c2e26 0px 48px 100px 0px;
+
+  /*radii*/
+  --border-radius-circle: 50%;
+  --border-radius-progressbar: 3.5px;
+  --border-radius-thumbnail: 15px;
+  --border-radius-input: 5rem;
+  --border-radius-large: 30px;
+  --border-radius-medium: 20px;
+  --border-radius-small: 5px;
 }
 
 [data-theme='light'] {
@@ -109,7 +119,7 @@ a {
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #463000;
-  --secondary-text-color: #978f7e;
+  --secondary-text-color: #e4d9bf;
   --tertiary-text-color: #181720;
   --link-text-color: #19a0fc;
   --primary-accent-color: #ffa81c;

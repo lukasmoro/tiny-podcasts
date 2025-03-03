@@ -72,7 +72,7 @@ function Form(props) {
                 />
                 <p
                   className={
-                    podcast.collectionName?.length > 50
+                    podcast.collectionName?.length > 10
                       ? 'podcast-item-title podcast-truncate-text'
                       : 'podcast-item-title'
                   }
@@ -83,7 +83,7 @@ function Form(props) {
                   className="podcast-add-btn"
                   onClick={() => handlePodcastSelect(podcast)}
                 >
-                  Add
+                  Subscribe
                 </button>
               </div>
             </li>
