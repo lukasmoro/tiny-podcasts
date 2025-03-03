@@ -83,7 +83,7 @@ function Form(props) {
                   className="podcast-add-btn"
                   onClick={() => handlePodcastSelect(podcast)}
                 >
-                  Add
+                  Subscribe
                 </button>
               </div>
             </li>

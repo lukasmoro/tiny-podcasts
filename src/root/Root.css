@@ -98,6 +98,7 @@ a {
     rgba(0, 0, 0, 0.3) 0px 18px 36px -38px inset;
   --button-shadow: #00000030 0px 10px 20px, #0000003b 0px 6px 6px;
   --progress-bar-shadow: 0 1px 3px #0000001a;
+  --info-card-shadow: #110c2e26 0px 48px 100px 0px;
 }
 
 [data-theme='light'] {
