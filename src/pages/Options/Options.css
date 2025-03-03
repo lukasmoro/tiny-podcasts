@@ -2,7 +2,41 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
+  align-items: center;
 }
+
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  max-width: 840px;
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 6rem; /* Add space for the signature */
+}
+
+.left-card {
+  margin-top: 2.5rem;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.left-card .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.right-cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  height: 540px; /* Fixed height that matches the left card */
+}
+
 .sub-header {
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
@@ -25,15 +59,37 @@
   box-shadow: var(--primary-shadow);
   background-color: var(--background-color-info);
   border-radius: var(--border-radius-large);
-  max-width: 400px;
-  height: fit-content;
-  margin-top: 2.5rem;
-  margin-left: auto;
-  margin-right: auto;
+  width: 400px;
+  flex-shrink: 0;
+}
+
+/* Fixed size right cards */
+.right-card {
+  height: calc(
+    50% - 10px
+  ); /* Exactly half the right-cards height, minus half the gap */
+}
+
+.right-card:first-child {
+  margin-bottom: 20px; /* Gap between the two right cards */
 }
 
 .container {
   padding: 2rem;
+  box-sizing: border-box;
+}
+
+.right-card .container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.left-card .overflow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 260px; /* Minimum height for the list */
 }
 
 form {
@@ -43,7 +99,8 @@ form {
 }
 
 .items {
-  margin-top: 1.6rem;
+  margin-top: 1rem;
+  flex: 1;
 }
 
 input {
@@ -51,15 +108,16 @@ input {
 }
 
 .instructions {
-  margin-top: 2rem;
+  margin-top: 1rem;
   max-width: 400px;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .greets {
-  margin-top: 1rem;
+  margin-top: auto;
   text-align: center;
   max-width: 100%;
+  padding-top: 1rem;
 }
 
 .line {
@@ -71,17 +129,16 @@ input {
 .signature {
   font-size: var(--font-size-small);
   position: absolute;
-  margin-top: 3.5rem;
+  bottom: 0;
   left: 50%;
   transform: translate(-50%, 0);
   text-align: center;
+  width: 100%;
 }
 
 .overflow {
   overflow: auto;
   overscroll-behavior: contain;
-  height: 250px;
-  padding-bottom: 2rem;
   scrollbar-width: none;
   scroll-behavior: smooth;
   overflow-y: auto;
