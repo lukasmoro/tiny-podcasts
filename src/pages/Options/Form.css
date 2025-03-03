@@ -27,14 +27,14 @@
 }
 
 .podcast-items-container .podcast-items {
-  background-color: var(--background-color-detail);
+  background-color: var(--background-color-info);
   border-radius: var(--border-radius-medium);
   transition: background-color 0.2s ease-in-out;
   max-width: 100%;
 }
 
 .podcast-items-container .podcast-items:hover {
-  background-color: var(--background-color-info);
+  background-color: var(--background-color-detail);
 }
 
 .podcast-item-thumbnail {

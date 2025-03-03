@@ -1,6 +1,7 @@
 import React from 'react';
 import List from './List';
 import Overlay from '../Newtab/Overlay';
+import BuyMeACoffeeButton from '../Newtab/BuyMeACoffeeButton';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import './Options.css';
 import './Form.css';
@@ -35,7 +36,6 @@ export default function Options() {
                 <p className="instructions">
                   Unsure where to start? Here are some favorites.
                 </p>
-                <div className="items"></div>
               </div>
             </div>
 
@@ -44,9 +44,10 @@ export default function Options() {
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
                 <h1 className="header">Support</h1>
                 <p className="instructions">
-                  Please consider supporting. This will help creating more tiny
-                  products in the future. Thank you!
+                  Enjoy podcasts? Support is much appreciated and helps me to
+                  create more tiny products in the future. Thank you!
                 </p>
+                <BuyMeACoffeeButton />
                 <div className="items">
                   <p></p>
                 </div>
