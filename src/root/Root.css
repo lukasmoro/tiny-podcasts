@@ -101,6 +101,15 @@ a {
   --margin-indicators: 0.2rem;
   --margin-progress-time: 1rem;
 
+  /*padding*/
+  --padding-card: 2rem;
+  --padding-infocard: 1.5rem;
+  --padding-infocard-description: 50px;
+  --padding-input: 1rem;
+  --padding-items: 0.5rem;
+  --padding-overlay: 25px;
+  --padding-cards-container: 2rem;
+
   /*elevation*/
   --primary-shadow: #0e3f7e0f 0px 0px 0px 1px, #2a334608 0px 1px 1px -0.5px,
     #2a33460a 0px 2px 2px -1px, #2a33460a 0px 3px 3px -1.5px,
@@ -120,6 +129,7 @@ a {
   --border-radius-progressbar: 3.5px;
   --border-radius-thumbnail: 15px;
   --border-radius-input: 5rem;
+  --border-radius-button: 5rem;
   --border-radius-large: 30px;
   --border-radius-medium: 20px;
   --border-radius-small: 5px;

@@ -43,7 +43,7 @@
 }
 
 .info-card-content {
-  padding: 25px;
+  padding: var(--padding-infocard);
   height: 100%;
   white-space: pre-wrap;
   overflow: hidden;
@@ -80,7 +80,7 @@
   color: var(--tertiary-text-color);
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-regular);
-  padding-bottom: 50px;
+  padding-bottom: var(--padding-infocard-description);
   line-height: 1.4;
   animation: fadeIn 0.3s ease-in-out;
 }

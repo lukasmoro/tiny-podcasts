@@ -11,8 +11,8 @@
 .corner {
   font-size: var(--font-size-small);
   color: var(--primary-text-color);
+  padding: var(--padding-overlay);
   position: absolute;
-  padding: 25px;
   text-transform: uppercase;
 }
 

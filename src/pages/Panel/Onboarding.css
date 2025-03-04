@@ -30,7 +30,7 @@
   position: relative;
 }
 .container {
-  padding: 2rem;
+  padding: var(--padding-card);
 }
 .greets {
   margin-top: 1.5rem;
