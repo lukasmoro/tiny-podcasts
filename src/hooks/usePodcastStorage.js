@@ -6,7 +6,13 @@ export const usePodcastStorage = () => {
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item) => {
       const existingItems = item.newUrls || [];
-      setItems(existingItems);
+      const feedItems = existingItems.map((feedItem) => ({
+        key: feedItem.key,
+        text: feedItem.text,
+        podcastName: feedItem.podcastName,
+        artwork: feedItem.artwork || feedItem.artworkUrl,
+      }));
+      setItems(feedItems);
     });
   }, []);
 
@@ -32,7 +38,7 @@ export const usePodcastStorage = () => {
       const xml = parser.parseFromString(text, 'text/xml');
       const podcastName =
         xml.querySelector('channel > title')?.textContent || 'Unnamed Podcast';
-      const newItem = { ...item, podcastName, artworkUrl: item.artwork };
+      const newItem = { ...item, podcastName, artwork: item.artwork };
 
       let newUrls = [newItem, ...items];
 
