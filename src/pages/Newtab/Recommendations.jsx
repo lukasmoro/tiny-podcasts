@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './Recommendations.css'; // Make sure to import the CSS file
 
 function Recommendations({ onAddPodcast }) {
   const [trendingPodcasts, setTrendingPodcasts] = useState([]);
@@ -27,6 +28,7 @@ function Recommendations({ onAddPodcast }) {
           artworkUrl600: entry['im:image'][2].label,
         };
       });
+
       const podcastsWithFeedUrls = await Promise.all(
         podcasts.map(async (podcast) => {
           try {
@@ -50,6 +52,7 @@ function Recommendations({ onAddPodcast }) {
           }
         })
       );
+
       setTrendingPodcasts(podcastsWithFeedUrls);
       setIsLoading(false);
     } catch (error) {
@@ -79,18 +82,7 @@ function Recommendations({ onAddPodcast }) {
 
   return (
     <div className="podcast-recommendations">
-      <div
-        className="podcast-recommendations-grid"
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'nowrap',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          gap: '10px',
-          width: '100%',
-        }}
-      >
+      <div className="podcast-recommendations-grid">
         {trendingPodcasts.map((podcast) => (
           <div
             key={podcast.collectionId}
@@ -102,13 +94,6 @@ function Recommendations({ onAddPodcast }) {
               src={podcast.artworkUrl600}
               alt={podcast.collectionName}
               title={`Subscribe to ${podcast.collectionName}`}
-              style={{
-                width: '75px',
-                height: '75px',
-                borderRadius: 'var(--border-radius-thumbnail)',
-                objectFit: 'cover',
-                cursor: 'pointer',
-              }}
             />
           </div>
         ))}

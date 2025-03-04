@@ -1,0 +1,26 @@
+.podcast-recommendations {
+  width: 100%;
+}
+
+.podcast-recommendations-grid {
+  margin-bottom: var(--margin-recommendations);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.podcast-recommendation-item {
+  cursor: pointer;
+}
+
+.podcast-recommendation-thumbnail {
+  width: 75px;
+  height: 75px;
+  border-radius: var(--border-radius-medium);
+  object-fit: cover;
+  cursor: pointer;
+}
