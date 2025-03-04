@@ -83,10 +83,15 @@ a {
   --font-weight-bold: 400;
   --font-weight-regular: 200;
 
-  /* spacing */
+  /* letter spacing */
   --letter-spacing-h2: auto;
   --letter-spacing-h3: -0.01em;
   --letter-spacing-p: 0em;
+
+  /*margins*/
+  --margin-header: 1rem;
+  --margin-subheader: 0.5rem;
+  --margin-text: 1.5rem;
 
   /*elevation*/
   --primary-shadow: #0e3f7e0f 0px 0px 0px 1px, #2a334608 0px 1px 1px -0.5px,

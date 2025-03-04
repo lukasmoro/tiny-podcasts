@@ -87,7 +87,7 @@ function Recommendations({ onAddPodcast }) {
           flexWrap: 'nowrap',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: '10px', // Added more gap for larger thumbnails
+          gap: '10px',
           width: '100%',
         }}
       >
