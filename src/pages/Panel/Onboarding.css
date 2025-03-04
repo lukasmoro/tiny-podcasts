@@ -32,8 +32,3 @@
 .container {
   padding: var(--padding-card);
 }
-.greets {
-  margin-top: 1.5rem;
-  text-align: center;
-  max-width: 100%;
-}

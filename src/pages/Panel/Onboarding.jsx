@@ -66,11 +66,13 @@ export default function Onboarding() {
             <h2 className="sub-header">Onboarding</h2>
             <h1 className="header">Welcome! 👋</h1>
             <p className="instructions">
-              To start search a podcast or pick a recommendation...
+              Search a podcast or pick a recommendation...
             </p>
             <List />
             <Recommendations onAddPodcast={handleAddPodcast} />
-            <p className="greets">Enjoy your Podcasts! 🎧</p>
+            <Recommendations onAddPodcast={handleAddPodcast} />
+            <Recommendations onAddPodcast={handleAddPodcast} />
+            <Recommendations onAddPodcast={handleAddPodcast} />
           </div>
         </div>
       </ThemeProvider>

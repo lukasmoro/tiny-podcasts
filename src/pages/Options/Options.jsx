@@ -68,21 +68,20 @@ export default function Options() {
         <div className="cards-container">
           <div className="card left-card">
             <div className="container">
-              <h2 className="sub-header">Managing Podcasts</h2>
-              <h1 className="header">Options</h1>
+              <h2 className="sub-header">Manage Podcasts</h2>
+              <h1 className="header">Subscriptions</h1>
               <p className="instructions">
                 Manage podcasts here or in the pop-up window.
               </p>
               <div className="overflow">
                 <List />
               </div>
-              <p className="greets">Enjoy your Podcasts! 🎧</p>
             </div>
           </div>
           <div className="right-cards">
             <div className="card right-card">
               <div className="container">
-                <h2 className="sub-header">Finding Podcasts</h2>
+                <h2 className="sub-header">Find Podcasts</h2>
                 <h1 className="header">Recommendations</h1>
                 <p className="instructions">
                   Unsure where to start? Here are some favorites.
@@ -93,10 +92,11 @@ export default function Options() {
             <div className="card right-card">
               <div className="container">
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
-                <h1 className="header">Support</h1>
+                <h1 className="header">Tip Char</h1>
                 <p className="instructions">
-                  Support is much appreciated and helps me to create more tiny
-                  products in the future. Thank you!
+                  <em>Tiny Podcasts</em> is the first product of{' '}
+                  <em>Tiny Software</em>. Every tip supports me to create future{' '}
+                  <em>Tiny Products</em>. <br /> Thank you!
                 </p>
                 <BuyMeACoffeeButton />
                 <div className="items">
