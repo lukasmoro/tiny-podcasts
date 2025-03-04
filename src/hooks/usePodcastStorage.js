@@ -6,6 +6,7 @@ export const usePodcastStorage = () => {
   useEffect(() => {
     chrome.storage.local.get(['newUrls'], (item) => {
       const existingItems = item.newUrls || [];
+      // Map items to ensure consistent format
       const feedItems = existingItems.map((feedItem) => ({
         key: feedItem.key,
         text: feedItem.text,
@@ -59,9 +60,20 @@ export const usePodcastStorage = () => {
     }
   };
 
+  const handleRemovePodcast = (key) => {
+    const newUrls = items.filter((item) => item.key !== key);
+    chrome.storage.local.set({ newUrls }, () => {
+      setItems(newUrls);
+    });
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.reload(tabs[0].id);
+    });
+  };
+
   return {
     items,
     setItems,
     handleAddPodcast,
+    handleRemovePodcast,
   };
 };

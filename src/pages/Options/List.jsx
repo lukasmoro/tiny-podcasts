@@ -5,17 +5,7 @@ import Item from './Item';
 import { usePodcastStorage } from '../../hooks/usePodcastStorage';
 
 function List() {
-  const { items, handleAddPodcast, setItems } = usePodcastStorage();
-
-  const removeUrl = (key) => {
-    const newUrls = items.filter((item) => item.key !== key);
-    chrome.storage.local.set({ newUrls }, () => {
-      setItems(newUrls);
-    });
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.reload(tabs[0].id);
-    });
-  };
+  const { items, handleAddPodcast, handleRemovePodcast } = usePodcastStorage();
 
   return (
     <animated.div className="podcast-container">
@@ -24,7 +14,7 @@ function List() {
       </div>
       <div className="podcast-divider"></div>
       <div className="podcast-list-overflow">
-        <Item items={items} removeUrl={removeUrl} />
+        <Item items={items} removeUrl={handleRemovePodcast} />
       </div>
       <div className="podcast-divider"></div>
     </animated.div>
