@@ -91,9 +91,15 @@ a {
   /*margins*/
   --margin-header: 1rem;
   --margin-subheader: 0.5rem;
+  --margin-info: 1rem;
   --margin-text: 1.5rem;
   --margin-input: 1rem;
   --margin-gap-card: 20px;
+  --margin-circle: -10px;
+  --margin-covers: 33%;
+  --margin-cards: 3.5rem;
+  --margin-indicators: 0.2rem;
+  --margin-progress-time: 1rem;
 
   /*elevation*/
   --primary-shadow: #0e3f7e0f 0px 0px 0px 1px, #2a334608 0px 1px 1px -0.5px,
@@ -107,6 +113,7 @@ a {
   --button-shadow: #00000030 0px 10px 20px, #0000003b 0px 6px 6px;
   --progress-bar-shadow: 0 1px 3px #0000001a;
   --info-card-shadow: #110c2e26 0px 48px 100px 0px;
+  --drop-shadow-icons: 0px 0px 15px #000000cc;
 
   /*radii*/
   --border-radius-circle: 50%;

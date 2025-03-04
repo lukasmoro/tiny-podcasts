@@ -107,6 +107,7 @@ function Recommendations({ onAddPodcast }) {
                 height: '75px',
                 borderRadius: 'var(--border-radius-thumbnail)',
                 objectFit: 'cover',
+                cursor: 'pointer',
               }}
             />
           </div>

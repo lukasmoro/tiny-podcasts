@@ -47,7 +47,7 @@
 }
 
 .circle:last-child {
-  margin-left: -10px;
+  margin-left: var(--margin-circle);
 }
 
 .top-center {

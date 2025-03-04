@@ -15,6 +15,7 @@ body {
   background-color: var(--background-color-play);
   outline: 5px solid var(--secondary-accent-color);
   border-radius: var(--border-radius-circle);
+  box-shadow: var(--primary-inner-shadow);
   position: relative;
   width: 55px;
   height: 55px;
@@ -23,9 +24,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  margin: 0 auto;
-  box-shadow: #0000000f 0px 2px 4px 0px inset;
   outline-offset: -3px;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
@@ -37,8 +35,8 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 25px;
-  height: 25px;
   color: var(--background-color-icons);
+  height: 25px;
   filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.8));
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
@@ -51,20 +49,18 @@ body {
   color: var(--primary-text-color);
   font-size: var(--font-size-small);
   font-family: var(--font-family-mono);
-  margin: 0;
-  margin-bottom: 0.265rem;
-  max-width: 40px;
+  width: 40px;
   text-align: center;
 }
 
 .current-time {
   text-align: right;
-  margin-right: 1rem;
+  margin-right: var(--margin-progress-time);
 }
 
 .duration {
   text-align: left;
-  margin-left: 1rem;
+  margin-left: var(--margin-progress-time);
 }
 
 .progress-container {
@@ -81,16 +77,11 @@ body {
   flex: 1;
   display: flex;
   justify-content: center;
-  max-width: 22em;
+  max-width: 400px;
 }
 
 .progress-bar {
   box-shadow: var(--primary-inner-shadow);
-  position: relative;
-  width: 22em;
-  max-width: 25em;
-  height: 7px;
-  margin-bottom: 0.38em;
   --bar-bg: var(--background-color-ui);
   --seek-before-width: 0px;
   --seek-before-color: var(--primary-accent-color);
@@ -98,9 +89,13 @@ body {
   --selectedknob: var(--secondary-accent-color);
   --right-radius: var(--border-radius-progressbar);
   --width-adjust: 1px;
-  appearance: none;
   background: var(--bar-bg);
   border-radius: var(--border-radius-progressbar);
+  position: relative;
+  width: 22em;
+  max-width: 25em;
+  height: 7px;
+  appearance: none;
   outline: none;
   animation: linear adjust-opacity-ui both;
   animation-timeline: --li-in-and-out-of-view;
@@ -116,6 +111,7 @@ body {
     var(--border-radius-progressbar)
   );
   width: calc(var(--seek-before-width) + var(--width-adjust));
+  border-radius: var(--border-radius-progressbar);
   background-color: var(--seek-before-color);
   content: '';
   height: 7px;
@@ -125,17 +121,16 @@ body {
   bottom: 0;
   cursor: pointer;
   z-index: 1;
-  border-radius: var(--border-radius-progressbar);
   transform: translateX(0);
 }
 
 .progress-bar::-webkit-slider-thumb {
   box-shadow: var(--progress-bar-shadow);
   background-color: var(--knob);
+  border-radius: var(--border-radius-circle);
   -webkit-appearance: none;
   width: 15px;
   height: 15px;
-  border-radius: var(--border-radius-circle);
   border: none;
   cursor: pointer;
   z-index: 3;
@@ -151,11 +146,11 @@ body {
 
 .progress-bar::-moz-range-thumb {
   box-shadow: var(--progress-bar-shadow);
+  border-radius: var(--border-radius-circle);
+  background-color: var(--knob);
   width: 15px;
   height: 15px;
-  border-radius: var(--border-radius-circle);
   border: none;
-  background-color: var(--knob);
   cursor: pointer;
   z-index: 3;
 }

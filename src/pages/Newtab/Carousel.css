@@ -38,7 +38,8 @@ h2 {
 .cards li {
   position: relative;
   width: var(--cover-size);
-  margin: 0 3.5rem;
+  margin-left: var(--margin-cards);
+  margin-right: var(--margin-cards);
   aspect-ratio: 1/1;
   scroll-snap-align: center;
   scroll-snap-stop: always;
@@ -110,10 +111,10 @@ h2 {
 }
 
 .cover-container {
+  margin-top: var(--margin-covers);
   position: relative;
   animation: linear rotate-cover both;
   animation-timeline: --li-in-and-out-of-view;
-  margin-top: 34%;
   transform-style: preserve-3d;
 }
 
@@ -198,7 +199,8 @@ h2 {
   border-radius: var(--border-radius-circle);
   border: none;
   outline: none;
-  margin: 0 0.2rem;
+  margin-left: var(--margin-indicators);
+  margin-right: var(--margin-indicators);
   transition: background-color 0.3s ease;
 }
 
