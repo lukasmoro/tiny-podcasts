@@ -32,6 +32,8 @@ function Form(props) {
   };
 
   const handlePodcastSelect = (podcast) => {
+    console.log('Selected podcast URL:', podcast.feedUrl);
+
     props.onSubmit({
       key: new Date().getTime(),
       text: podcast.feedUrl,
