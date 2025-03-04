@@ -16,13 +16,13 @@
   margin-bottom: var(--margin-header);
 }
 .instructions {
-  max-width: 400px;
   margin-bottom: var(--margin-text);
+  max-width: 400px;
 }
 .card {
   box-shadow: var(--primary-shadow);
   background-color: var(--background-color-info);
-  border-radius: 1.5rem;
+  border-radius: var(--border-radius-large);
   max-width: 400px;
   width: 100%;
   height: fit-content;
@@ -36,27 +36,4 @@
   margin-top: 1.5rem;
   text-align: center;
   max-width: 100%;
-}
-.line {
-  background: var(--background-color-detail);
-  width: 400px;
-  height: 1px;
-}
-.signature {
-  font-size: var(--font-size-small);
-  position: absolute;
-  margin-top: 3.5rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-  text-align: center;
-}
-.overflow {
-  overflow: auto;
-  overscroll-behavior: contain;
-  height: 250px;
-  padding-bottom: 2rem;
-  scrollbar-width: none;
-  scroll-behavior: smooth;
-  overflow-y: auto;
-  overscroll-behavior-y: auto;
 }

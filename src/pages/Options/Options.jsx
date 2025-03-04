@@ -65,7 +65,6 @@ export default function Options() {
     <div className="App">
       <ThemeProvider>
         <Overlay />
-        <div className="spacer"></div>
         <div className="cards-container">
           <div className="card left-card">
             <div className="container">
@@ -106,14 +105,6 @@ export default function Options() {
               </div>
             </div>
           </div>
-          <p className="signature">
-            Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.
-            <br />
-            <a href="https://github.com/lukasmoro/podcasts-chrome-extension">
-              Github
-            </a>{' '}
-            • <a href="">Privacy Policy</a>
-          </p>
         </div>
       </ThemeProvider>
     </div>

@@ -92,6 +92,8 @@ a {
   --margin-header: 1rem;
   --margin-subheader: 0.5rem;
   --margin-text: 1.5rem;
+  --margin-input: 1rem;
+  --margin-gap-card: 20px;
 
   /*elevation*/
   --primary-shadow: #0e3f7e0f 0px 0px 0px 1px, #2a334608 0px 1px 1px -0.5px,

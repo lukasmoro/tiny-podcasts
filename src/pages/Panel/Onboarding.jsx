@@ -64,9 +64,9 @@ export default function Onboarding() {
         <div className="card">
           <div className="container">
             <h2 className="sub-header">Onboarding</h2>
-            <h1 className="header">Hey there, good you are here! 👋</h1>
+            <h1 className="header">Welcome! 👋</h1>
             <p className="instructions">
-              Simply search for a podcast or pick a recommendation...
+              To start search a podcast or pick a recommendation...
             </p>
             <List />
             <Recommendations onAddPodcast={handleAddPodcast} />
