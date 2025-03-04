@@ -7,7 +7,6 @@ function parseRss(xml) {
       return null;
     }
 
-    // Get essential podcast data with fallbacks
     const item = {
       mp3: getEnclosureUrl(firstItem) || null,
       image: getPodcastImage(xmlDoc) || null,
