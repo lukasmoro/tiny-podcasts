@@ -106,6 +106,7 @@ a {
   --margin-indicators: 0.2rem;
   --margin-progress-time: 1rem;
   --margin-recommendations: 0.5rem;
+  --margin-additional: 1rem;
 
   /*padding*/
   --padding-card: 2rem;

@@ -17,6 +17,10 @@
   cursor: pointer;
 }
 
+.recommendations-container {
+  margin-top: var(--margin-additional);
+}
+
 .podcast-recommendation-thumbnail {
   width: 75px;
   height: 75px;

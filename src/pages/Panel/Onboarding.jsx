@@ -1,6 +1,7 @@
 import React from 'react';
 import List from '../../pages/Options/List.jsx';
 import Recommendations from '../Newtab/Recommendations.jsx';
+import Overlay from '../Newtab/Overlay.jsx';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastStorage } from '../../hooks/usePodcastStorage.js';
 import './Onboarding.css';
@@ -139,6 +140,7 @@ export default function Onboarding() {
   return (
     <div className="App">
       <ThemeProvider>
+        <Overlay />
         <div className="card">
           <div className="container">
             <h2 className="sub-header">Onboarding</h2>
@@ -147,22 +149,24 @@ export default function Onboarding() {
               Search a podcast or pick a recommendation...
             </p>
             <List />
-            <Recommendations
-              podcasts={podcastsRow1}
-              onAddPodcast={handleAddPodcast}
-            />
-            <Recommendations
-              podcasts={podcastsRow2}
-              onAddPodcast={handleAddPodcast}
-            />
-            <Recommendations
-              podcasts={podcastsRow3}
-              onAddPodcast={handleAddPodcast}
-            />
-            <Recommendations
-              podcasts={podcastsRow4}
-              onAddPodcast={handleAddPodcast}
-            />
+            <div className="recommendations-container">
+              <Recommendations
+                podcasts={podcastsRow1}
+                onAddPodcast={handleAddPodcast}
+              />
+              <Recommendations
+                podcasts={podcastsRow2}
+                onAddPodcast={handleAddPodcast}
+              />
+              <Recommendations
+                podcasts={podcastsRow3}
+                onAddPodcast={handleAddPodcast}
+              />
+              <Recommendations
+                podcasts={podcastsRow4}
+                onAddPodcast={handleAddPodcast}
+              />
+            </div>
           </div>
         </div>
       </ThemeProvider>
