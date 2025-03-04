@@ -30,7 +30,6 @@ const Carousel = () => {
     setIsLoadingActive(false);
   };
 
-  // Apply or remove no-scroll class to body element when blur visibility changes
   useEffect(() => {
     if (isBlurVisible) {
       document.body.classList.add('no-scroll');
@@ -38,7 +37,6 @@ const Carousel = () => {
       document.body.classList.remove('no-scroll');
     }
 
-    // Clean up function to ensure class is removed if component unmounts
     return () => {
       document.body.classList.remove('no-scroll');
     };

@@ -1,8 +1,5 @@
-/* Updated podcast recommendations styles */
-
 .podcast-recommendations {
   width: 100%;
-  margin: 0 auto;
 }
 
 .podcast-recommendations-grid {
@@ -11,7 +8,6 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  gap: 2px;
 }
 
 .podcast-recommendation-item {
@@ -19,8 +15,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  padding: 6px;
   border-radius: var(--border-radius-medium);
   transition: background-color 0.2s ease-in-out;
   flex: 1 1 auto;
@@ -29,15 +23,8 @@
 }
 
 .podcast-recommendation-thumbnail {
+  border-radius: var(--border-radius-thumbnail);
   width: 150px;
   height: 150px;
-  border-radius: var(--border-radius-thumbnail);
   object-fit: cover;
-}
-
-.podcast-recommendations-loading,
-.podcast-recommendations-error {
-  text-align: center;
-  color: var(--tertiary-text-color);
-  padding: 1rem;
 }

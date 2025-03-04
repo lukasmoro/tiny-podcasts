@@ -12,16 +12,13 @@ export default function Options() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    // Load existing podcast URLs from storage
     chrome.storage.local.get(['newUrls'], (item) => {
       const existingItems = item.newUrls || [];
       setItems(existingItems);
     });
   }, []);
 
-  // Function to add a podcast URL
   const handleAddPodcast = async (item) => {
-    // Check if we already have this URL or if we've reached the limit
     const urlChecker = (url) => url.text !== item.text;
     let check = items.every(urlChecker);
 
@@ -51,7 +48,6 @@ export default function Options() {
         setItems(newUrls);
         console.log('Podcast added:', newItem);
 
-        // Refresh the current tab to reflect changes
         chrome.tabs.query(
           { active: true, currentWindow: true },
           function (tabs) {
@@ -69,7 +65,6 @@ export default function Options() {
     <div className="App">
       <ThemeProvider>
         <Overlay />
-        <div className="spacer"></div>
         <div className="cards-container">
           <div className="card left-card">
             <div className="container">
@@ -110,14 +105,6 @@ export default function Options() {
               </div>
             </div>
           </div>
-          <p className="signature">
-            Podcasts by <a href="https://lukasmoro.com">Lukas Moro</a>.
-            <br />
-            <a href="https://github.com/lukasmoro/podcasts-chrome-extension">
-              Github
-            </a>{' '}
-            • <a href="">Privacy Policy</a>
-          </p>
         </div>
       </ThemeProvider>
     </div>

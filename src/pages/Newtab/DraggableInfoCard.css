@@ -7,8 +7,6 @@
   top: 0;
   right: 0;
   width: 250px;
-  margin: 0;
-  padding: 0;
   backdrop-filter: blur(12px);
   overflow: hidden;
   touch-action: none;
@@ -45,7 +43,6 @@
 }
 
 .info-card-content {
-  margin: 0;
   padding: 25px;
   height: 100%;
   white-space: pre-wrap;
@@ -55,37 +52,34 @@
 }
 
 .info-row {
+  margin-bottom: var(--margin-header);
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 10px;
-  gap: 5px;
+  gap: 0.25rem;
 }
 
 .info-item {
   display: flex;
   align-items: baseline;
-  margin-right: 25px;
 }
 
 .info-value,
 .info-label {
   font-size: var(--font-size-small);
   color: var(--tertiary-text-color);
-  margin-right: 2px;
 }
 
 .episode-title {
   font-size: var(--font-size-large);
   color: var(--tertiary-text-color);
+  margin-bottom: var(--margin-header);
   text-transform: uppercase;
-  margin: 0 0 12px 0;
 }
 
 .episode-description p {
   color: var(--tertiary-text-color);
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-regular);
-  margin-top: 15px;
   padding-bottom: 50px;
   line-height: 1.4;
   animation: fadeIn 0.3s ease-in-out;

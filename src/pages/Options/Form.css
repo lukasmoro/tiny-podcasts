@@ -34,7 +34,7 @@
 }
 
 .podcast-items-container .podcast-items:hover {
-  background-color: var(--background-color-detail);
+  background-color: var(--accent-color-item);
 }
 
 .podcast-item-thumbnail {
@@ -48,7 +48,6 @@
 .podcast-item-title {
   color: var(--tertiary-text-color);
   flex: 1;
-  margin: 0;
   display: block;
   padding: 0 5px;
   height: 50px;
@@ -58,7 +57,6 @@
 
 .podcast-remove-btn,
 .podcast-add-btn {
-  margin: 0;
   flex-shrink: 0;
   width: 4.7rem;
   height: 2.22rem;
@@ -159,7 +157,6 @@
 .podcast-items button.podcast-remove-btn,
 .podcast-items button.podcast-add-btn,
 .search-result-item .podcast-items button.podcast-add-btn {
-  margin: 0;
   align-self: center;
   position: relative;
   top: 0;

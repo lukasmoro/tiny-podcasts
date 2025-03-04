@@ -61,6 +61,7 @@ a {
   --secondary-accent-color: #ffffff;
   --tertiary-accent-color: #ff8181;
   --quarternary-accent-color: #bdffdf;
+  --accent-color-item: #a0a0a0;
   --outline-color: #ffffff1a;
   --outline-color-info: #a0a0a0a6;
   --button-color-positive: #5dffb1;
@@ -82,10 +83,23 @@ a {
   --font-weight-bold: 400;
   --font-weight-regular: 200;
 
-  /* spacing */
+  /* letter spacing */
   --letter-spacing-h2: auto;
   --letter-spacing-h3: -0.01em;
   --letter-spacing-p: 0em;
+
+  /*margins*/
+  --margin-header: 1rem;
+  --margin-subheader: 0.5rem;
+  --margin-info: 1rem;
+  --margin-text: 1.5rem;
+  --margin-input: 1rem;
+  --margin-gap-card: 20px;
+  --margin-circle: -10px;
+  --margin-covers: 33%;
+  --margin-cards: 3.5rem;
+  --margin-indicators: 0.2rem;
+  --margin-progress-time: 1rem;
 
   /*elevation*/
   --primary-shadow: #0e3f7e0f 0px 0px 0px 1px, #2a334608 0px 1px 1px -0.5px,
@@ -99,6 +113,7 @@ a {
   --button-shadow: #00000030 0px 10px 20px, #0000003b 0px 6px 6px;
   --progress-bar-shadow: 0 1px 3px #0000001a;
   --info-card-shadow: #110c2e26 0px 48px 100px 0px;
+  --drop-shadow-icons: 0px 0px 15px #000000cc;
 
   /*radii*/
   --border-radius-circle: 50%;
@@ -119,13 +134,14 @@ a {
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #463000;
-  --secondary-text-color: #e4d9bf;
+  --secondary-text-color: #6e5829;
   --tertiary-text-color: #181720;
   --link-text-color: #19a0fc;
   --primary-accent-color: #ffa81c;
   --secondary-accent-color: #ffffff;
   --tertiary-accent-color: #ff8181;
   --quarternary-accent-color: #bdffdf;
+  --accent-color-item: #e4d9bf;
   --outline-color: #4630000f;
   --outline-color-info: #a5a5a5a6;
 }
