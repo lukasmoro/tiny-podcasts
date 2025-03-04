@@ -34,7 +34,7 @@
 }
 
 .podcast-items-container .podcast-items:hover {
-  background-color: var(--background-color-detail);
+  background-color: var(--accent-color-item);
 }
 
 .podcast-item-thumbnail {

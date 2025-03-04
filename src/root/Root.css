@@ -61,6 +61,7 @@ a {
   --secondary-accent-color: #ffffff;
   --tertiary-accent-color: #ff8181;
   --quarternary-accent-color: #bdffdf;
+  --accent-color-item: #a0a0a0;
   --outline-color: #ffffff1a;
   --outline-color-info: #a0a0a0a6;
   --button-color-positive: #5dffb1;
@@ -119,13 +120,14 @@ a {
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #463000;
-  --secondary-text-color: #e4d9bf;
+  --secondary-text-color: #6e5829;
   --tertiary-text-color: #181720;
   --link-text-color: #19a0fc;
   --primary-accent-color: #ffa81c;
   --secondary-accent-color: #ffffff;
   --tertiary-accent-color: #ff8181;
   --quarternary-accent-color: #bdffdf;
+  --accent-color-item: #e4d9bf;
   --outline-color: #4630000f;
   --outline-color-info: #a5a5a5a6;
 }
