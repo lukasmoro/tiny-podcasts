@@ -4,6 +4,7 @@ import StatusIndicator from './StatusIndicator.jsx';
 import DraggableInfoCard from './DraggableInfoCard.jsx';
 import Overlay from './Overlay.jsx';
 import { parseRss } from '../../utils/rssParser';
+import { textTruncate } from '../../utils/textTruncate.js';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import './Carousel.css';
 
@@ -86,9 +87,7 @@ const Carousel = () => {
                       <div className="header-content">
                         <div className="podcast-title-container">
                           <h2 className="podcast-title">
-                            {podcast.title.length > 30
-                              ? `${podcast.title.substring(0, 30)}...`
-                              : podcast.title}
+                            {textTruncate(podcast.title || 'Unknown Title', 30)}
                           </h2>
                           <StatusIndicator
                             status={podcast.PLAYBACK_STATUS}
@@ -96,9 +95,10 @@ const Carousel = () => {
                           />
                         </div>
                         <h3 className="podcast-episode">
-                          {podcast.episode.length > 45
-                            ? `${podcast.episode.substring(0, 45)}...`
-                            : podcast.episode}
+                          {textTruncate(
+                            podcast.episode || 'Unknown Episode',
+                            45
+                          )}
                         </h3>
                       </div>
                     </div>

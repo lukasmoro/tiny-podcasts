@@ -51,16 +51,20 @@
   scrollbar-color: #00000000 transparent;
 }
 
-.info-row {
+.info-row-container {
   margin-bottom: var(--margin-header);
+}
+
+.info-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 0.25rem;
 }
 
 .info-item {
   display: flex;
   align-items: baseline;
+  width: 100%;
 }
 
 .info-value,
