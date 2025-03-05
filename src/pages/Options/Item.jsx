@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
+import './Item.css';
 
 const AnimatedItem = ({ item, removeUrl }) => {
   const [isRemoved, setIsRemoved] = useState(false);

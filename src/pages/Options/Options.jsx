@@ -87,9 +87,9 @@ export default function Options() {
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
                 <h1 className="header">Tip Char</h1>
                 <p className="instructions">
-                  <em>Tiny Podcasts</em> is the first product of{' '}
-                  <em>Tiny Software</em>. Every tip supports me to create future{' '}
-                  <em>Tiny Products</em>. <br /> Thank you!
+                  <em>Tiny Podcasts</em> is the first project of{' '}
+                  <em>Tiny Software</em>. Every tip supports the creation of
+                  future <em>Tiny Products</em>. <br /> Thank you!
                 </p>
                 <BuyMeACoffeeButton />
                 <div className="items">
