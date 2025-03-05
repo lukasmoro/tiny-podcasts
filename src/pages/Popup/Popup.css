@@ -1,7 +1,7 @@
 .App {
   padding: 1.5rem 1rem 1.5rem 1rem;
   min-height: 250px;
-  height: auto; /* Allow the popup to grow as needed */
+  height: auto;
   background-color: var(--background-color-info);
 }
 
@@ -9,8 +9,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: auto; /* Allow content to determine height */
-  flex-grow: 1; /* Take up available space */
+  height: auto;
+  flex-grow: 1;
 }
 
 .podcast-divider {

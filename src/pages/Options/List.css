@@ -9,11 +9,14 @@
   scroll-behavior: smooth;
 }
 
-.popup-list-overflow .podcast-list-overflow {
+.options-list-overflow .podcast-list-overflow {
+  padding-top: 1rem;
   overflow-y: visible;
+  padding-bottom: 1rem;
 }
 
-.options-list-overflow .podcast-list-overflow {
-  max-height: 340px;
-  overflow-y: auto;
+.podcast-list-overflow .podcast-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }

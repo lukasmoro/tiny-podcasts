@@ -57,8 +57,8 @@ export default function Options() {
               <p className="instructions">
                 Manage podcasts here or in the pop-up window.
               </p>
+              <Form onSubmit={handleAddPodcast} />
               <div className="overflow">
-                <Form onSubmit={handleAddPodcast} />
                 <div className="podcast-divider"></div>
                 <List
                   items={items}

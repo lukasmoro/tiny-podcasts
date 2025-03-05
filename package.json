@@ -1,6 +1,6 @@
 {
   "name": "podcasts-for-chrome",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A chrome extension that lets you play your favourite podcasts from a new tab.",
   "license": "MIT",
   "repository": {
