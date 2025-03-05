@@ -10,7 +10,6 @@
   box-shadow: var(--input-inner-shadow);
   border-radius: var(--border-radius-input);
   padding-left: var(--padding-input);
-  margin-bottom: var(--margin-input);
   outline: none;
   border: none;
   width: 100%;

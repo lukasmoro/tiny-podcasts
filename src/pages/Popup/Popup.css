@@ -13,9 +13,6 @@
   flex-grow: 1;
 }
 
-.podcast-divider {
-  height: 1px;
-  background-color: var(--background-color-detail);
-  margin: 0.5rem 0;
-  width: 100%;
+.popup-list-overflow {
+  margin-top: var(--margin-input);
 }

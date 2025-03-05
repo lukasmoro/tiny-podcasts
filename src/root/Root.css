@@ -116,6 +116,7 @@ a {
   --padding-items: 0.5rem;
   --padding-overlay: 25px;
   --padding-cards-container: 2rem;
+  --padding-list: 1rem;
 
   /*elevation*/
   --primary-shadow: #0e3f7e0f 0px 0px 0px 1px, #2a334608 0px 1px 1px -0.5px,
