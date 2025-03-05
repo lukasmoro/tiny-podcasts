@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useGesture } from '@use-gesture/react';
 import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
+import { textTruncate } from '../../utils/textTruncate';
 import './DraggableInfoCard.css';
 
 const DraggableInfoCard = ({ podcast }) => {
@@ -101,26 +102,36 @@ const DraggableInfoCard = ({ podcast }) => {
       <div className="card-handle"></div>
 
       <div className="info-card-content">
-        <h2 className="episode-title">{episode || 'Unknown Episode'}</h2>
-        <div className="info-row">
-          {publisher && publisher !== author && (
-            <div className="info-item">
-              <span className="info-label">Publisher: </span>
-              <span className="info-value">{publisher}</span>
-            </div>
-          )}
-          {releaseDate && (
-            <div className="info-item">
-              <span className="info-label">Release: </span>
-              <span className="info-value">{releaseDate}</span>
-            </div>
-          )}
-          {category && (
-            <div className="info-item">
-              <span className="info-label">Category: </span>
-              <span className="info-value">{category}</span>
-            </div>
-          )}
+        <h2 className="episode-title" title={episode || 'Unknown Episode'}>
+          {textTruncate(episode || 'Unknown Episode', 70)}
+        </h2>
+        <div className="info-row-container">
+          <div className="info-row">
+            {publisher && publisher !== author && (
+              <div className="info-item">
+                <span className="info-label">Publisher: </span>
+                <span className="info-value" title={publisher}>
+                  {textTruncate(publisher, 20)}
+                </span>
+              </div>
+            )}
+            {releaseDate && (
+              <div className="info-item">
+                <span className="info-label">Release: </span>
+                <span className="info-value" title={releaseDate}>
+                  {textTruncate(releaseDate, 20)}
+                </span>
+              </div>
+            )}
+            {category && (
+              <div className="info-item">
+                <span className="info-label">Category: </span>
+                <span className="info-value" title={category}>
+                  {textTruncate(category, 20)}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
         {isExpanded && description && (
           <div className="episode-description">

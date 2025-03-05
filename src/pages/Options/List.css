@@ -1,0 +1,22 @@
+.podcast-list-container {
+  width: 100%;
+}
+
+.podcast-list-overflow {
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.options-list-overflow .podcast-list-overflow {
+  padding-top: 1rem;
+  overflow-y: visible;
+  padding-bottom: 1rem;
+}
+
+.podcast-list-overflow .podcast-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}

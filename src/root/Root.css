@@ -11,6 +11,11 @@ body {
   background-color: var(--background-color);
 }
 
+em {
+  font-weight: 500;
+  font-style: normal;
+}
+
 h1 {
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-xxlarge);
@@ -100,6 +105,18 @@ a {
   --margin-cards: 3.5rem;
   --margin-indicators: 0.2rem;
   --margin-progress-time: 1rem;
+  --margin-recommendations: 0.5rem;
+  --margin-additional: 1rem;
+
+  /*padding*/
+  --padding-card: 2rem;
+  --padding-infocard: 1.5rem;
+  --padding-infocard-description: 50px;
+  --padding-input: 1rem;
+  --padding-items: 0.5rem;
+  --padding-overlay: 25px;
+  --padding-cards-container: 2rem;
+  --padding-list: 1rem;
 
   /*elevation*/
   --primary-shadow: #0e3f7e0f 0px 0px 0px 1px, #2a334608 0px 1px 1px -0.5px,
@@ -120,6 +137,7 @@ a {
   --border-radius-progressbar: 3.5px;
   --border-radius-thumbnail: 15px;
   --border-radius-input: 5rem;
+  --border-radius-button: 5rem;
   --border-radius-large: 30px;
   --border-radius-medium: 20px;
   --border-radius-small: 5px;

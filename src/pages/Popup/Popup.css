@@ -1,5 +1,18 @@
 .App {
-  padding: 1.5rem 1rem 0.5rem 1rem;
+  padding: 1.5rem 1rem 1.5rem 1rem;
   min-height: 250px;
+  height: auto;
   background-color: var(--background-color-info);
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  flex-grow: 1;
+}
+
+.popup-list-overflow {
+  margin-top: var(--margin-input);
 }

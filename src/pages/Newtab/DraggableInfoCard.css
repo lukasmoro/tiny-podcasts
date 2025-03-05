@@ -43,7 +43,7 @@
 }
 
 .info-card-content {
-  padding: 25px;
+  padding: var(--padding-infocard);
   height: 100%;
   white-space: pre-wrap;
   overflow: hidden;
@@ -51,16 +51,20 @@
   scrollbar-color: #00000000 transparent;
 }
 
-.info-row {
+.info-row-container {
   margin-bottom: var(--margin-header);
+}
+
+.info-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 0.25rem;
 }
 
 .info-item {
   display: flex;
   align-items: baseline;
+  width: 100%;
 }
 
 .info-value,
@@ -80,7 +84,7 @@
   color: var(--tertiary-text-color);
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-regular);
-  padding-bottom: 50px;
+  padding-bottom: var(--padding-infocard-description);
   line-height: 1.4;
   animation: fadeIn 0.3s ease-in-out;
 }

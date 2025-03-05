@@ -6,6 +6,8 @@ import BehaviourClick from './BehaviourClick.jsx';
 import usePlaybackPosition from '../../hooks/usePlaybackPosition.js';
 import { PlayIcon } from '../Icons/PlayIcon';
 import { PauseIcon } from '../Icons/PauseIcon';
+// Import Google Analytics tracking functions
+import { trackButtonClick } from '../../utils/googleAnalytics';
 
 const AudioPlayer = (props) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -170,6 +172,13 @@ const AudioPlayer = (props) => {
           y: 50,
         },
       });
+
+      // Track play event with Google Analytics
+      trackButtonClick('audio_play', {
+        podcast_id: props.podcastId,
+        podcast_title: props.title || 'Unknown',
+        playback_position: audio.currentTime,
+      }).catch((err) => console.error('Error tracking play event:', err));
     };
 
     const handlePause = () => {
@@ -185,6 +194,14 @@ const AudioPlayer = (props) => {
       if (audio.currentTime && audio.duration) {
         updatePlaybackState(audio.currentTime, audio.duration);
       }
+
+      // Track pause event with Google Analytics
+      trackButtonClick('audio_pause', {
+        podcast_id: props.podcastId,
+        podcast_title: props.title || 'Unknown',
+        playback_position: audio.currentTime,
+        duration_played: audio.currentTime,
+      }).catch((err) => console.error('Error tracking pause event:', err));
     };
 
     const handleEnded = () => {
@@ -200,6 +217,13 @@ const AudioPlayer = (props) => {
       if (audio.duration) {
         updatePlaybackState(audio.duration, audio.duration);
       }
+
+      // Track podcast completion with Google Analytics
+      trackButtonClick('audio_completed', {
+        podcast_id: props.podcastId,
+        podcast_title: props.title || 'Unknown',
+        duration: audio.duration,
+      }).catch((err) => console.error('Error tracking completion event:', err));
 
       if (props.onEnded) {
         props.onEnded();
@@ -231,7 +255,7 @@ const AudioPlayer = (props) => {
         updatePlaybackState(audio.currentTime, audio.duration);
       }
     };
-  }, [updatePlaybackState, props.onEnded, api]);
+  }, [updatePlaybackState, props.onEnded, api, props.podcastId, props.title]);
 
   const togglePlayPause = () => {
     if (!audioPlayer.current) return;
@@ -239,6 +263,10 @@ const AudioPlayer = (props) => {
     if (!isPlaying) {
       audioPlayer.current.play().catch((err) => {
         console.error('Error playing audio:', err);
+        // Track error with Google Analytics
+        trackError(err).catch((trackErr) =>
+          console.error('Error tracking error event:', trackErr)
+        );
       });
     } else {
       audioPlayer.current.pause();
@@ -266,6 +294,16 @@ const AudioPlayer = (props) => {
     if (audioPlayer.current.duration) {
       updatePlaybackState(newTime, audioPlayer.current.duration);
     }
+
+    // Track seek event with Google Analytics
+    trackButtonClick('audio_seek', {
+      podcast_id: props.podcastId,
+      podcast_title: props.title || 'Unknown',
+      seek_position: newTime,
+      seek_percentage: audioPlayer.current.duration
+        ? Math.round((newTime / audioPlayer.current.duration) * 100)
+        : 0,
+    }).catch((err) => console.error('Error tracking seek event:', err));
   };
 
   const calculateTime = (secs) => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { textTruncate } from '../../utils/textTruncate';
 import './Form.css';
 
 function Form(props) {
@@ -32,6 +33,8 @@ function Form(props) {
   };
 
   const handlePodcastSelect = (podcast) => {
+    console.log('Selected podcast URL:', podcast.feedUrl);
+
     props.onSubmit({
       key: new Date().getTime(),
       text: podcast.feedUrl,
@@ -70,14 +73,11 @@ function Form(props) {
                   src={podcast.artworkUrl60}
                   alt={podcast.collectionName}
                 />
-                <p
-                  className={
-                    podcast.collectionName?.length > 10
-                      ? 'podcast-item-title podcast-truncate-text'
-                      : 'podcast-item-title'
-                  }
-                >
-                  {podcast.collectionName || 'Unnamed Podcast'}
+                <p className="podcast-item-title">
+                  {textTruncate(
+                    podcast.collectionName || 'Unnamed Podcast',
+                    10
+                  )}
                 </p>
                 <button
                   className="podcast-add-btn"
