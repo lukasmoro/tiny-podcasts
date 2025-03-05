@@ -1,0 +1,19 @@
+.podcast-list-container {
+  width: 100%;
+}
+
+.podcast-list-overflow {
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.popup-list-overflow .podcast-list-overflow {
+  overflow-y: visible;
+}
+
+.options-list-overflow .podcast-list-overflow {
+  max-height: 340px;
+  overflow-y: auto;
+}

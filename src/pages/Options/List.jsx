@@ -1,22 +1,13 @@
 import React from 'react';
 import { animated } from '@react-spring/web';
-import Form from './Form';
 import Item from './Item';
-import { usePodcastStorage } from '../../hooks/usePodcastStorage';
 
-function List() {
-  const { items, handleAddPodcast, handleRemovePodcast } = usePodcastStorage();
-
+function List({ items, removeUrl, className = '' }) {
   return (
-    <animated.div className="podcast-container">
-      <div className="podcast-form-container">
-        <Form onSubmit={handleAddPodcast} />
-      </div>
-      <div className="podcast-divider"></div>
+    <animated.div className={`podcast-list-container ${className}`}>
       <div className="podcast-list-overflow">
-        <Item items={items} removeUrl={handleRemovePodcast} />
+        <Item items={items} removeUrl={removeUrl} />
       </div>
-      <div className="podcast-divider"></div>
     </animated.div>
   );
 }

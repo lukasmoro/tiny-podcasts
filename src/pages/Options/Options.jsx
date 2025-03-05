@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import Form from './Form';
 import List from './List';
 import Overlay from '../Newtab/Overlay';
 import Recommendations from '../Newtab/Recommendations';
@@ -7,10 +8,11 @@ import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastStorage } from '../../hooks/usePodcastStorage';
 import './Options.css';
 import './Form.css';
+import './List.css';
 import '../../root/Root.css';
 
 export default function Options() {
-  const { items, handleAddPodcast } = usePodcastStorage();
+  const { items, handleAddPodcast, handleRemovePodcast } = usePodcastStorage();
 
   const podcastsRow1 = [
     {
@@ -56,7 +58,13 @@ export default function Options() {
                 Manage podcasts here or in the pop-up window.
               </p>
               <div className="overflow">
-                <List />
+                <Form onSubmit={handleAddPodcast} />
+                <div className="podcast-divider"></div>
+                <List
+                  items={items}
+                  removeUrl={handleRemovePodcast}
+                  className="options-list-overflow"
+                />
               </div>
             </div>
           </div>

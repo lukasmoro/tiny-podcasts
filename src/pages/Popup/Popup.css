@@ -1,5 +1,21 @@
 .App {
   padding: 1.5rem 1rem 1.5rem 1rem;
   min-height: 250px;
+  height: auto; /* Allow the popup to grow as needed */
   background-color: var(--background-color-info);
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto; /* Allow content to determine height */
+  flex-grow: 1; /* Take up available space */
+}
+
+.podcast-divider {
+  height: 1px;
+  background-color: var(--background-color-detail);
+  margin: 0.5rem 0;
+  width: 100%;
 }
