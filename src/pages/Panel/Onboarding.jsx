@@ -1,7 +1,7 @@
 import React from 'react';
-import List from '../../pages/Options/List.jsx';
 import Recommendations from '../Newtab/Recommendations.jsx';
 import Overlay from '../Newtab/Overlay.jsx';
+import Form from '../Options/Form.jsx';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastStorage } from '../../hooks/usePodcastStorage.js';
 import './Onboarding.css';
@@ -148,7 +148,7 @@ export default function Onboarding() {
             <p className="instructions">
               Search a podcast or pick a recommendation...
             </p>
-            <List />
+            <Form onSubmit={handleAddPodcast} />
             <div className="recommendations-container">
               <Recommendations
                 podcasts={podcastsRow1}
