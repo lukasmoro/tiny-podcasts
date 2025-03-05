@@ -123,6 +123,7 @@
   overflow-y: auto;
   z-index: 1000;
   list-style: none;
+  margin-top: var(--margin-input);
 }
 
 .search-result-item {

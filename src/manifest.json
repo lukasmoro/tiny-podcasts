@@ -19,6 +19,7 @@
     "128": "icon-128.png"
   },
   "permissions": ["storage", "tabs"],
+  "host_permissions": ["https://www.google-analytics.com/*"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline'"
   },
