@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Form from './Form';
 import List from './List';
 import Overlay from '../Newtab/Overlay';
@@ -12,7 +12,13 @@ import './List.css';
 import '../../root/Root.css';
 
 export default function Options() {
-  const { items, handleAddPodcast, handleRemovePodcast } = usePodcastStorage();
+  const [isDragging, setIsDragging] = useState(false);
+  const {
+    items,
+    handleAddPodcast,
+    handleRemovePodcast,
+    handleReorderPodcasts,
+  } = usePodcastStorage();
 
   const podcastsRow1 = [
     {
@@ -45,6 +51,10 @@ export default function Options() {
     },
   ];
 
+  const handleDragStateChange = (dragging) => {
+    setIsDragging(dragging);
+  };
+
   return (
     <div className="App">
       <ThemeProvider>
@@ -55,7 +65,7 @@ export default function Options() {
               <h2 className="sub-header">Manage Podcasts</h2>
               <h1 className="header">Subscriptions</h1>
               <p className="instructions">
-                Manage podcasts here or in the pop-up window.
+                Manage podcasts here or in the pop-up window. Drag to reorder.
               </p>
               <Form onSubmit={handleAddPodcast} />
               <div className="overflow">
@@ -63,6 +73,8 @@ export default function Options() {
                 <List
                   items={items}
                   removeUrl={handleRemovePodcast}
+                  moveItem={handleReorderPodcasts}
+                  onDragStateChange={handleDragStateChange}
                   className="options-list-overflow"
                 />
               </div>

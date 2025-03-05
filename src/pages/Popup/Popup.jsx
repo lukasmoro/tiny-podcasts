@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Form from '../Options/Form';
 import List from '../Options/List';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastStorage } from '../../hooks/usePodcastStorage';
 import './Popup.css';
-import '../Options/List.css';
 import '../../root/Root.css';
 
 const Popup = () => {
-  const { items, handleAddPodcast, handleRemovePodcast } = usePodcastStorage();
+  const [isDragging, setIsDragging] = useState(false);
+  const {
+    items,
+    handleAddPodcast,
+    handleRemovePodcast,
+    handleReorderPodcasts,
+  } = usePodcastStorage();
+
+  const handleDragStateChange = (dragging) => {
+    setIsDragging(dragging);
+  };
 
   return (
     <div className="App">
@@ -18,8 +27,9 @@ const Popup = () => {
           <List
             items={items}
             removeUrl={handleRemovePodcast}
-            className="popup-list-overflow"
-            stretchContent={true}
+            moveItem={handleReorderPodcasts}
+            onDragStateChange={handleDragStateChange}
+            isPopup={true}
           />
         </div>
       </ThemeProvider>
