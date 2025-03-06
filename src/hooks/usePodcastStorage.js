@@ -1,15 +1,23 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+
+const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
+
+const notifyStorageUpdated = (detail = {}) => {
+  const event = new CustomEvent(PODCAST_UPDATED_EVENT, { detail });
+  window.dispatchEvent(event);
+};
 
 export const usePodcastStorage = () => {
   const [items, setItems] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const isReorderingRef = useRef(false);
+  const lastReorderSignatureRef = useRef(null);
+  const initiatedUpdateRef = useRef(false);
 
-  // Load podcasts from storage on initial render
   useEffect(() => {
     const loadPodcasts = () => {
       chrome.storage.local.get(['newUrls'], (item) => {
         const existingItems = item.newUrls || [];
-        // Map items to ensure consistent format
         const feedItems = existingItems.map((feedItem) => ({
           key: feedItem.key,
           text: feedItem.text,
@@ -23,6 +31,30 @@ export const usePodcastStorage = () => {
     };
 
     loadPodcasts();
+
+    const storageChangeHandler = (changes, area) => {
+      if (area === 'local' && changes.newUrls && !initiatedUpdateRef.current) {
+        console.log('Storage changed externally, reloading podcasts');
+        loadPodcasts();
+      }
+      initiatedUpdateRef.current = false;
+    };
+
+    const customEventHandler = () => {
+      if (!initiatedUpdateRef.current) {
+        console.log('Received podcast update event, reloading podcasts');
+        loadPodcasts();
+      }
+      initiatedUpdateRef.current = false;
+    };
+
+    chrome.storage.onChanged.addListener(storageChangeHandler);
+    window.addEventListener(PODCAST_UPDATED_EVENT, customEventHandler);
+
+    return () => {
+      chrome.storage.onChanged.removeListener(storageChangeHandler);
+      window.removeEventListener(PODCAST_UPDATED_EVENT, customEventHandler);
+    };
   }, []);
 
   const handleAddPodcast = useCallback(
@@ -50,24 +82,14 @@ export const usePodcastStorage = () => {
           xml.querySelector('channel > title')?.textContent ||
           'Unnamed Podcast';
         const newItem = { ...item, podcastName, artwork: item.artwork };
-
         const newUrls = [newItem, ...items];
+        initiatedUpdateRef.current = true;
 
-        // Update state first for immediate UI response
         setItems(newUrls);
 
-        // Then update storage
         chrome.storage.local.set({ newUrls }, () => {
           console.log('Podcast added:', newItem);
-
-          chrome.tabs.query(
-            { active: true, currentWindow: true },
-            function (tabs) {
-              if (tabs && tabs[0] && tabs[0].id) {
-                chrome.tabs.reload(tabs[0].id);
-              }
-            }
-          );
+          notifyStorageUpdated({ action: 'add', item: newItem });
         });
       } catch (error) {
         console.error('Error fetching podcast feed:', error);
@@ -82,22 +104,11 @@ export const usePodcastStorage = () => {
   const handleRemovePodcast = useCallback(
     (key) => {
       const newUrls = items.filter((item) => item.key !== key);
-
-      // Update state first for immediate UI response
+      initiatedUpdateRef.current = true;
       setItems(newUrls);
 
-      // Then update storage
       chrome.storage.local.set({ newUrls }, () => {
-        console.log('Podcast removed with key:', key);
-
-        chrome.tabs.query(
-          { active: true, currentWindow: true },
-          function (tabs) {
-            if (tabs && tabs[0] && tabs[0].id) {
-              chrome.tabs.reload(tabs[0].id);
-            }
-          }
-        );
+        notifyStorageUpdated({ action: 'remove', key });
       });
     },
     [items]
@@ -105,42 +116,49 @@ export const usePodcastStorage = () => {
 
   const handleReorderPodcasts = useCallback(
     (sourceIndex, destinationIndex) => {
-      console.log('Reordering podcasts:', sourceIndex, 'to', destinationIndex);
+      const reorderSignature = `${sourceIndex}-${destinationIndex}`;
 
-      // Create a new array
+      if (
+        lastReorderSignatureRef.current === reorderSignature &&
+        isReorderingRef.current
+      ) {
+        return;
+      }
+
+      isReorderingRef.current = true;
+      lastReorderSignatureRef.current = reorderSignature;
       const reorderedItems = Array.from(items);
-
-      // Remove the item from source position
       const [movedItem] = reorderedItems.splice(sourceIndex, 1);
-
-      // Insert it at the destination position
       reorderedItems.splice(destinationIndex, 0, movedItem);
-
-      // Update state first for immediate UI response
+      initiatedUpdateRef.current = true;
       setItems(reorderedItems);
 
-      // Log the item IDs to verify the reordering
-      console.log(
-        'Reordered items:',
-        reorderedItems.map((item) => item.key)
-      );
-
-      // Then update storage with the new order
       chrome.storage.local.set({ newUrls: reorderedItems }, () => {
-        console.log('Podcasts reordered in storage');
+        notifyStorageUpdated({
+          action: 'reorder',
+          sourceIndex,
+          destinationIndex,
+        });
 
-        chrome.tabs.query(
-          { active: true, currentWindow: true },
-          function (tabs) {
-            if (tabs && tabs[0] && tabs[0].id) {
-              chrome.tabs.reload(tabs[0].id);
-            }
-          }
-        );
+        isReorderingRef.current = false;
       });
     },
     [items]
   );
+
+  const refreshFromStorage = useCallback(() => {
+    chrome.storage.local.get(['newUrls'], (item) => {
+      const existingItems = item.newUrls || [];
+      const feedItems = existingItems.map((feedItem) => ({
+        key: feedItem.key,
+        text: feedItem.text,
+        podcastName: feedItem.podcastName,
+        artwork: feedItem.artwork || feedItem.artworkUrl,
+      }));
+      setItems(feedItems);
+      console.log('Podcasts manually refreshed from storage:', feedItems);
+    });
+  }, []);
 
   return {
     items,
@@ -149,5 +167,6 @@ export const usePodcastStorage = () => {
     handleAddPodcast,
     handleRemovePodcast,
     handleReorderPodcasts,
+    refreshFromStorage,
   };
 };

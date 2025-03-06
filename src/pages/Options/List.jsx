@@ -1,9 +1,11 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { useSprings, animated, config } from '@react-spring/web';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { useSprings, animated } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import clamp from 'lodash/clamp';
 import swap from 'lodash-move';
 import './List.css';
+
+const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
 const List = ({
   items,
@@ -13,7 +15,6 @@ const List = ({
   isPopup = false,
 }) => {
   const [itemHeight, setItemHeight] = useState(70);
-  const [isMeasured, setIsMeasured] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef(null);
   const itemsRef = useRef([]);
@@ -21,71 +22,62 @@ const List = ({
   const animationCompleteRef = useRef(true);
   const initialRenderRef = useRef(true);
   const lastReorderedRef = useRef(null);
+  const lastProcessedItemsRef = useRef([]);
 
-  // Debug log to track items and order
+  const areItemsEquivalent = useCallback((prevItems, newItems) => {
+    if (prevItems.length !== newItems.length) return false;
+
+    return newItems.every((item, index) => {
+      return item.key === prevItems[index]?.key;
+    });
+  }, []);
+
   useEffect(() => {
-    console.log(
-      'Items updated:',
-      items.map((item) => item.podcastName || item.key)
+    const itemsChanged = !areItemsEquivalent(
+      lastProcessedItemsRef.current,
+      items
     );
-    console.log('Current order ref:', order.current);
 
-    // In popup mode, always sync order ref with items when items change
-    if (isPopup && !initialRenderRef.current) {
-      console.log('Popup mode: Re-syncing order ref with items');
+    // In popup mode, always sync order ref with items when items change (if actually changed)
+    if ((isPopup && !initialRenderRef.current) || itemsChanged) {
       order.current = items.map((_, index) => index);
+      lastProcessedItemsRef.current = [...items];
     }
-  }, [items, isPopup]);
+  }, [items, isPopup, areItemsEquivalent]);
+
+  // Listen for podcast storage updates
+  useEffect(() => {
+    const handleStorageUpdate = (event) => {
+      if (event.detail.action === 'reorder' && !initialRenderRef.current) {
+        api.start(fn(order.current));
+      }
+    };
+    window.addEventListener(PODCAST_UPDATED_EVENT, handleStorageUpdate);
+    return () => {
+      window.removeEventListener(PODCAST_UPDATED_EVENT, handleStorageUpdate);
+    };
+  }, []);
 
   // Initialize positions and prevent any animations on first render
   useEffect(() => {
     if (initialRenderRef.current) {
-      // Update order ref
       order.current = items.map((_, index) => index);
-
-      // Use RAF to ensure this happens after initial render
-      const rafId = requestAnimationFrame(() => {
-        // First measure the items if possible
-        if (itemsRef.current[0]) {
-          const height =
-            itemsRef.current[0].getBoundingClientRect().height + 10;
-          setItemHeight(height);
-        }
-
-        // Then mark as measured to prevent animations
-        setIsMeasured(true);
-
-        // Short delay to ensure styles are applied before showing
-        setTimeout(() => {
-          setIsVisible(true);
-          initialRenderRef.current = false;
-        }, 50);
-      });
-
-      return () => cancelAnimationFrame(rafId);
+      lastProcessedItemsRef.current = [...items];
+      setItemHeight(70);
+      setIsVisible(true);
+      initialRenderRef.current = false;
     }
-  }, [items]);
+  }, []);
 
-  // Update order ref when items change (after initial render)
+  // Update order ref when items change (after initial render and if not in animation)
   useEffect(() => {
     if (!initialRenderRef.current && animationCompleteRef.current) {
-      console.log('Updating order ref based on items');
-      order.current = items.map((_, index) => index);
+      if (!areItemsEquivalent(lastProcessedItemsRef.current, items)) {
+        order.current = items.map((_, index) => index);
+        lastProcessedItemsRef.current = [...items];
+      }
     }
-  }, [items]);
-
-  // For popup: Force refresh animationComplete state after each drag
-  useEffect(() => {
-    if (isPopup && lastReorderedRef.current) {
-      const resetTimer = setTimeout(() => {
-        console.log('Popup: Force resetting animation state');
-        animationCompleteRef.current = true;
-        lastReorderedRef.current = null;
-      }, 50);
-
-      return () => clearTimeout(resetTimer);
-    }
-  }, [isPopup, items]);
+  }, [items, areItemsEquivalent]);
 
   // The animation function
   const fn =
@@ -96,7 +88,6 @@ const List = ({
           y: curIndex * itemHeight + y,
           scale: 1.03,
           zIndex: 1,
-          opacity: 1,
           immediate: (key) => key === 'y' || key === 'zIndex',
         };
       }
@@ -105,17 +96,9 @@ const List = ({
         y: order.indexOf(index) * itemHeight,
         scale: 1,
         zIndex: 0,
-        opacity: isVisible ? 1 : 0, // Hide items until measured
         shadow: 1,
-        // Force immediate:true for all properties until fully measured and visible
-        // Also force immediate in popup mode for better responsiveness
-        immediate:
-          !isVisible ||
-          (!active && index !== originalIndex) ||
-          (isPopup && !active),
-        config: isPopup
-          ? { tension: 400, friction: 40 }
-          : { tension: 300, friction: 30 },
+        immediate: !isVisible,
+        config: { tension: 300, friction: 30 },
       };
     };
 
@@ -124,16 +107,12 @@ const List = ({
     y: index * itemHeight,
     scale: 1,
     zIndex: 0,
-    opacity: 0, // Start invisible
-    immediate: true, // Force immediate for initial positioning
+    immediate: true,
   }));
 
-  // Update springs once measurements and visibility are set
-  useEffect(() => {
-    if (isMeasured) {
-      api.start(fn(order.current));
-    }
-  }, [isMeasured, isVisible, itemHeight, api]);
+  // Debounce drag updates to prevent flooding the storage
+  const lastDragTimestampRef = useRef(0);
+  const pendingDragUpdateRef = useRef(null);
 
   const bind = useDrag(
     ({ args: [originalIndex], active, movement: [_, y], last }) => {
@@ -141,14 +120,9 @@ const List = ({
         onDragStateChange(active);
       }
 
-      // Skip drag handling during initial render
-      if (initialRenderRef.current) return;
-
-      // In popup, reset animation state on each drag start
       if (isPopup && active) {
         animationCompleteRef.current = false;
       } else {
-        // For non-popup, use the existing approach
         animationCompleteRef.current = !active;
       }
 
@@ -162,13 +136,10 @@ const List = ({
 
       const newOrder = swap(order.current, curIndex, curRow);
 
-      // In popup mode, use more immediate animation
       api.start(fn(newOrder, active, originalIndex, curIndex, y));
 
       if (!active && last) {
-        // Only call moveItem when the position actually changed
         if (curIndex !== curRow) {
-          // Save info about this reordering operation
           lastReorderedRef.current = {
             originalIndex,
             curIndex,
@@ -184,75 +155,27 @@ const List = ({
             isPopup,
           });
 
-          // For popups, we need to take a more direct approach
-          if (isPopup) {
-            // Update internal ref first
-            order.current = newOrder;
-
-            // Call moveItem synchronously for popups with no delay
-            moveItem(curIndex, curRow);
-            console.log(
-              'moveItem called immediately (popup mode):',
-              curIndex,
-              curRow
-            );
-
-            // Force a re-application of the visual order
-            requestAnimationFrame(() => {
-              api.start(fn(order.current));
-
-              // Reset animation state after a short delay
-              setTimeout(() => {
-                animationCompleteRef.current = true;
-              }, 50);
-            });
-          } else {
-            // In regular mode, use the existing timeout approach
-            order.current = newOrder;
-
-            setTimeout(() => {
-              // Convert from visual indices to actual data indices
-              moveItem(curIndex, curRow);
-              console.log('moveItem called with delay:', curIndex, curRow);
-              animationCompleteRef.current = true;
-            }, 300); // Adjust timeout to match your animation duration
-          }
-        } else {
           order.current = newOrder;
-          animationCompleteRef.current = true;
-        }
+          api.start(fn(order.current));
 
-        // Final animation cleanup
-        api.start((index) => {
-          if (index === originalIndex) {
-            return {
-              scale: 1,
-              shadow: 1,
-              immediate: isPopup, // Force immediate in popup mode
-            };
-          }
-          return {};
-        });
+          pendingDragUpdateRef.current = setTimeout(() => {
+            lastDragTimestampRef.current = Date.now();
+            moveItem(curIndex, curRow);
+            animationCompleteRef.current = true;
+            pendingDragUpdateRef.current = null;
+          }, 300);
+        }
       }
     }
   );
 
-  // Remove item handler
   const handleRemove = (key) => {
     removeUrl(key);
   };
 
-  // Render with CSS to completely hide items until they're properly positioned
   return (
-    <div
-      className="podcast-items-container"
-      ref={containerRef}
-      style={{
-        height: items.length * itemHeight,
-        visibility: isVisible ? 'visible' : 'hidden', // Hide container until ready
-      }}
-    >
-      {springs.map(({ y, scale, zIndex, opacity }, i) => (
+    <div className="podcast-items-container" ref={containerRef}>
+      {springs.map(({ y, scale, zIndex }, i) => (
         <animated.div
           key={items[i]?.key || `item-${i}`}
           ref={(el) => (itemsRef.current[i] = el)}
@@ -261,7 +184,6 @@ const List = ({
             zIndex,
             y,
             scale,
-            opacity,
             position: 'absolute',
             width: '100%',
             touchAction: 'none',
