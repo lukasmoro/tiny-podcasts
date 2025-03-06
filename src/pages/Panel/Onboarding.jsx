@@ -3,13 +3,13 @@ import Recommendations from '../Newtab/Recommendations.jsx';
 import Overlay from '../Newtab/Overlay.jsx';
 import Form from '../Options/Form.jsx';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
-import { usePodcastStorage } from '../../hooks/usePodcastStorage.js';
+import { usePodcastData } from '../../hooks/usePodcastData.js';
 import './Onboarding.css';
 import '../Options/List.css';
 import '../../root/Root.css';
 
 export default function Onboarding({ onPodcastAdded }) {
-  const { items, handleAddPodcast } = usePodcastStorage();
+  const { items, handleAddPodcast } = usePodcastData();
 
   // Create a wrapper for handleAddPodcast that also calls onPodcastAdded
   const handleAddPodcastWithCallback = async (item) => {

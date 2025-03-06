@@ -3,7 +3,7 @@ import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
 import './AudioPlayer.css';
 import BehaviourClick from './BehaviourClick.jsx';
-import usePlaybackPosition from '../../hooks/usePlaybackPosition.js';
+import usePodcastPlayback from '../../hooks/usePodcastPlayback.js';
 import { PlayIcon } from '../Icons/PlayIcon';
 import { PauseIcon } from '../Icons/PauseIcon';
 // Import Google Analytics tracking functions
@@ -22,7 +22,7 @@ const AudioPlayer = (props) => {
     updatePlaybackState,
     PLAYBACK_STATUS,
     wasFinished,
-  } = usePlaybackPosition(props.podcastId);
+  } = usePodcastPlayback(props.podcastId);
 
   const audioPlayer = useRef();
   const progressBar = useRef();

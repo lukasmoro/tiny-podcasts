@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Form from '../Options/Form';
 import List from '../Options/List';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
-import { usePodcastStorage } from '../../hooks/usePodcastStorage';
+import { usePodcastData } from '../../hooks/usePodcastData';
 import './Popup.css';
 import '../../root/Root.css';
 
@@ -13,7 +13,7 @@ const Popup = () => {
     handleAddPodcast,
     handleRemovePodcast,
     handleReorderPodcasts,
-  } = usePodcastStorage();
+  } = usePodcastData();
 
   const handleDragStateChange = (dragging) => {
     setIsDragging(dragging);

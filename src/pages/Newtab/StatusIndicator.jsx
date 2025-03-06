@@ -1,11 +1,11 @@
 import React from 'react';
-import usePlaybackPosition from '../../hooks/usePlaybackPosition';
+import usePodcastPlayback from '../../hooks/usePodcastPlayback';
 import './StatusIndicator.css';
 import { CheckIcon } from '../Icons/CheckIcon';
 
 const StatusIndicator = ({ podcastId }) => {
   const { status: playbackStatus, PLAYBACK_STATUS } =
-    usePlaybackPosition(podcastId);
+    usePodcastPlayback(podcastId);
 
   const getStatusColor = () => {
     switch (playbackStatus) {

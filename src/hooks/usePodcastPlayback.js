@@ -8,7 +8,7 @@ const PLAYBACK_STATUS = {
 
 const FINISHED_THRESHOLD = 30;
 
-const usePlaybackPosition = (podcastId) => {
+const usePodcastPlayback = (podcastId) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [status, setStatus] = useState(PLAYBACK_STATUS.UNPLAYED);
@@ -25,9 +25,7 @@ const usePlaybackPosition = (podcastId) => {
             duration: savedDuration,
           } = result[podcastId];
 
-          // Check if the podcast was previously finished
           if (savedStatus === PLAYBACK_STATUS.FINISHED) {
-            // Set time to 0 for replay but maintain FINISHED status
             setCurrentTime(0);
             setWasFinished(true);
           } else {
@@ -44,12 +42,10 @@ const usePlaybackPosition = (podcastId) => {
 
     loadSavedState();
 
-    // Add storage change listener
     const handleStorageChange = (changes, namespace) => {
       if (namespace === 'local' && changes[podcastId]) {
         const newValue = changes[podcastId].newValue;
         if (newValue) {
-          // Only update time if not previously finished or explicitly setting a new time
           if (
             !wasFinished ||
             (newValue.time > 0 &&
@@ -57,11 +53,8 @@ const usePlaybackPosition = (podcastId) => {
           ) {
             setCurrentTime(newValue.time || 0);
           }
-
           setStatus(newValue.status || PLAYBACK_STATUS.UNPLAYED);
           setDuration(newValue.duration || 0);
-
-          // Update wasFinished flag
           if (newValue.status === PLAYBACK_STATUS.FINISHED) {
             setWasFinished(true);
           }
@@ -71,7 +64,6 @@ const usePlaybackPosition = (podcastId) => {
 
     chrome.storage.onChanged.addListener(handleStorageChange);
 
-    // Cleanup listener on unmount
     return () => {
       chrome.storage.onChanged.removeListener(handleStorageChange);
     };
@@ -82,7 +74,6 @@ const usePlaybackPosition = (podcastId) => {
       let newStatus = status;
 
       if (time === 0) {
-        // If starting from beginning but was previously finished, keep FINISHED status
         newStatus = wasFinished
           ? PLAYBACK_STATUS.FINISHED
           : PLAYBACK_STATUS.UNPLAYED;
@@ -90,7 +81,6 @@ const usePlaybackPosition = (podcastId) => {
         newStatus = PLAYBACK_STATUS.FINISHED;
         setWasFinished(true);
       } else if (time > 0) {
-        // When in progress, update status normally
         newStatus = PLAYBACK_STATUS.IN_PROGRESS;
       }
 
@@ -134,4 +124,4 @@ const usePlaybackPosition = (podcastId) => {
   };
 };
 
-export default usePlaybackPosition;
+export default usePodcastPlayback;

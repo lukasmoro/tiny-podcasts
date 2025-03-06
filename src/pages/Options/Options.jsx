@@ -5,7 +5,7 @@ import Overlay from '../Newtab/Overlay';
 import Recommendations from '../Newtab/Recommendations';
 import BuyMeACoffeeButton from '../Newtab/BuyMeACoffeeButton';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
-import { usePodcastStorage } from '../../hooks/usePodcastStorage';
+import { usePodcastData } from '../../hooks/usePodcastData';
 import './Options.css';
 import './Form.css';
 import './List.css';
@@ -18,7 +18,7 @@ export default function Options() {
     handleAddPodcast,
     handleRemovePodcast,
     handleReorderPodcasts,
-  } = usePodcastStorage();
+  } = usePodcastData();
 
   const podcastsRow1 = [
     {
