@@ -5,10 +5,21 @@ import Form from '../Options/Form.jsx';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastStorage } from '../../hooks/usePodcastStorage.js';
 import './Onboarding.css';
+import '../Options/List.css';
 import '../../root/Root.css';
 
-export default function Onboarding() {
+export default function Onboarding({ onPodcastAdded }) {
   const { items, handleAddPodcast } = usePodcastStorage();
+
+  // Create a wrapper for handleAddPodcast that also calls onPodcastAdded
+  const handleAddPodcastWithCallback = async (item) => {
+    await handleAddPodcast(item);
+
+    // After podcast is added, notify parent component to switch views
+    if (onPodcastAdded) {
+      onPodcastAdded();
+    }
+  };
 
   const podcastsRow1 = [
     {
@@ -40,7 +51,6 @@ export default function Onboarding() {
       feedUrl: 'https://museapp.com/podcast.rss',
     },
   ];
-
   const podcastsRow2 = [
     {
       collectionId: '2001234567',
@@ -71,7 +81,6 @@ export default function Onboarding() {
       feedUrl: 'https://feeds.simplecast.com/FO6kxYGj',
     },
   ];
-
   const podcastsRow3 = [
     {
       collectionId: '3001234567',
@@ -103,7 +112,6 @@ export default function Onboarding() {
         'https://feeds.acast.com/public/shows/0185cea5-9e3b-4b82-a887-26f91f92765f',
     },
   ];
-
   const podcastsRow4 = [
     {
       collectionId: '4001234567',
@@ -148,23 +156,23 @@ export default function Onboarding() {
             <p className="instructions">
               Search a podcast or pick a recommendation...
             </p>
-            <Form onSubmit={handleAddPodcast} />
+            <Form onSubmit={handleAddPodcastWithCallback} />
             <div className="recommendations-container">
               <Recommendations
                 podcasts={podcastsRow1}
-                onAddPodcast={handleAddPodcast}
+                onAddPodcast={handleAddPodcastWithCallback}
               />
               <Recommendations
                 podcasts={podcastsRow2}
-                onAddPodcast={handleAddPodcast}
+                onAddPodcast={handleAddPodcastWithCallback}
               />
               <Recommendations
                 podcasts={podcastsRow3}
-                onAddPodcast={handleAddPodcast}
+                onAddPodcast={handleAddPodcastWithCallback}
               />
               <Recommendations
                 podcasts={podcastsRow4}
-                onAddPodcast={handleAddPodcast}
+                onAddPodcast={handleAddPodcastWithCallback}
               />
             </div>
           </div>

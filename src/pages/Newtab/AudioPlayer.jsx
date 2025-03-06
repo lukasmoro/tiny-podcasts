@@ -173,7 +173,6 @@ const AudioPlayer = (props) => {
         },
       });
 
-      // Track play event with Google Analytics
       trackButtonClick('audio_play', {
         podcast_id: props.podcastId,
         podcast_title: props.title || 'Unknown',
@@ -263,7 +262,6 @@ const AudioPlayer = (props) => {
     if (!isPlaying) {
       audioPlayer.current.play().catch((err) => {
         console.error('Error playing audio:', err);
-        // Track error with Google Analytics
         trackError(err).catch((trackErr) =>
           console.error('Error tracking error event:', trackErr)
         );

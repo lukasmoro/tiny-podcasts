@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 import StatusIndicator from './StatusIndicator.jsx';
 import DraggableInfoCard from './DraggableInfoCard.jsx';
-import Overlay from './Overlay.jsx';
 import { parseRss } from '../../utils/rssParser';
 import { textTruncate } from '../../utils/textTruncate.js';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import './Carousel.css';
 
-const Carousel = () => {
+const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
+
+const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoadingActive] = useState(true);
-  const [isBlurVisible, setIsBlurVisible] = useState(false);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
 
   const { scrollPosition, indicatorIndex } = useScrollPosition(
@@ -19,63 +19,77 @@ const Carousel = () => {
     items.length
   );
 
-  const handleClick = () => {
-    setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
-  };
-
-  const handlePodcastEnd = () => {
-    setIsBlurVisible(false);
-  };
-
   const handleLoading = () => {
     setIsLoadingActive(false);
   };
 
-  useEffect(() => {
-    if (isBlurVisible) {
-      document.body.classList.add('no-scroll');
-    } else {
-      document.body.classList.remove('no-scroll');
-    }
+  const loadPodcasts = () => {
+    setIsLoadingActive(true);
 
-    return () => {
-      document.body.classList.remove('no-scroll');
-    };
-  }, [isBlurVisible]);
-
-  useEffect(() => {
     chrome.storage.local.get(['latestPodcasts', 'newUrls'], (items) => {
       if (items.latestPodcasts && items.latestPodcasts.length > 0) {
         setItems(items.latestPodcasts);
-      } else if (items.newUrls) {
+        setTimeout(() => setIsLoadingActive(false), 500);
+      } else if (items.newUrls && items.newUrls.length > 0) {
         const newUrls = items.newUrls.map((newUrl) => newUrl.text);
         Promise.all(newUrls.map((url) => fetch(url)))
           .then((responses) => Promise.all(responses.map((r) => r.text())))
           .then((xmlStrings) => {
             const firstPodcasts = xmlStrings.map(parseRss);
             setItems(firstPodcasts);
+            setTimeout(() => setIsLoadingActive(false), 500);
           })
-          .catch((error) => console.error(error));
+          .catch((error) => {
+            console.error('Error fetching podcast feeds:', error);
+            setIsLoadingActive(false);
+          });
+      } else {
+        setItems([]);
+        setIsLoadingActive(false);
       }
     });
+  };
+
+  useEffect(() => {
+    loadPodcasts();
+
+    const handlePodcastUpdated = (event) => {
+      console.log('Podcast storage updated:', event.detail?.action);
+      loadPodcasts();
+    };
+
+    window.addEventListener(PODCAST_UPDATED_EVENT, handlePodcastUpdated);
+
+    const handleStorageChanged = (changes, area) => {
+      if (area === 'local' && changes.newUrls) {
+        console.log('Chrome storage updated with new podcast data');
+        loadPodcasts();
+      }
+    };
+
+    chrome.storage.onChanged.addListener(handleStorageChanged);
+
+    return () => {
+      window.removeEventListener(PODCAST_UPDATED_EVENT, handlePodcastUpdated);
+      chrome.storage.onChanged.removeListener(handleStorageChanged);
+    };
   }, []);
 
   useEffect(() => {
-    const loadingTimer = setTimeout(() => {
+    const initialLoadingTimer = setTimeout(() => {
       handleLoading();
     }, 2000);
     return () => {
-      clearTimeout(loadingTimer);
+      clearTimeout(initialLoadingTimer);
     };
   }, []);
 
   return (
-    <div className="App">
+    <>
       <ul
         id="parent-container"
         className={`cards ${isBlurVisible ? 'visible' : ''}`}
       >
-        <Overlay />
         <div className={`loader ${isLoading ? 'active' : ''}`}>
           <li className="spacer"></li>
           {items.map(
@@ -117,15 +131,14 @@ const Carousel = () => {
                       <AudioPlayer
                         src={podcast.mp3}
                         podcastId={`${podcast.title}-${podcast.episode}`}
-                        handleClick={handleClick}
-                        onEnded={handlePodcastEnd}
+                        handleClick={handleBlurToggle}
+                        onEnded={onPodcastEnd}
                       />
                     </div>
                   </div>
                 </li>
               )
           )}
-          <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
           <li className="spacer"></li>
         </div>
       </ul>
@@ -141,7 +154,7 @@ const Carousel = () => {
           ))}
         </span>
       )}
-    </div>
+    </>
   );
 };
 
