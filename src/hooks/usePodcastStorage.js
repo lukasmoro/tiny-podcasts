@@ -26,7 +26,6 @@ export const usePodcastStorage = () => {
         }));
         setItems(feedItems);
         setIsLoaded(true);
-        console.log('Podcasts loaded from storage:', feedItems);
       });
     };
 
@@ -34,7 +33,6 @@ export const usePodcastStorage = () => {
 
     const storageChangeHandler = (changes, area) => {
       if (area === 'local' && changes.newUrls && !initiatedUpdateRef.current) {
-        console.log('Storage changed externally, reloading podcasts');
         loadPodcasts();
       }
       initiatedUpdateRef.current = false;
@@ -42,7 +40,6 @@ export const usePodcastStorage = () => {
 
     const customEventHandler = () => {
       if (!initiatedUpdateRef.current) {
-        console.log('Received podcast update event, reloading podcasts');
         loadPodcasts();
       }
       initiatedUpdateRef.current = false;
@@ -156,7 +153,6 @@ export const usePodcastStorage = () => {
         artwork: feedItem.artwork || feedItem.artworkUrl,
       }));
       setItems(feedItems);
-      console.log('Podcasts manually refreshed from storage:', feedItems);
     });
   }, []);
 
