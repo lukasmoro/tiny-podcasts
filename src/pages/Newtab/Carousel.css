@@ -10,7 +10,8 @@ body.no-scroll {
   overflow: hidden;
 }
 
-h2 {
+h2,
+h3 {
   animation: linear adjust-opacity both;
   animation-timeline: --li-in-and-out-of-view;
 }
