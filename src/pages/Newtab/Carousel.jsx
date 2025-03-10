@@ -83,7 +83,9 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
                     <DraggableInfoCard
                       podcast={podcast}
                       expanded={activeInfoCard === index}
-                      setExpanded={setActiveInfoCard}
+                      setExpanded={(isExpanded) => {
+                        setActiveInfoCard(isExpanded ? index : null);
+                      }}
                     />
                     <div className="player-container">
                       <AudioPlayer
