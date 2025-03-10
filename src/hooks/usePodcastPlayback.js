@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 
-const PLAYBACK_STATUS = {
+const currentStatus = {
   UNPLAYED: 'UNPLAYED',
   IN_PROGRESS: 'IN_PROGRESS',
   FINISHED: 'FINISHED',
 };
 
-const FINISHED_THRESHOLD = 30;
-
 const usePodcastPlayback = (podcastId) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [status, setStatus] = useState(PLAYBACK_STATUS.UNPLAYED);
-  const [wasFinished, setWasFinished] = useState(false);
+  const [status, setStatus] = useState(currentStatus.UNPLAYED);
 
   useEffect(() => {
     const loadSavedState = async () => {
@@ -25,14 +22,13 @@ const usePodcastPlayback = (podcastId) => {
             duration: savedDuration,
           } = result[podcastId];
 
-          if (savedStatus === PLAYBACK_STATUS.FINISHED) {
+          if (savedStatus === currentStatus.FINISHED) {
             setCurrentTime(0);
-            setWasFinished(true);
           } else {
             setCurrentTime(time || 0);
           }
 
-          setStatus(savedStatus || PLAYBACK_STATUS.UNPLAYED);
+          setStatus(savedStatus || currentStatus.UNPLAYED);
           setDuration(savedDuration || 0);
         }
       } catch (error) {
@@ -46,18 +42,11 @@ const usePodcastPlayback = (podcastId) => {
       if (namespace === 'local' && changes[podcastId]) {
         const newValue = changes[podcastId].newValue;
         if (newValue) {
-          if (
-            !wasFinished ||
-            (newValue.time > 0 &&
-              newValue.time < newValue.duration - FINISHED_THRESHOLD)
-          ) {
+          if (newValue.time > 0 && newValue.time < newValue.duration - 30) {
             setCurrentTime(newValue.time || 0);
           }
-          setStatus(newValue.status || PLAYBACK_STATUS.UNPLAYED);
+          setStatus(newValue.status || currentStatus.UNPLAYED);
           setDuration(newValue.duration || 0);
-          if (newValue.status === PLAYBACK_STATUS.FINISHED) {
-            setWasFinished(true);
-          }
         }
       }
     };
@@ -67,21 +56,17 @@ const usePodcastPlayback = (podcastId) => {
     return () => {
       chrome.storage.onChanged.removeListener(handleStorageChange);
     };
-  }, [podcastId, wasFinished]);
+  }, [podcastId]);
 
   const updatePlaybackState = async (time, totalDuration) => {
     try {
       let newStatus = status;
 
       if (time === 0) {
-        newStatus = wasFinished
-          ? PLAYBACK_STATUS.FINISHED
-          : PLAYBACK_STATUS.UNPLAYED;
-      } else if (totalDuration && totalDuration - time <= FINISHED_THRESHOLD) {
-        newStatus = PLAYBACK_STATUS.FINISHED;
-        setWasFinished(true);
+      } else if (totalDuration && totalDuration - time <= 30) {
+        newStatus = currentStatus.FINISHED;
       } else if (time > 0) {
-        newStatus = PLAYBACK_STATUS.IN_PROGRESS;
+        newStatus = currentStatus.IN_PROGRESS;
       }
 
       const newState = {
@@ -105,9 +90,8 @@ const usePodcastPlayback = (podcastId) => {
     try {
       await chrome.storage.local.remove(podcastId);
       setCurrentTime(0);
-      setStatus(PLAYBACK_STATUS.UNPLAYED);
+      setStatus(currentStatus.UNPLAYED);
       setDuration(0);
-      setWasFinished(false);
     } catch (error) {
       console.error('Error resetting playback state:', error);
     }
@@ -117,10 +101,9 @@ const usePodcastPlayback = (podcastId) => {
     currentTime,
     duration,
     status,
+    currentStatus,
     updatePlaybackState,
     resetPlaybackState,
-    PLAYBACK_STATUS,
-    wasFinished,
   };
 };
 

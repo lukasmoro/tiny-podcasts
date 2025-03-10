@@ -19,9 +19,8 @@ const AudioPlayer = (props) => {
     currentTime: savedTime,
     duration: savedDuration,
     status,
+    currentStatus,
     updatePlaybackState,
-    PLAYBACK_STATUS,
-    wasFinished,
   } = usePodcastPlayback(props.podcastId);
 
   const audioPlayer = useRef();
@@ -37,10 +36,10 @@ const AudioPlayer = (props) => {
 
   useEffect(() => {
     if (!isInitialized && audioPlayer.current) {
-      const timeToSet = status === PLAYBACK_STATUS.FINISHED ? 0 : savedTime;
+      const timeToSet = status === currentStatus.FINISHED ? 0 : savedTime;
 
       if (
-        (timeToSet > 0 || status === PLAYBACK_STATUS.FINISHED) &&
+        (timeToSet > 0 || status === currentStatus.FINISHED) &&
         savedDuration > 0
       ) {
         setCurrentTime(timeToSet);
@@ -58,7 +57,7 @@ const AudioPlayer = (props) => {
         }
       }
     }
-  }, [savedTime, savedDuration, isInitialized, status, PLAYBACK_STATUS]);
+  }, [savedTime, savedDuration, isInitialized, status, currentStatus]);
 
   useEffect(() => {
     const audio = audioPlayer.current;
@@ -75,7 +74,7 @@ const AudioPlayer = (props) => {
         progressBar.current.max = audioDuration;
       }
 
-      if (status === PLAYBACK_STATUS.FINISHED && !isInitialized) {
+      if (status === currentStatus.FINISHED && !isInitialized) {
         audio.currentTime = 0;
 
         if (progressBar.current) {
