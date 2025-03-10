@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import AudioPlayer from './AudioPlayer.jsx';
 import StatusIndicator from './StatusIndicator.jsx';
 import DraggableInfoCard from './DraggableInfoCard.jsx';
-import { parseRss } from '../../utils/rssParser';
+import { usePodcastData } from '../../hooks/usePodcastData';
 import { textTruncate } from '../../utils/textTruncate.js';
 import './Carousel.css';
 
-const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
-
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
-  const [items, setItems] = useState([]);
+  const { items } = usePodcastData();
+
   const [isLoading, setIsLoadingActive] = useState(true);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
 
@@ -19,44 +18,13 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
   const loadPodcasts = () => {
     setIsLoadingActive(true);
-
-    chrome.storage.local.get(['latestPodcasts', 'newUrls'], (items) => {
-      if (items.latestPodcasts && items.latestPodcasts.length > 0) {
-        setItems(items.latestPodcasts);
-        setTimeout(() => setIsLoadingActive(false), 500);
-      } else if (items.newUrls && items.newUrls.length > 0) {
-        const newUrls = items.newUrls.map((newUrl) => newUrl.url);
-        Promise.all(newUrls.map((url) => fetch(url)))
-          .then((responses) => Promise.all(responses.map((r) => r.text())))
-          .then((xmlStrings) => {
-            const firstPodcasts = xmlStrings.map(parseRss);
-            setItems(firstPodcasts);
-            setTimeout(() => setIsLoadingActive(false), 500);
-          })
-          .catch((error) => {
-            console.error('Error fetching podcast feeds:', error);
-            setIsLoadingActive(false);
-          });
-      } else {
-        setItems([]);
-        setIsLoadingActive(false);
-      }
-    });
   };
 
   useEffect(() => {
     loadPodcasts();
 
-    const handlePodcastUpdated = (event) => {
-      console.log('Podcast storage updated:', event.detail?.action);
-      loadPodcasts();
-    };
-
-    window.addEventListener(PODCAST_UPDATED_EVENT, handlePodcastUpdated);
-
     const handleStorageChanged = (changes, area) => {
       if (area === 'local' && changes.newUrls) {
-        console.log('Chrome storage updated with new podcast data');
         loadPodcasts();
       }
     };
@@ -64,7 +32,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
     chrome.storage.onChanged.addListener(handleStorageChanged);
 
     return () => {
-      window.removeEventListener(PODCAST_UPDATED_EVENT, handlePodcastUpdated);
       chrome.storage.onChanged.removeListener(handleStorageChanged);
     };
   }, []);
@@ -98,15 +65,12 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
                             {textTruncate(podcast.title || 'Unknown Title', 30)}
                           </h2>
                           <StatusIndicator
-                            status={podcast.PLAYBACK_STATUS}
-                            podcastId={`${podcast.title}-${podcast.episode}`}
+                            status={podcast.status}
+                            podcastID={podcast.key}
                           />
                         </div>
                         <h3 className="podcast-episode">
-                          {textTruncate(
-                            podcast.episode || 'Unknown Episode',
-                            45
-                          )}
+                          {textTruncate(podcast.episode, 45)}
                         </h3>
                       </div>
                     </div>
@@ -124,7 +88,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
                     <div className="player-container">
                       <AudioPlayer
                         src={podcast.mp3}
-                        podcastId={`${podcast.title}-${podcast.episode}`}
+                        podcastID={podcast.key}
                         handleClick={handleBlurToggle}
                         onEnded={onPodcastEnd}
                       />

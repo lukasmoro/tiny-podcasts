@@ -20,9 +20,17 @@ export const usePodcastData = () => {
       const existingItems = item.newUrls || [];
       const feedItems = existingItems.map((feedItem) => ({
         key: feedItem.key,
-        url: feedItem.url,
         title: feedItem.title,
+        episode: feedItem.episode || 'Unknown Episode',
+        url: feedItem.url,
         image: feedItem.image,
+        description: feedItem.description,
+        author: feedItem.author,
+        categories: feedItem.category,
+        mp3: feedItem.mp3,
+        status: null,
+        duration: null,
+        currentTime: null,
       }));
       setItems(feedItems);
       setIsLoaded(true);
@@ -81,6 +89,7 @@ export const usePodcastData = () => {
           ...item,
           key: new Date().getTime(),
           title: parsedItem.title || 'Unnamed Podcast',
+          episode: parsedItem.episode || 'Unknown Episode',
           image: parsedItem.image,
           description: parsedItem.description,
           author: parsedItem.author,
