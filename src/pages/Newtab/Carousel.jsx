@@ -4,7 +4,6 @@ import StatusIndicator from './StatusIndicator.jsx';
 import DraggableInfoCard from './DraggableInfoCard.jsx';
 import { parseRss } from '../../utils/rssParser';
 import { textTruncate } from '../../utils/textTruncate.js';
-import useScrollPosition from '../../hooks/useScrollPosition';
 import './Carousel.css';
 
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
@@ -13,11 +12,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoadingActive] = useState(true);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
-
-  const { scrollPosition, indicatorIndex } = useScrollPosition(
-    'parent-container',
-    items.length
-  );
 
   const handleLoading = () => {
     setIsLoadingActive(false);
@@ -142,18 +136,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
           <li className="spacer"></li>
         </div>
       </ul>
-      {items.length > 1 && (
-        <span className="indicators">
-          {items.map((__, index) => (
-            <button
-              key={index}
-              className={`indicator ${
-                index === indicatorIndex ? 'active' : ''
-              }`}
-            ></button>
-          ))}
-        </span>
-      )}
     </>
   );
 };

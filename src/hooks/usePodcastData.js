@@ -22,7 +22,7 @@ export const usePodcastData = () => {
       const feedItems = existingItems.map((feedItem) => ({
         key: feedItem.key,
         text: feedItem.text,
-        podcastName: feedItem.podcastName,
+        title: feedItem.title,
         artwork: feedItem.artwork || feedItem.artworkUrl,
       }));
       setItems(feedItems);

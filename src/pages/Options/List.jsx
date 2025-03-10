@@ -194,16 +194,16 @@ const List = ({
             <img
               className="podcast-item-thumbnail"
               src={items[i]?.artwork}
-              alt={items[i]?.podcastName || 'Podcast'}
+              alt={items[i]?.title || 'Podcast'}
             />
             <p
               className={
-                items[i]?.podcastName?.length > 10
+                items[i]?.title?.length > 10
                   ? 'podcast-item-title podcast-truncate-text'
                   : 'podcast-item-title'
               }
             >
-              {items[i]?.podcastName || 'Unnamed Podcast'}
+              {items[i]?.title || 'Unnamed Podcast'}
             </p>
             <button
               className="podcast-remove-btn"
