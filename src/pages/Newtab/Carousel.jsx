@@ -25,7 +25,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         setItems(items.latestPodcasts);
         setTimeout(() => setIsLoadingActive(false), 500);
       } else if (items.newUrls && items.newUrls.length > 0) {
-        const newUrls = items.newUrls.map((newUrl) => newUrl.text);
+        const newUrls = items.newUrls.map((newUrl) => newUrl.url);
         Promise.all(newUrls.map((url) => fetch(url)))
           .then((responses) => Promise.all(responses.map((r) => r.text())))
           .then((xmlStrings) => {

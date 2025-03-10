@@ -6,7 +6,7 @@ const Recommendations = ({ podcastID, onAddPodcast }) => {
   const [podcasts, setPodcasts] = useState([]);
 
   useEffect(() => {
-    // fetch podcast data from itunes api for ui & adding item if handleAddPodcast is called
+    // fetch podcast url from itunes api for ui & adding item if handleAddPodcast is called
     const fetchPodcasts = async () => {
       try {
         const podcastPromises = podcastID.map((id) =>
@@ -25,13 +25,10 @@ const Recommendations = ({ podcastID, onAddPodcast }) => {
     }
   }, [podcastID]);
 
-  //pass fetched data to parent
+  //pass fetched url to parent
   const handleAddPodcast = (podcast) => {
     const podcastData = {
-      key: new Date().getTime(),
-      text: podcast.feedUrl,
-      title: podcast.collectionName,
-      artwork: podcast.artworkUrl600,
+      url: podcast.feedUrl,
     };
     onAddPodcast(podcastData);
   };

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { parseRss } from '../utils/rssParser';
 
 // update event broadcast utility function to make specific storage changes listenable across application
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
@@ -21,7 +22,7 @@ export const usePodcastData = () => {
       const existingItems = item.newUrls || [];
       const feedItems = existingItems.map((feedItem) => ({
         key: feedItem.key,
-        text: feedItem.text,
+        url: feedItem.url,
         title: feedItem.title,
         artwork: feedItem.artwork || feedItem.artworkUrl,
       }));
@@ -66,32 +67,36 @@ export const usePodcastData = () => {
   const handleAddPodcast = useCallback(
     async (item) => {
       //check for duplicate podcasts & not more then 5 podcasts
-      let check = items.every((url) => url.text !== item.text);
+      let check = items.every((url) => url.url !== item.url);
       if (items.length > 4 || !check) {
         alert('This podcast has already been added! 👀');
         return;
       }
 
-      // fetch title & artwork from url, create new item, update newUrls array, set storage & notify
+      // create new item, update newUrls array, set storage & notify
       try {
-        const response = await fetch(item.text);
+        const response = await fetch(item.url);
         const text = await response.text();
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(text, 'text/xml');
-        const title =
-          xml.querySelector('channel > title')?.textContent ||
-          'Unnamed Podcast';
+        const parsedItem = parseRss(text);
+
+        if (!parsedItem) {
+          throw new Error('Failed to parse RSS feed');
+        }
+
         const newItem = {
           ...item,
-          title,
-          artwork: item.artwork,
-          description: null,
-          author: null,
-          categories: null,
-          mp3: null,
+          key: new Date().getTime(),
+          title: parsedItem.title || 'Unnamed Podcast',
+          artwork: parsedItem.image,
+          description: parsedItem.description,
+          author: parsedItem.author,
+          categories: parsedItem.category,
+          mp3: parsedItem.mp3,
+          status: null,
           duration: null,
           currentTime: null,
         };
+
         const newUrls = [newItem, ...items];
         initiatedUpdateRef.current = true;
         setItems(newUrls);
@@ -103,6 +108,7 @@ export const usePodcastData = () => {
         alert(
           'Error fetching podcast feed. Please check the URL and try again.'
         );
+        console.error('Error details:', error);
       }
     },
     [items]

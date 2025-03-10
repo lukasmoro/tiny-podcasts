@@ -32,14 +32,11 @@ const Searchbar = (props) => {
     }
   };
 
-  // handle podcast select by passing up item data to parent component (options, onboarding or popup)
+  // handle podcast select by passing up queried url to parent component (options, onboarding or popup)
   // reset input field & search results
   const handlePodcastSelect = (podcast) => {
     props.onSubmit({
-      key: new Date().getTime(),
-      text: podcast.feedUrl,
-      title: podcast.collectionName,
-      artwork: podcast.artworkUrl600,
+      url: podcast.feedUrl,
     });
     setInput('');
     setSearchResults([]);
