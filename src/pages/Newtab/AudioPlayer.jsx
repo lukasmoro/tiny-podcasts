@@ -6,7 +6,6 @@ import BehaviourClick from './BehaviourClick.jsx';
 import usePodcastPlayback from '../../hooks/usePodcastPlayback.js';
 import { PlayIcon } from '../Icons/PlayIcon';
 import { PauseIcon } from '../Icons/PauseIcon';
-// Import Google Analytics tracking functions
 import { trackButtonClick } from '../../utils/googleAnalytics';
 
 const AudioPlayer = (props) => {
@@ -25,7 +24,6 @@ const AudioPlayer = (props) => {
 
   const audioPlayer = useRef();
   const progressBar = useRef();
-  const animationRef = useRef();
   const lastUpdateTimeRef = useRef(0);
 
   const [springs, api] = useSpring(() => ({
