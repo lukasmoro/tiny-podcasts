@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
-const storageUpdateNotification = (detail = {}) => {
+const updateEvent = (detail = {}) => {
   const event = new CustomEvent(PODCAST_UPDATED_EVENT, { detail });
   window.dispatchEvent(event);
 };
@@ -86,7 +86,7 @@ export const usePodcastData = () => {
 
         chrome.storage.local.set({ newUrls }, () => {
           console.log('Podcast added:', newItem);
-          storageUpdateNotification({ action: 'add', item: newItem });
+          updateEvent({ action: 'add', item: newItem });
         });
       } catch (error) {
         console.error('Error fetching podcast feed:', error);
@@ -105,7 +105,7 @@ export const usePodcastData = () => {
       setItems(newUrls);
 
       chrome.storage.local.set({ newUrls }, () => {
-        storageUpdateNotification({ action: 'remove', key });
+        updateEvent({ action: 'remove', key });
       });
     },
     [items]
@@ -131,7 +131,7 @@ export const usePodcastData = () => {
       setItems(reorderedItems);
 
       chrome.storage.local.set({ newUrls: reorderedItems }, () => {
-        storageUpdateNotification({
+        updateEvent({
           action: 'reorder',
           sourceIndex,
           destinationIndex,
