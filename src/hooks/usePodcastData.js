@@ -1,67 +1,74 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
+// update event broadcast utility function to make specific storage changes listenable across application
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
-const updateEvent = (detail = {}) => {
+const updateEventBroadcast = (detail = {}) => {
   const event = new CustomEvent(PODCAST_UPDATED_EVENT, { detail });
   window.dispatchEvent(event);
 };
 
 export const usePodcastData = () => {
+  // state (re-render)
   const [items, setItems] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  // refs (no re-render)
   const isReorderingRef = useRef(false);
-  const lastReorderSignatureRef = useRef(null);
   const initiatedUpdateRef = useRef(false);
 
-  useEffect(() => {
-    const loadPodcasts = () => {
-      chrome.storage.local.get(['newUrls'], (item) => {
-        const existingItems = item.newUrls || [];
-        const feedItems = existingItems.map((feedItem) => ({
-          key: feedItem.key,
-          text: feedItem.text,
-          podcastName: feedItem.podcastName,
-          artwork: feedItem.artwork || feedItem.artworkUrl,
-        }));
-        setItems(feedItems);
-        setIsLoaded(true);
-      });
-    };
+  // encapsulated load podcasts
+  const loadPodcasts = () => {
+    chrome.storage.local.get(['newUrls'], (item) => {
+      const existingItems = item.newUrls || [];
+      const feedItems = existingItems.map((feedItem) => ({
+        key: feedItem.key,
+        text: feedItem.text,
+        podcastName: feedItem.podcastName,
+        artwork: feedItem.artwork || feedItem.artworkUrl,
+      }));
+      setItems(feedItems);
+      setIsLoaded(true);
+    });
+  };
 
+  // mount on initial load of component
+  useEffect(() => {
+    // load podcasts on initial mount
     loadPodcasts();
 
-    const storageChangeHandler = (changes, area) => {
+    // event handler triggering if local storage changed
+    const storageEventHandler = (changes, area) => {
       if (area === 'local' && changes.newUrls && !initiatedUpdateRef.current) {
         loadPodcasts();
       }
       initiatedUpdateRef.current = false;
     };
 
-    const customEventHandler = () => {
+    // podcast update eventhandler, reloading after specific action to podcasts
+    const updateEventHandler = () => {
       if (!initiatedUpdateRef.current) {
         loadPodcasts();
       }
       initiatedUpdateRef.current = false;
     };
 
-    chrome.storage.onChanged.addListener(storageChangeHandler);
-    window.addEventListener(PODCAST_UPDATED_EVENT, customEventHandler);
+    // add storage & event listener
+    chrome.storage.onChanged.addListener(storageEventHandler);
+    window.addEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
 
+    // remove storage & event listener
     return () => {
-      chrome.storage.onChanged.removeListener(storageChangeHandler);
-      window.removeEventListener(PODCAST_UPDATED_EVENT, customEventHandler);
+      chrome.storage.onChanged.removeListener(storageEventHandler);
+      window.removeEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
     };
   }, []);
 
+  // callback function for adding items
   const handleAddPodcast = useCallback(
     async (item) => {
-      const urlChecker = (url) => url.text !== item.text;
-      let check = items.every(urlChecker);
-
+      // check if not more than 5 items & new url
       if (
         items.length > 4 ||
-        !check ||
         !/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/.test(
           item.text
         )
@@ -70,6 +77,7 @@ export const usePodcastData = () => {
         return;
       }
 
+      // fetch title & artwork from url, create new item, update newUrls array, set storage & notify
       try {
         const response = await fetch(item.text);
         const text = await response.text();
@@ -81,15 +89,12 @@ export const usePodcastData = () => {
         const newItem = { ...item, podcastName, artwork: item.artwork };
         const newUrls = [newItem, ...items];
         initiatedUpdateRef.current = true;
-
         setItems(newUrls);
 
         chrome.storage.local.set({ newUrls }, () => {
-          console.log('Podcast added:', newItem);
-          updateEvent({ action: 'add', item: newItem });
+          updateEventBroadcast({ action: 'add', item: newItem });
         });
       } catch (error) {
-        console.error('Error fetching podcast feed:', error);
         alert(
           'Error fetching podcast feed. Please check the URL and try again.'
         );
@@ -98,32 +103,25 @@ export const usePodcastData = () => {
     [items]
   );
 
+  // callback function for removing items
   const handleRemovePodcast = useCallback(
     (key) => {
+      // remove url with matching key from array, update newUrls array, set storage & notify
       const newUrls = items.filter((item) => item.key !== key);
       initiatedUpdateRef.current = true;
       setItems(newUrls);
 
       chrome.storage.local.set({ newUrls }, () => {
-        updateEvent({ action: 'remove', key });
+        updateEventBroadcast({ action: 'remove', key });
       });
     },
     [items]
   );
 
+  // callback function for re-ordering podcasts
   const handleReorderPodcasts = useCallback(
     (sourceIndex, destinationIndex) => {
-      const reorderSignature = `${sourceIndex}-${destinationIndex}`;
-
-      if (
-        lastReorderSignatureRef.current === reorderSignature &&
-        isReorderingRef.current
-      ) {
-        return;
-      }
-
-      isReorderingRef.current = true;
-      lastReorderSignatureRef.current = reorderSignature;
+      //create copy of items array, remove moveItem from source index and add it destination index with splice & notify
       const reorderedItems = Array.from(items);
       const [movedItem] = reorderedItems.splice(sourceIndex, 1);
       reorderedItems.splice(destinationIndex, 0, movedItem);
@@ -131,30 +129,15 @@ export const usePodcastData = () => {
       setItems(reorderedItems);
 
       chrome.storage.local.set({ newUrls: reorderedItems }, () => {
-        updateEvent({
+        updateEventBroadcast({
           action: 'reorder',
           sourceIndex,
           destinationIndex,
         });
-
-        isReorderingRef.current = false;
       });
     },
     [items]
   );
-
-  const refreshFromStorage = useCallback(() => {
-    chrome.storage.local.get(['newUrls'], (item) => {
-      const existingItems = item.newUrls || [];
-      const feedItems = existingItems.map((feedItem) => ({
-        key: feedItem.key,
-        text: feedItem.text,
-        podcastName: feedItem.podcastName,
-        artwork: feedItem.artwork || feedItem.artworkUrl,
-      }));
-      setItems(feedItems);
-    });
-  }, []);
 
   return {
     items,
@@ -163,6 +146,5 @@ export const usePodcastData = () => {
     handleAddPodcast,
     handleRemovePodcast,
     handleReorderPodcasts,
-    refreshFromStorage,
   };
 };
