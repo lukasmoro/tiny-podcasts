@@ -20,9 +20,7 @@ const Recommendations = ({ podcastID, onAddPodcast }) => {
         console.error('Error fetching podcast recommendations:', error);
       }
     };
-    if (podcastID && podcastID.length > 0) {
-      fetchPodcasts();
-    }
+    fetchPodcasts();
   }, [podcastID]);
 
   //pass fetched url to parent

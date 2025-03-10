@@ -20,19 +20,6 @@ const StatusIndicator = ({ podcastId }) => {
     }
   };
 
-  const getStatusIcon = () => {
-    switch (playbackStatus) {
-      case currentStatus.UNPLAYED:
-        return null;
-      case currentStatus.IN_PROGRESS:
-        return null;
-      case currentStatus.FINISHED:
-        return <CheckIcon className="status-icon" />;
-      default:
-        return null;
-    }
-  };
-
   return (
     <div
       className="status-indicator"
@@ -41,7 +28,6 @@ const StatusIndicator = ({ podcastId }) => {
         '--outline-color': getStatusColor(),
       }}
     >
-      {getStatusIcon()}
       <span className="status-dot"></span>
     </div>
   );

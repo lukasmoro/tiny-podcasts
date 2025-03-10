@@ -13,8 +13,6 @@ export const usePodcastData = () => {
   // state (re-render)
   const [items, setItems] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  // refs (no re-render)
-  const initiatedUpdateRef = useRef(false);
 
   // encapsulated load podcasts
   const loadPodcasts = () => {
@@ -38,18 +36,14 @@ export const usePodcastData = () => {
 
     // event handler triggering if local storage changed
     const storageEventHandler = (changes, area) => {
-      if (area === 'local' && changes.newUrls && !initiatedUpdateRef.current) {
+      if (area === 'local' && changes.newUrls) {
         loadPodcasts();
       }
-      initiatedUpdateRef.current = false;
     };
 
     // podcast update eventhandler, reloading after specific action to podcasts
     const updateEventHandler = () => {
-      if (!initiatedUpdateRef.current) {
-        loadPodcasts();
-      }
-      initiatedUpdateRef.current = false;
+      loadPodcasts();
     };
 
     // add storage & event listener
@@ -98,7 +92,7 @@ export const usePodcastData = () => {
         };
 
         const newUrls = [newItem, ...items];
-        initiatedUpdateRef.current = true;
+
         setItems(newUrls);
         chrome.storage.local.set({ newUrls }, () => {
           console.log('New podcast added:', newUrls);
@@ -119,9 +113,8 @@ export const usePodcastData = () => {
     (key) => {
       // remove url with matching key from array, update newUrls array, set storage & notify
       const newUrls = items.filter((item) => item.key !== key);
-      initiatedUpdateRef.current = true;
-      setItems(newUrls);
 
+      setItems(newUrls);
       chrome.storage.local.set({ newUrls }, () => {
         updateEventBroadcast({ action: 'remove', key });
       });
@@ -136,7 +129,7 @@ export const usePodcastData = () => {
       const reorderedItems = Array.from(items);
       const [movedItem] = reorderedItems.splice(sourceIndex, 1);
       reorderedItems.splice(destinationIndex, 0, movedItem);
-      initiatedUpdateRef.current = true;
+
       setItems(reorderedItems);
 
       chrome.storage.local.set({ newUrls: reorderedItems }, () => {
