@@ -13,7 +13,6 @@ export const usePodcastData = () => {
   const [items, setItems] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   // refs (no re-render)
-  const isReorderingRef = useRef(false);
   const initiatedUpdateRef = useRef(false);
 
   // encapsulated load podcasts
@@ -66,13 +65,9 @@ export const usePodcastData = () => {
   // callback function for adding items
   const handleAddPodcast = useCallback(
     async (item) => {
-      // check if not more than 5 items & new url
-      if (
-        items.length > 4 ||
-        !/(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/.test(
-          item.text
-        )
-      ) {
+      //check for duplicate podcasts & not more then 5 podcasts
+      let check = items.every((url) => url.text !== item.text);
+      if (items.length > 4 || !check) {
         alert('This podcast has already been added! 👀');
         return;
       }

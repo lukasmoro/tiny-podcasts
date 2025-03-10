@@ -7,17 +7,12 @@ import './Popup.css';
 import '../../root/Root.css';
 
 const Popup = () => {
-  const [isDragging, setIsDragging] = useState(false);
   const {
     items,
     handleAddPodcast,
     handleRemovePodcast,
     handleReorderPodcasts,
   } = usePodcastData();
-
-  const handleDragStateChange = (dragging) => {
-    setIsDragging(dragging);
-  };
 
   return (
     <div className="App">
@@ -28,8 +23,6 @@ const Popup = () => {
             items={items}
             removeUrl={handleRemovePodcast}
             moveItem={handleReorderPodcasts}
-            onDragStateChange={handleDragStateChange}
-            isPopup={true}
           />
         </div>
       </ThemeProvider>

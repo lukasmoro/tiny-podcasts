@@ -11,8 +11,7 @@ import './Searchbar.css';
 import './List.css';
 import '../../root/Root.css';
 
-export default function Options() {
-  const [isDragging, setIsDragging] = useState(false);
+const Options = () => {
   const {
     items,
     handleAddPodcast,
@@ -20,40 +19,10 @@ export default function Options() {
     handleReorderPodcasts,
   } = usePodcastData();
 
-  const podcastsRow1 = [
-    {
-      collectionId: '1001591696',
-      collectionName: 'The Daily',
-      artworkUrl600:
-        'https://is1-ssl.mzstatic.com/image/thumb/Podcasts211/v4/c8/1a/71/c81a716b-b5d1-61b7-7d3e-0253a56e63d5/mza_15186388159121451528.jpg/600x600bb.jpg',
-      feedUrl: 'https://feeds.simplecast.com/54nAGcIl',
-    },
-    {
-      collectionId: '1002345678',
-      collectionName: 'Tetragrammaton',
-      artworkUrl600:
-        'https://is1-ssl.mzstatic.com/image/thumb/Podcasts112/v4/7c/0c/5a/7c0c5ac5-d264-c8b8-092c-e783a7d90acd/mza_5701251400846604141.png/600x600bb.jpg',
-      feedUrl: 'https://feeds.megaphone.fm/tetragrammaton',
-    },
-    {
-      collectionId: '1003456789',
-      collectionName: 'Hard Fork',
-      artworkUrl600:
-        'https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/a9/6b/6c/a96b6c32-c995-99bb-ca21-2b3513a73ed5/mza_13537672625974326334.jpg/600x600bb.jpg',
-      feedUrl: 'https://feeds.simplecast.com/l2i9YnTd',
-    },
-    {
-      collectionId: '1004567890',
-      collectionName: 'Metamuse',
-      artworkUrl600:
-        'https://is1-ssl.mzstatic.com/image/thumb/Podcasts122/v4/ab/85/0e/ab850e67-ef76-23ad-b0e5-178d5a62defb/mza_10900988606734060896.png/600x600bb.jpg',
-      feedUrl: 'https://museapp.com/podcast.rss',
-    },
+  // define podcast IDs for row of recommendations
+  const recommendationRows = [
+    ['1200361736', '1671669052', '1528594034', '81934659'],
   ];
-
-  const handleDragStateChange = (dragging) => {
-    setIsDragging(dragging);
-  };
 
   return (
     <div className="App">
@@ -74,7 +43,6 @@ export default function Options() {
                   items={items}
                   removeUrl={handleRemovePodcast}
                   moveItem={handleReorderPodcasts}
-                  onDragStateChange={handleDragStateChange}
                   className="options-list-overflow"
                 />
               </div>
@@ -88,10 +56,13 @@ export default function Options() {
                 <p className="instructions">
                   Unsure where to start? Here are some favorites.
                 </p>
-                <Recommendations
-                  podcasts={podcastsRow1}
-                  onAddPodcast={handleAddPodcast}
-                />
+                {recommendationRows.map((rowIds, index) => (
+                  <Recommendations
+                    key={`row-${index}`}
+                    podcastID={rowIds}
+                    onAddPodcast={handleAddPodcast}
+                  />
+                ))}
               </div>
             </div>
             <div className="card right-card">
@@ -114,4 +85,6 @@ export default function Options() {
       </ThemeProvider>
     </div>
   );
-}
+};
+
+export default Options;
