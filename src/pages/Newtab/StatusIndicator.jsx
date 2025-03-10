@@ -1,7 +1,6 @@
 import React from 'react';
 import usePodcastPlayback from '../../hooks/usePodcastPlayback';
 import './StatusIndicator.css';
-import { CheckIcon } from '../Icons/CheckIcon';
 
 const StatusIndicator = ({ podcastId }) => {
   const { status: playbackStatus, currentStatus } =
