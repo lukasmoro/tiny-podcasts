@@ -24,7 +24,7 @@ export const usePodcastData = () => {
         key: feedItem.key,
         url: feedItem.url,
         title: feedItem.title,
-        artwork: feedItem.artwork || feedItem.artworkUrl,
+        image: feedItem.image,
       }));
       setItems(feedItems);
       setIsLoaded(true);
@@ -87,7 +87,7 @@ export const usePodcastData = () => {
           ...item,
           key: new Date().getTime(),
           title: parsedItem.title || 'Unnamed Podcast',
-          artwork: parsedItem.image,
+          image: parsedItem.image,
           description: parsedItem.description,
           author: parsedItem.author,
           categories: parsedItem.category,

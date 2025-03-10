@@ -193,7 +193,7 @@ const List = ({
           <div className="podcast-items">
             <img
               className="podcast-item-thumbnail"
-              src={items[i]?.artwork}
+              src={items[i]?.image}
               alt={items[i]?.title || 'Podcast'}
             />
             <p
