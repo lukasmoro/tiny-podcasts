@@ -78,15 +78,25 @@ export const usePodcastData = () => {
         const text = await response.text();
         const parser = new DOMParser();
         const xml = parser.parseFromString(text, 'text/xml');
-        const podcastName =
+        const title =
           xml.querySelector('channel > title')?.textContent ||
           'Unnamed Podcast';
-        const newItem = { ...item, podcastName, artwork: item.artwork };
+        const newItem = {
+          ...item,
+          title,
+          artwork: item.artwork,
+          description: null,
+          author: null,
+          categories: null,
+          mp3: null,
+          duration: null,
+          currentTime: null,
+        };
         const newUrls = [newItem, ...items];
         initiatedUpdateRef.current = true;
         setItems(newUrls);
-
         chrome.storage.local.set({ newUrls }, () => {
+          console.log('New podcast added:', newUrls);
           updateEventBroadcast({ action: 'add', item: newItem });
         });
       } catch (error) {
