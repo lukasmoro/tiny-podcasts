@@ -1,7 +1,7 @@
 import React from 'react';
 import './Recommendations.css';
 
-function Recommendations({ podcasts, onAddPodcast }) {
+const Recommendations = ({ podcasts, onAddPodcast }) => {
   const handleAddPodcast = (podcast) => {
     if (!podcast.feedUrl) {
       console.error('No feed URL available for this podcast');
@@ -37,6 +37,6 @@ function Recommendations({ podcasts, onAddPodcast }) {
       </div>
     </div>
   );
-}
+};
 
 export default Recommendations;

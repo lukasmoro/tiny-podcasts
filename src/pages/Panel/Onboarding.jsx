@@ -1,7 +1,7 @@
 import React from 'react';
 import Recommendations from '../Newtab/Recommendations.jsx';
 import Overlay from '../Newtab/Overlay.jsx';
-import Form from '../Options/Form.jsx';
+import Searchbar from '../Options/Searchbar.jsx';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastData } from '../../hooks/usePodcastData.js';
 import './Onboarding.css';
@@ -156,7 +156,7 @@ export default function Onboarding({ onPodcastAdded }) {
             <p className="instructions">
               Search a podcast or pick a recommendation...
             </p>
-            <Form onSubmit={handleAddPodcastWithCallback} />
+            <Searchbar onSubmit={handleAddPodcastWithCallback} />
             <div className="recommendations-container">
               <Recommendations
                 podcasts={podcastsRow1}

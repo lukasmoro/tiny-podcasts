@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Form from '../Options/Form';
+import Searchbar from '../Options/Searchbar';
 import List from '../Options/List';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastData } from '../../hooks/usePodcastData';
@@ -23,7 +23,7 @@ const Popup = () => {
     <div className="App">
       <ThemeProvider>
         <div className="list-container">
-          <Form onSubmit={handleAddPodcast} />
+          <Searchbar onSubmit={handleAddPodcast} />
           <List
             items={items}
             removeUrl={handleRemovePodcast}

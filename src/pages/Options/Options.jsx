@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Form from './Form';
+import Searchbar from './Searchbar';
 import List from './List';
 import Overlay from '../Newtab/Overlay';
 import Recommendations from '../Newtab/Recommendations';
@@ -7,7 +7,7 @@ import BuyMeACoffeeButton from '../Newtab/BuyMeACoffeeButton';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastData } from '../../hooks/usePodcastData';
 import './Options.css';
-import './Form.css';
+import './Searchbar.css';
 import './List.css';
 import '../../root/Root.css';
 
@@ -67,7 +67,7 @@ export default function Options() {
               <p className="instructions">
                 Manage podcasts here or in the pop-up window. Drag to reorder.
               </p>
-              <Form onSubmit={handleAddPodcast} />
+              <Searchbar onSubmit={handleAddPodcast} />
               <div className="overflow">
                 <div className="podcast-divider"></div>
                 <List

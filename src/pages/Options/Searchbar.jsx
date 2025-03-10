@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { textTruncate } from '../../utils/textTruncate';
-import './Form.css';
+import './Searchbar.css';
 
-function Form(props) {
+const Searchbar = (props) => {
+  // state
   const [input, setInput] = useState('');
-  const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
+  // search podcasts via itunes podcast api & show the top 3 results
   const searchPodcasts = async (query) => {
-    setIsSearching(true);
     try {
       const response = await fetch(
         `https://itunes.apple.com/search?term=${encodeURIComponent(
@@ -20,9 +20,9 @@ function Form(props) {
     } catch (error) {
       console.error('Error searching podcasts:', error);
     }
-    setIsSearching(false);
   };
 
+  // when user types into searchbar display search results after two characters
   const handleChange = (e) => {
     setInput(e.target.value);
     if (e.target.value.length > 2) {
@@ -32,9 +32,9 @@ function Form(props) {
     }
   };
 
+  // handle podcast select by passing up item data to parent component (options, onboarding or popup)
+  // reset input field & search results
   const handlePodcastSelect = (podcast) => {
-    console.log('Selected podcast URL:', podcast.feedUrl);
-
     props.onSubmit({
       key: new Date().getTime(),
       text: podcast.feedUrl,
@@ -45,6 +45,7 @@ function Form(props) {
     setSearchResults([]);
   };
 
+  // handle submit event (pressing enter) by calling handlePodcastSelect with first result
   const handleSubmit = (e) => {
     e.preventDefault();
     if (searchResults.length > 0) {
@@ -92,6 +93,6 @@ function Form(props) {
       )}
     </div>
   );
-}
+};
 
-export default Form;
+export default Searchbar;
