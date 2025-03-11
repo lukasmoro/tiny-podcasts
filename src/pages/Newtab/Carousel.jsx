@@ -6,42 +6,47 @@ import { usePodcastData } from '../../hooks/usePodcastData';
 import { textTruncate } from '../../utils/textTruncate.js';
 import './Carousel.css';
 
+// subscribe to event
+const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
+
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
+  // usePodcastData hook
   const { items } = usePodcastData();
 
+  // states
   const [isLoading, setIsLoadingActive] = useState(true);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
 
-  const handleLoading = () => {
-    setIsLoadingActive(false);
-  };
-
-  const loadPodcasts = () => {
+  // start loading
+  const startLoading = () => {
     setIsLoadingActive(true);
   };
 
-  useEffect(() => {
-    loadPodcasts();
+  // stop loading
+  const stopLoading = () => {
+    setIsLoadingActive(false);
+  };
 
-    const handleStorageChanged = (changes, area) => {
-      if (area === 'local' && changes.newUrls) {
-        loadPodcasts();
-      }
+  // useEffect loading carousel on mount and when podcast data changes
+  useEffect(() => {
+    startLoading();
+
+    // use the
+    //  podcast update event
+    const updateEventHandler = () => {
+      startLoading();
     };
 
-    chrome.storage.onChanged.addListener(handleStorageChanged);
-
-    return () => {
-      chrome.storage.onChanged.removeListener(handleStorageChanged);
-    };
-  }, []);
-
-  useEffect(() => {
-    const initialLoadingTimer = setTimeout(() => {
-      handleLoading();
+    const loadingTimer = setTimeout(() => {
+      stopLoading();
     }, 2000);
+
+    // listen to the custom event instead of chrome.storage.onChanged
+    window.addEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
+
     return () => {
-      clearTimeout(initialLoadingTimer);
+      clearTimeout(loadingTimer);
+      window.removeEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
     };
   }, []);
 
