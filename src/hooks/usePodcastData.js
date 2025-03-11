@@ -48,6 +48,7 @@ export const usePodcastData = () => {
     const storageEventHandler = (changes, area) => {
       if (area === 'local' && changes.newUrls) {
         loadPodcasts();
+        console.log(changes.newUrls);
       }
     };
 
