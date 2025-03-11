@@ -31,8 +31,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   useEffect(() => {
     startLoading();
 
-    // use the
-    //  podcast update event
+    // use the podcast update event
     const updateEventHandler = () => {
       startLoading();
     };
@@ -41,7 +40,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
       stopLoading();
     }, 2000);
 
-    // listen to the custom event instead of chrome.storage.onChanged
+    // listen to the custom event
     window.addEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
 
     return () => {
