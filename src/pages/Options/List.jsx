@@ -24,18 +24,13 @@ const List = ({ items, removeUrl, moveItem }) => {
 
   // useEffect that triggers animations when reordering event happens through storage
   useEffect(() => {
-    console.log('⚡ Podcast storage update event listener effect running');
-
     const handleStorageUpdate = (event) => {
-      console.log('🔄 Storage update event received:', event.detail);
       if (event.detail.action === 'reorder' && !initialRenderRef.current) {
-        console.log('🔃 Triggering animation due to external reorder');
         api.start(fn(order.current));
       }
     };
     window.addEventListener(PODCAST_UPDATED_EVENT, handleStorageUpdate);
     return () => {
-      console.log('🧹 Cleaning up podcast storage update event listener');
       window.removeEventListener(PODCAST_UPDATED_EVENT, handleStorageUpdate);
     };
   }, []);
@@ -47,17 +42,10 @@ const List = ({ items, removeUrl, moveItem }) => {
     setItemHeight(70);
     setIsVisible(true);
     initialRenderRef.current = false;
-    console.log('✅ Initial setup complete, items:', items.length);
   }, []);
 
   //useEffect to update order when items change after initial render
   useEffect(() => {
-    console.log('📦 Items change effect running', {
-      itemsLength: items.length,
-      initialRender: initialRenderRef.current,
-      lastProcessedItems: lastProcessedItemsRef.current.length,
-    });
-
     if (!initialRenderRef.current) {
       order.current = items.map((_, index) => index);
       lastProcessedItemsRef.current = [...items];
@@ -78,7 +66,7 @@ const List = ({ items, removeUrl, moveItem }) => {
         };
       }
 
-      // For all other items
+      // for all other items
       return {
         y: order.indexOf(index) * itemHeight, // position based on current order
         scale: 1, // normal scale
@@ -127,13 +115,6 @@ const List = ({ items, removeUrl, moveItem }) => {
             curIndex,
             curRow,
           };
-
-          console.log('👆 Drag completed:', {
-            originalIndex,
-            curIndex,
-            curRow,
-            newOrder: JSON.stringify(newOrder),
-          });
 
           // update the order reference
           order.current = newOrder;

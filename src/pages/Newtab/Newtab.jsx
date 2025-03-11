@@ -30,8 +30,8 @@ const Newtab = () => {
   });
 
   const checkForPodcasts = () => {
-    chrome.storage.local.get(['newUrls'], (item) => {
-      if (item.newUrls && item.newUrls.length > 0) {
+    chrome.storage.local.get(['newItems'], (item) => {
+      if (item.newItems && item.newItems.length > 0) {
         setOnboarding(false);
       } else {
         setOnboarding(true);
@@ -51,8 +51,8 @@ const Newtab = () => {
     window.addEventListener(PODCAST_UPDATED_EVENT, handlePodcastUpdated);
 
     const handleStorageChanged = (changes, area) => {
-      if (area === 'local' && changes.newUrls) {
-        const newValue = changes.newUrls.newValue || [];
+      if (area === 'local' && changes.newItems) {
+        const newValue = changes.newItems.newValue || [];
         if (newValue.length > 0 && onboarding) {
           setOnboarding(false);
         } else if (newValue.length === 0 && !onboarding) {
