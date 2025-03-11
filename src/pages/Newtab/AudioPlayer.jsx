@@ -34,6 +34,31 @@ const AudioPlayer = (props) => {
     },
   });
 
+  // useEffect(() => {
+  //   return () => {
+  //     if (audioPlayer.current && props.podcastID) {
+  //       saveCurrentTime();
+  //     }
+  //   };
+  // }, []);
+
+  // useEffect to set initial time from storage
+  useEffect(() => {
+    if (audioPlayer.current && props.initialTime) {
+      audioPlayer.current.currentTime = props.initialTime;
+      setCurrentTime(props.initialTime);
+      if (progressBar.current && audioPlayer.current.duration) {
+        const percentage =
+          (props.initialTime / audioPlayer.current.duration) * 100;
+        progressBar.current.value = props.initialTime;
+        progressBar.current.style.setProperty(
+          '--seek-before-width',
+          `${percentage}%`
+        );
+      }
+    }
+  }, [props.initialTime]);
+
   // useEffect to reset button click animation
   useEffect(() => {
     if (!buttonClicked) {
@@ -58,6 +83,22 @@ const AudioPlayer = (props) => {
       if (progressBar.current) {
         progressBar.current.max = audioDuration;
       }
+
+      // Set initial time after duration is known
+      if (props.initialTime && isFinite(audioDuration)) {
+        audio.currentTime = props.initialTime;
+        setCurrentTime(props.initialTime);
+
+        // Update progress bar with correct percentage
+        if (progressBar.current) {
+          const percentage = (props.initialTime / audioDuration) * 100;
+          progressBar.current.value = props.initialTime;
+          progressBar.current.style.setProperty(
+            '--seek-before-width',
+            `${percentage}%`
+          );
+        }
+      }
     };
 
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
@@ -65,7 +106,7 @@ const AudioPlayer = (props) => {
     return () => {
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, []);
+  }, [props.initialTime]);
 
   // useEffect to update progress bar during playback
   useEffect(() => {
@@ -76,6 +117,9 @@ const AudioPlayer = (props) => {
       const currentValue = audio.currentTime;
       const audioDuration = audio.duration;
       setCurrentTime(currentValue);
+      if (Math.floor(currentValue) % 5 === 0) {
+        saveCurrentTime();
+      }
       if (progressBar.current && isFinite(audioDuration) && audioDuration > 0) {
         progressBar.current.value = currentValue;
         const percentage = (currentValue / audioDuration) * 100;
@@ -133,7 +177,7 @@ const AudioPlayer = (props) => {
         },
       });
       if (props.onEnded) {
-        props.onEnded();
+        props.onEnded(props.podcastID);
       }
     };
 
@@ -169,6 +213,15 @@ const AudioPlayer = (props) => {
       });
     } else {
       audioPlayer.current.pause();
+      saveCurrentTime();
+    }
+  };
+
+  // function to save the current time
+  const saveCurrentTime = () => {
+    if (props.onTimeUpdate && audioPlayer.current && props.podcastID) {
+      props.onTimeUpdate(props.podcastID, audioPlayer.current.currentTime);
+      console.log(props.podcastID, audioPlayer.current.currentTime);
     }
   };
 
@@ -186,6 +239,7 @@ const AudioPlayer = (props) => {
     if (isNaN(newTime)) return;
     audioPlayer.current.currentTime = newTime;
     setCurrentTime(newTime);
+    saveCurrentTime();
     if (audioPlayer.current.duration && progressBar.current) {
       const percentage = (newTime / audioPlayer.current.duration) * 100;
       progressBar.current.style.setProperty(

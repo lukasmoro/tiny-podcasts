@@ -10,8 +10,7 @@ import './Carousel.css';
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
-  // usePodcastData hook
-  const { items } = usePodcastData();
+  const { items, handleUpdatePodcastTime } = usePodcastData();
 
   // states
   const [isLoading, setIsLoadingActive] = useState(true);
@@ -25,6 +24,19 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   // stop loading
   const stopLoading = () => {
     setIsLoadingActive(false);
+  };
+
+  // Handler for time updates
+  const handleTimeUpdate = (podcastID, time) => {
+    handleUpdatePodcastTime(podcastID, time);
+  };
+
+  // Handle podcast ending
+  const handlePodcastEnd = (podcastID) => {
+    handleUpdatePodcastTime(podcastID, 0);
+    if (onPodcastEnd) {
+      onPodcastEnd();
+    }
   };
 
   // useEffect loading carousel on mount and when podcast data changes
@@ -95,8 +107,14 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
                       <AudioPlayer
                         src={podcast.mp3}
                         podcastID={podcast.key}
-                        handleClick={handleBlurToggle}
-                        onEnded={onPodcastEnd}
+                        initialTime={podcast.currentTime}
+                        handleClick={() => {
+                          handleBlurToggle();
+                        }}
+                        onTimeUpdate={(podcastID, time) =>
+                          handleTimeUpdate(podcastID, time)
+                        }
+                        onEnded={() => handlePodcastEnd(podcast.key)}
                       />
                     </div>
                   </div>

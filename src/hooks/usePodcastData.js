@@ -32,7 +32,7 @@ export const usePodcastData = () => {
         mp3: feedItem.mp3,
         duration: feedItem.duration,
         status: null,
-        currentTime: null,
+        currentTime: feedItem.currentTime,
       }));
       setItems(feedItems);
       setIsLoaded(true);
@@ -157,6 +157,31 @@ export const usePodcastData = () => {
     [items]
   );
 
+  const handleUpdatePodcastTime = useCallback(
+    (key, currentTime) => {
+      chrome.storage.local.get(['newItems'], (result) => {
+        const storedItems = result.newItems || [];
+        const itemIndex = storedItems.findIndex((item) => item.key === key);
+
+        if (
+          itemIndex === -1 ||
+          storedItems[itemIndex].currentTime === currentTime
+        ) {
+          return; // No need to update if the time is the same or item doesn't exist
+        }
+
+        const updatedItems = [...storedItems];
+        updatedItems[itemIndex] = { ...updatedItems[itemIndex], currentTime };
+
+        chrome.storage.local.set({ newItems: updatedItems }, () => {
+          setItems(updatedItems);
+          console.log(`Updated time for podcast ${key}: ${currentTime}`);
+        });
+      });
+    },
+    [] // Remove items dependency to prevent recreating function
+  );
+
   return {
     items,
     isLoaded,
@@ -164,5 +189,6 @@ export const usePodcastData = () => {
     handleAddPodcast,
     handleRemovePodcast,
     handleReorderPodcasts,
+    handleUpdatePodcastTime,
   };
 };
