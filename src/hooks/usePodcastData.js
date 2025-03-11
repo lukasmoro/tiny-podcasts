@@ -14,173 +14,200 @@ export const usePodcastData = () => {
   const [items, setItems] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // encapsulated load podcasts
-  const loadPodcasts = () => {
-    chrome.storage.local.get(['newItems'], (item) => {
-      const items = item.newItems || [];
-      const feedItems = items.map((feedItem) => ({
-        key: feedItem.key,
+  // Use a ref to track the most recent storage data without causing re-renders
+  const storedItemsRef = useRef([]);
+
+  // Synchronize storage to state and ref
+  const synchronizeFromStorage = useCallback(() => {
+    chrome.storage.local.get(['newItems'], (result) => {
+      const storedItems = result.newItems || [];
+
+      // Update ref first
+      storedItemsRef.current = storedItems;
+
+      // Then update state (triggers re-render)
+      const feedItems = storedItems.map((feedItem) => ({
+        ...feedItem,
         title: feedItem.title || 'Unknown Title',
         episode: feedItem.episode || 'Unknown Episode',
-        url: feedItem.url,
-        image: feedItem.image,
         description: feedItem.description || 'No Description',
         author: feedItem.author || 'Unknown Author',
         category: feedItem.category || 'Unknown Category',
         releaseDate: feedItem.releaseDate || 'Unknown Release',
         publisher: feedItem.publisher || 'Unknown Publisher',
-        mp3: feedItem.mp3,
-        duration: feedItem.duration,
-        status: null,
-        currentTime: feedItem.currentTime,
+        status: feedItem.status || null,
+        currentTime: typeof feedItem.currentTime === 'number' ? feedItem.currentTime : 0,
       }));
+
       setItems(feedItems);
       setIsLoaded(true);
     });
-  };
+  }, []);
 
-  // mount on initial load of component
+  // Synchronize state to storage
+  const synchronizeToStorage = useCallback((newItems, action = {}) => {
+    chrome.storage.local.set({ newItems }, () => {
+      // Update ref to match what's in storage
+      storedItemsRef.current = newItems;
+
+      console.log('Storage updated:', action);
+      updateEventBroadcast({ ...action, items: newItems });
+    });
+  }, []);
+
+  // Initial load on component mount
   useEffect(() => {
-    // load podcasts on initial mount
-    loadPodcasts();
+    // Load podcasts on initial mount
+    synchronizeFromStorage();
 
-    // event handler triggering if local storage changed
+    // Event handler triggering if local storage changed
     const storageEventHandler = (changes, area) => {
       if (area === 'local' && changes.newItems) {
-        loadPodcasts();
-        console.log(changes.newItems);
+        // Only synchronize if the change didn't come from this instance
+        // This helps prevent circular updates
+        const newValue = changes.newItems.newValue || [];
+        if (JSON.stringify(newValue) !== JSON.stringify(storedItemsRef.current)) {
+          synchronizeFromStorage();
+        }
       }
     };
 
-    // podcast update eventhandler, reloading after specific action to podcasts
+    // Podcast update event handler
     const updateEventHandler = () => {
-      loadPodcasts();
+      synchronizeFromStorage();
     };
 
-    // add storage & event listener
+    // Add storage & event listener
     chrome.storage.onChanged.addListener(storageEventHandler);
     window.addEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
 
-    // remove storage & event listener
+    // Remove storage & event listener on unmount
     return () => {
       chrome.storage.onChanged.removeListener(storageEventHandler);
       window.removeEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
     };
-  }, []);
+  }, [synchronizeFromStorage]);
 
-  // callback function for adding items
-  const handleAddPodcast = useCallback(
-    async (item) => {
-      //check for duplicate podcasts & not more then 5 podcasts
-      let check = items.every((url) => url.url !== item.url);
-      if (items.length > 4 || !check) {
-        alert('This podcast has already been added! 👀');
-        return;
+  // Add podcast handler
+  const handleAddPodcast = useCallback(async (item) => {
+    // Check for duplicate podcasts & not more than 5 podcasts
+    let check = items.every((podcastItem) => podcastItem.url !== item.url);
+    if (items.length > 4 || !check) {
+      alert('This podcast has already been added! 👀');
+      return;
+    }
+
+    try {
+      const response = await fetch(item.url);
+      const text = await response.text();
+      const parsedItem = parseRss(text);
+
+      if (!parsedItem) {
+        throw new Error('Failed to parse RSS feed');
       }
 
-      // create new item, update newItems array, set storage & notify
-      try {
-        const response = await fetch(item.url);
-        const text = await response.text();
-        const parsedItem = parseRss(text);
+      const newItem = {
+        ...item,
+        key: new Date().getTime(),
+        title: parsedItem.title || 'Unnamed Podcast',
+        episode: parsedItem.episode || 'Unknown Episode',
+        image: parsedItem.image,
+        description: parsedItem.description,
+        author: parsedItem.author,
+        category: parsedItem.category,
+        mp3: parsedItem.mp3,
+        releaseDate: parsedItem.releaseDate,
+        publisher: parsedItem.publisher,
+        duration: parsedItem.duration,
+        status: null,
+        currentTime: 0,
+      };
 
-        if (!parsedItem) {
-          throw new Error('Failed to parse RSS feed');
-        }
+      // Get the latest stored items from our ref
+      const currentStoredItems = [...storedItemsRef.current];
+      const updatedItems = [newItem, ...currentStoredItems];
 
-        const newItem = {
-          ...item,
-          key: new Date().getTime(),
-          title: parsedItem.title || 'Unnamed Podcast',
-          episode: parsedItem.episode || 'Unknown Episode',
-          image: parsedItem.image,
-          description: parsedItem.description,
-          author: parsedItem.author,
-          category: parsedItem.category,
-          mp3: parsedItem.mp3,
-          releaseDate: parsedItem.releaseDate,
-          publisher: parsedItem.publisher,
-          duration: parsedItem.duration,
-          status: null,
-          currentTime: null,
-        };
+      // Update state and storage
+      setItems(updatedItems);
+      synchronizeToStorage(updatedItems, { action: 'add', item: newItem });
 
-        const newItems = [newItem, ...items];
+    } catch (error) {
+      alert('Error fetching podcast feed. Please check the URL and try again.');
+      console.error('Error details:', error);
+    }
+  }, [items, synchronizeToStorage]);
 
-        setItems(newItems);
-        chrome.storage.local.set({ newItems }, () => {
-          console.log('New podcast added:', newItems);
-          updateEventBroadcast({ action: 'add', item: newItem });
-        });
-      } catch (error) {
-        alert(
-          'Error fetching podcast feed. Please check the URL and try again.'
-        );
-        console.error('Error details:', error);
-      }
-    },
-    [items]
-  );
+  // Remove podcast handler
+  const handleRemovePodcast = useCallback((key) => {
+    // Get the latest stored items from our ref
+    const currentStoredItems = [...storedItemsRef.current];
+    const updatedItems = currentStoredItems.filter((item) => item.key !== key);
 
-  // callback function for removing items
-  const handleRemovePodcast = useCallback(
-    (key) => {
-      // remove url with matching key from array, update newItems array, set storage & notify
-      const newItems = items.filter((item) => item.key !== key);
+    // Update state and storage
+    setItems(updatedItems);
+    synchronizeToStorage(updatedItems, { action: 'remove', key });
 
-      setItems(newItems);
-      chrome.storage.local.set({ newItems }, () => {
-        updateEventBroadcast({ action: 'remove', key });
-      });
-    },
-    [items]
-  );
+  }, [synchronizeToStorage]);
 
-  // callback function for re-ordering podcasts
-  const handleReorderPodcasts = useCallback(
-    (sourceIndex, destinationIndex) => {
-      //create copy of items array, remove moveItem from source index and add it destination index with splice & notify
-      const reorderedItems = Array.from(items);
-      const [movedItem] = reorderedItems.splice(sourceIndex, 1);
-      reorderedItems.splice(destinationIndex, 0, movedItem);
+  // Reorder podcasts handler
+  const handleReorderPodcasts = useCallback((sourceIndex, destinationIndex) => {
+    // Get the latest stored items from our ref
+    const currentStoredItems = [...storedItemsRef.current];
 
-      setItems(reorderedItems);
+    // Create a copy and perform reordering
+    const reorderedItems = Array.from(currentStoredItems);
+    const [movedItem] = reorderedItems.splice(sourceIndex, 1);
+    reorderedItems.splice(destinationIndex, 0, movedItem);
 
-      chrome.storage.local.set({ newItems: reorderedItems }, () => {
-        updateEventBroadcast({
-          action: 'reorder',
-          sourceIndex,
-          destinationIndex,
-        });
-      });
-    },
-    [items]
-  );
+    // Log before update to help debug
+    console.log('Reordering items:');
+    console.log('Before:', currentStoredItems.map(item => `${item.title} - ${item.currentTime}`));
+    console.log('After:', reorderedItems.map(item => `${item.title} - ${item.currentTime}`));
 
-  const handleUpdatePodcastTime = useCallback(
-    (key, currentTime) => {
-      chrome.storage.local.get(['newItems'], (result) => {
-        const storedItems = result.newItems || [];
-        const itemIndex = storedItems.findIndex((item) => item.key === key);
+    // Update state and storage
+    setItems(reorderedItems);
+    synchronizeToStorage(reorderedItems, {
+      action: 'reorder',
+      sourceIndex,
+      destinationIndex
+    });
 
-        if (
-          itemIndex === -1 ||
-          storedItems[itemIndex].currentTime === currentTime
-        ) {
-          return; // No need to update if the time is the same or item doesn't exist
-        }
+  }, [synchronizeToStorage]);
 
-        const updatedItems = [...storedItems];
-        updatedItems[itemIndex] = { ...updatedItems[itemIndex], currentTime };
+  // Update podcast time handler
+  const handleUpdatePodcastTime = useCallback((key, currentTime) => {
+    // Get the latest stored items from our ref
+    const currentStoredItems = [...storedItemsRef.current];
+    const itemIndex = currentStoredItems.findIndex((item) => item.key === key);
 
-        chrome.storage.local.set({ newItems: updatedItems }, () => {
-          setItems(updatedItems);
-          console.log(`Updated time for podcast ${key}: ${currentTime}`);
-        });
-      });
-    },
-    [] // Remove items dependency to prevent recreating function
-  );
+    if (itemIndex === -1) {
+      console.warn(`Podcast with key ${key} not found when updating time.`);
+      return;
+    }
+
+    if (currentStoredItems[itemIndex].currentTime === currentTime) {
+      return; // No need to update if the time is the same
+    }
+
+    // Create a copy and update the time
+    const updatedItems = [...currentStoredItems];
+    updatedItems[itemIndex] = {
+      ...updatedItems[itemIndex],
+      currentTime
+    };
+
+    // Log for debugging
+    console.log(`Updating time for "${updatedItems[itemIndex].title}" (${key}): ${currentTime}`);
+
+    // Update state and storage
+    setItems(updatedItems);
+    synchronizeToStorage(updatedItems, {
+      action: 'updateTime',
+      key,
+      currentTime
+    });
+
+  }, [synchronizeToStorage]);
 
   return {
     items,

@@ -28,11 +28,13 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
   // Handler for time updates
   const handleTimeUpdate = (podcastID, time) => {
+    console.log(`Carousel: Updating time for podcast ${podcastID} to ${time}`);
     handleUpdatePodcastTime(podcastID, time);
   };
 
   // Handle podcast ending
   const handlePodcastEnd = (podcastID) => {
+    console.log(`Carousel: Podcast ${podcastID} ended, resetting time to 0`);
     handleUpdatePodcastTime(podcastID, 0);
     if (onPodcastEnd) {
       onPodcastEnd();
@@ -42,6 +44,16 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   // useEffect loading carousel on mount and when podcast data changes
   useEffect(() => {
     startLoading();
+
+    // Log podcast items and their currentTime values when they change
+    if (items.length > 0) {
+      console.log('Carousel: Current podcast items with times:');
+      items.forEach((item) => {
+        console.log(
+          `- ${item.title} (ID: ${item.key}): currentTime = ${item.currentTime}`
+        );
+      });
+    }
 
     // use the podcast update event
     const updateEventHandler = () => {
@@ -67,62 +79,60 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         id="parent-container"
         className={`cards ${isBlurVisible ? 'visible' : ''}`}
       >
-        <div className={`loader ${isLoading ? 'active' : ''}`}>
-          <li className="spacer"></li>
-          {items.map(
-            (podcast, index) =>
-              podcast && (
-                <li key={index}>
-                  <div className="cover-container">
-                    <div className="header-container">
-                      <div className="header-content">
-                        <div className="podcast-title-container">
-                          <h2 className="podcast-title">
-                            {textTruncate(podcast.title || 'Unknown Title', 30)}
-                          </h2>
-                          <StatusIndicator
-                            status={podcast.status}
-                            podcastID={podcast.key}
-                          />
-                        </div>
-                        <h3 className="podcast-episode">
-                          {textTruncate(podcast.episode, 45)}
-                        </h3>
+        <li className="spacer"></li>
+        {items.map(
+          (podcast, index) =>
+            podcast && (
+              <li key={index}>
+                <div className="cover-container">
+                  <div className="header-container">
+                    <div className="header-content">
+                      <div className="podcast-title-container">
+                        <h2 className="podcast-title">
+                          {textTruncate(podcast.title || 'Unknown Title', 30)}
+                        </h2>
+                        <StatusIndicator
+                          status={podcast.status}
+                          podcastID={podcast.key}
+                        />
                       </div>
-                    </div>
-                    <div className="cover-mask"></div>
-                    <img
-                      className="cover"
-                      src={podcast.image}
-                      alt={podcast.title}
-                    />
-                    <DraggableInfoCard
-                      podcast={podcast}
-                      expanded={activeInfoCard === index}
-                      setExpanded={(isExpanded) => {
-                        setActiveInfoCard(isExpanded ? index : null);
-                      }}
-                    />
-                    <div className="player-container">
-                      <AudioPlayer
-                        src={podcast.mp3}
-                        podcastID={podcast.key}
-                        initialTime={podcast.currentTime}
-                        handleClick={() => {
-                          handleBlurToggle();
-                        }}
-                        onTimeUpdate={(podcastID, time) =>
-                          handleTimeUpdate(podcastID, time)
-                        }
-                        onEnded={() => handlePodcastEnd(podcast.key)}
-                      />
+                      <h3 className="podcast-episode">
+                        {textTruncate(podcast.episode, 45)}
+                      </h3>
                     </div>
                   </div>
-                </li>
-              )
-          )}
-          <li className="spacer"></li>
-        </div>
+                  <div className="cover-mask"></div>
+                  <img
+                    className="cover"
+                    src={podcast.image}
+                    alt={podcast.title}
+                  />
+                  <DraggableInfoCard
+                    podcast={podcast}
+                    expanded={activeInfoCard === index}
+                    setExpanded={(isExpanded) => {
+                      setActiveInfoCard(isExpanded ? index : null);
+                    }}
+                  />
+                  <div className="player-container">
+                    <AudioPlayer
+                      src={podcast.mp3}
+                      podcastID={podcast.key}
+                      initialTime={podcast.currentTime}
+                      handleClick={() => {
+                        handleBlurToggle();
+                      }}
+                      onTimeUpdate={(podcastID, time) =>
+                        handleTimeUpdate(podcastID, time)
+                      }
+                      onEnded={() => handlePodcastEnd(podcast.key)}
+                    />
+                  </div>
+                </div>
+              </li>
+            )
+        )}
+        <li className="spacer"></li>
       </ul>
     </>
   );

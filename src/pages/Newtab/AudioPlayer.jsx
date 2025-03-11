@@ -10,11 +10,12 @@ const AudioPlayer = (props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
   const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [currentTime, setCurrentTime] = useState(props.initialTime || 0);
 
   // refs (no re-render when updated)
   const audioPlayer = useRef(); // ref for audio element
   const progressBar = useRef(); // ref for progressbar
+  const podcastID = useRef(props.podcastID); // Store the podcast ID in a ref
 
   // animation config for player progress
   const [springs, api] = useSpring(() => ({
@@ -34,13 +35,43 @@ const AudioPlayer = (props) => {
     },
   });
 
-  // useEffect(() => {
-  //   return () => {
-  //     if (audioPlayer.current && props.podcastID) {
-  //       saveCurrentTime();
-  //     }
-  //   };
-  // }, []);
+  // Last saved time reference to avoid redundant saves
+  const lastSavedTimeRef = useRef(props.initialTime || 0);
+
+  // useEffect to handle initialTime changes or podcastID changes
+  useEffect(() => {
+    // Update the podcast ID ref when it changes
+    podcastID.current = props.podcastID;
+
+    // Log to help debug time tracking issues
+    console.log(`AudioPlayer: Initializing ${props.podcastID} with time ${props.initialTime}`);
+
+    // Update the lastSavedTimeRef when initialTime changes
+    lastSavedTimeRef.current = props.initialTime || 0;
+
+    if (audioPlayer.current && props.initialTime) {
+      audioPlayer.current.currentTime = props.initialTime;
+      setCurrentTime(props.initialTime);
+      if (progressBar.current && audioPlayer.current.duration) {
+        const percentage =
+          (props.initialTime / audioPlayer.current.duration) * 100;
+        progressBar.current.value = props.initialTime;
+        progressBar.current.style.setProperty(
+          '--seek-before-width',
+          `${percentage}%`
+        );
+      }
+    }
+  }, [props.initialTime, props.podcastID]);
+
+  // Save current time when component unmounts
+  useEffect(() => {
+    return () => {
+      if (audioPlayer.current && podcastID.current) {
+        saveCurrentTime(true); // Force save on unmount
+      }
+    };
+  }, []);
 
   // useEffect to set initial time from storage
   useEffect(() => {
@@ -117,9 +148,14 @@ const AudioPlayer = (props) => {
       const currentValue = audio.currentTime;
       const audioDuration = audio.duration;
       setCurrentTime(currentValue);
-      if (Math.floor(currentValue) % 5 === 0) {
+
+      // Save current time at appropriate intervals (every 5 seconds)
+      // Or if we've moved more than 3 seconds from last saved position
+      const timeDiff = Math.abs(currentValue - lastSavedTimeRef.current);
+      if (Math.floor(currentValue) % 5 === 0 || timeDiff > 3) {
         saveCurrentTime();
       }
+
       if (progressBar.current && isFinite(audioDuration) && audioDuration > 0) {
         progressBar.current.value = currentValue;
         const percentage = (currentValue / audioDuration) * 100;
@@ -218,10 +254,16 @@ const AudioPlayer = (props) => {
   };
 
   // function to save the current time
-  const saveCurrentTime = () => {
+  const saveCurrentTime = (force = false) => {
     if (props.onTimeUpdate && audioPlayer.current && props.podcastID) {
-      props.onTimeUpdate(props.podcastID, audioPlayer.current.currentTime);
-      console.log(props.podcastID, audioPlayer.current.currentTime);
+      const currentTimeToSave = audioPlayer.current.currentTime;
+
+      // Only save if the time has changed significantly (more than 1 second) or if forced
+      if (force || Math.abs(currentTimeToSave - lastSavedTimeRef.current) > 1) {
+        lastSavedTimeRef.current = currentTimeToSave;
+        props.onTimeUpdate(props.podcastID, currentTimeToSave);
+        console.log(`Saved time for podcast ${props.podcastID}: ${currentTimeToSave}`);
+      }
     }
   };
 
@@ -239,7 +281,7 @@ const AudioPlayer = (props) => {
     if (isNaN(newTime)) return;
     audioPlayer.current.currentTime = newTime;
     setCurrentTime(newTime);
-    saveCurrentTime();
+    saveCurrentTime(true); // Force save when manually seeking
     if (audioPlayer.current.duration && progressBar.current) {
       const percentage = (newTime / audioPlayer.current.duration) * 100;
       progressBar.current.style.setProperty(
@@ -249,7 +291,7 @@ const AudioPlayer = (props) => {
     }
   };
 
-  // utility function to format seconds into mm:ss display format
+  // function to format seconds into mm:ss display format
   const calculateTime = (secs) => {
     if (!isFinite(secs) || secs < 0) return '00:00';
     const timeInSeconds = Number(secs);
