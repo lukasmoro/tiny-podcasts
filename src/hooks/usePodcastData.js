@@ -30,8 +30,8 @@ export const usePodcastData = () => {
         releaseDate: feedItem.releaseDate || 'Unknown Release',
         publisher: feedItem.publisher || 'Unknown Publisher',
         mp3: feedItem.mp3,
+        duration: feedItem.duration,
         status: null,
-        duration: null,
         currentTime: null,
       }));
       setItems(feedItems);
@@ -99,8 +99,8 @@ export const usePodcastData = () => {
           mp3: parsedItem.mp3,
           releaseDate: parsedItem.releaseDate,
           publisher: parsedItem.publisher,
+          duration: parsedItem.duration,
           status: null,
-          duration: null,
           currentTime: null,
         };
 

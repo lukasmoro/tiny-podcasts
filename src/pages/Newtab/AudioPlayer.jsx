@@ -158,7 +158,7 @@ const AudioPlayer = (props) => {
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('durationchange', handleDurationChange);
     };
-  }, [api, props.podcastId, props.title, props.onEnded]);
+  }, [api, props.onEnded]);
 
   // function to toggle play/pause state
   const togglePlayPause = () => {
