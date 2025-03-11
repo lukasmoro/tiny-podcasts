@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
 import './AudioPlayer.css';
-import BehaviourClick from './BehaviourClick.jsx';
 import { PlayIcon } from '../Icons/PlayIcon';
 import { PauseIcon } from '../Icons/PauseIcon';
 
 const AudioPlayer = (props) => {
   // states
   const [isPlaying, setIsPlaying] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
@@ -16,12 +16,36 @@ const AudioPlayer = (props) => {
   const audioPlayer = useRef(); // ref for audio element
   const progressBar = useRef(); // ref for progressbar
 
-  // animation config
+  // animation config for player progress
   const [springs, api] = useSpring(() => ({
     from: { opacity: 0, y: 0 },
     to: { opacity: isPlaying ? 1 : 0, y: isPlaying ? 50 : 0 },
     config: { tension: 280, friction: 60 },
   }));
+
+  // animation config for button click
+  const buttonSpring = useSpring({
+    display: 'inline-block',
+    backfaceVisibility: 'hidden',
+    transform: buttonClicked ? 'translateY(-10px)' : 'translateY(0px)',
+    config: {
+      tension: 300,
+      friction: 10,
+    },
+  });
+
+  // useEffect to reset button click animation
+  useEffect(() => {
+    if (!buttonClicked) {
+      return;
+    }
+    const timeoutId = window.setTimeout(() => {
+      setButtonClicked(false);
+    }, 150);
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [buttonClicked]);
 
   // useEffect to handle audio metadata loading
   useEffect(() => {
@@ -148,6 +172,13 @@ const AudioPlayer = (props) => {
     }
   };
 
+  // function to handle button click combined with play/pause toggle
+  const handleButtonClick = () => {
+    setButtonClicked(true);
+    togglePlayPause();
+    if (props.handleClick) props.handleClick();
+  };
+
   // function to handle manual seeking via progress bar
   const changeRange = () => {
     if (!audioPlayer.current || !progressBar.current) return;
@@ -180,21 +211,17 @@ const AudioPlayer = (props) => {
       <div className="player-container">
         <audio ref={audioPlayer} src={props.src} preload="metadata" />
         <div className="button">
-          <BehaviourClick>
-            <button
-              className="play-pause"
-              onClick={() => {
-                togglePlayPause();
-                if (props.handleClick) props.handleClick();
-              }}
-            >
-              {isPlaying ? (
-                <PauseIcon className="player-icon" />
-              ) : (
-                <PlayIcon className="player-icon" />
-              )}
-            </button>
-          </BehaviourClick>
+          <animated.button
+            className="play-pause"
+            onClick={handleButtonClick}
+            style={buttonSpring}
+          >
+            {isPlaying ? (
+              <PauseIcon className="player-icon" />
+            ) : (
+              <PlayIcon className="player-icon" />
+            )}
+          </animated.button>
         </div>
         <animated.div style={springs} className="progress-container">
           <div className="current-time">{calculateTime(currentTime)}</div>
