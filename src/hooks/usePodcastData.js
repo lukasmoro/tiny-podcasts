@@ -16,8 +16,8 @@ export const usePodcastData = () => {
 
   // encapsulated load podcasts
   const loadPodcasts = () => {
-    chrome.storage.local.get(['newUrls'], (item) => {
-      const items = item.newUrls || [];
+    chrome.storage.local.get(['newItems'], (item) => {
+      const items = item.newItems || [];
       const feedItems = items.map((feedItem) => ({
         key: feedItem.key,
         title: feedItem.title || 'Unknown Title',
@@ -46,9 +46,9 @@ export const usePodcastData = () => {
 
     // event handler triggering if local storage changed
     const storageEventHandler = (changes, area) => {
-      if (area === 'local' && changes.newUrls) {
+      if (area === 'local' && changes.newItems) {
         loadPodcasts();
-        console.log(changes.newUrls);
+        console.log(changes.newItems);
       }
     };
 
@@ -78,7 +78,7 @@ export const usePodcastData = () => {
         return;
       }
 
-      // create new item, update newUrls array, set storage & notify
+      // create new item, update newItems array, set storage & notify
       try {
         const response = await fetch(item.url);
         const text = await response.text();
@@ -105,11 +105,11 @@ export const usePodcastData = () => {
           currentTime: null,
         };
 
-        const newUrls = [newItem, ...items];
+        const newItems = [newItem, ...items];
 
-        setItems(newUrls);
-        chrome.storage.local.set({ newUrls }, () => {
-          console.log('New podcast added:', newUrls);
+        setItems(newItems);
+        chrome.storage.local.set({ newItems }, () => {
+          console.log('New podcast added:', newItems);
           updateEventBroadcast({ action: 'add', item: newItem });
         });
       } catch (error) {
@@ -125,11 +125,11 @@ export const usePodcastData = () => {
   // callback function for removing items
   const handleRemovePodcast = useCallback(
     (key) => {
-      // remove url with matching key from array, update newUrls array, set storage & notify
-      const newUrls = items.filter((item) => item.key !== key);
+      // remove url with matching key from array, update newItems array, set storage & notify
+      const newItems = items.filter((item) => item.key !== key);
 
-      setItems(newUrls);
-      chrome.storage.local.set({ newUrls }, () => {
+      setItems(newItems);
+      chrome.storage.local.set({ newItems }, () => {
         updateEventBroadcast({ action: 'remove', key });
       });
     },
@@ -146,7 +146,7 @@ export const usePodcastData = () => {
 
       setItems(reorderedItems);
 
-      chrome.storage.local.set({ newUrls: reorderedItems }, () => {
+      chrome.storage.local.set({ newItems: reorderedItems }, () => {
         updateEventBroadcast({
           action: 'reorder',
           sourceIndex,
