@@ -17,8 +17,8 @@ export const usePodcastData = () => {
   // encapsulated load podcasts
   const loadPodcasts = () => {
     chrome.storage.local.get(['newUrls'], (item) => {
-      const existingItems = item.newUrls || [];
-      const feedItems = existingItems.map((feedItem) => ({
+      const items = item.newUrls || [];
+      const feedItems = items.map((feedItem) => ({
         key: feedItem.key,
         title: feedItem.title,
         episode: feedItem.episode || 'Unknown Episode',
