@@ -42,7 +42,7 @@ async function parseRss(text) {
     const channelContent = text.replace(/<item[\s\S]*$/, '');
 
     return {
-      title: getTag('title', itemContent),
+      title: getTag('title', channelContent),
       episode: getTag('title', itemContent),
       image: getTagAttribute('itunes:image', 'href', channelContent) || getTag('url', text.match(/<image>([\s\S]*?)<\/image>/i)?.[1] || ''),
       description: getTag('description', itemContent) || getTag('itunes:summary', itemContent),

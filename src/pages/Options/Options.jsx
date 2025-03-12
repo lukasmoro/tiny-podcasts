@@ -47,8 +47,6 @@ const Options = () => {
                 moveItem={handleReorderPodcasts}
               />
             </div>
-
-
           </div>
           <div className="right-cards">
             <div className="card right-card">
@@ -83,6 +81,25 @@ const Options = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="socials-links-container">
+          <a
+            className="socials-button"
+            href="https://lukasmoro.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Tiny Software</a>
+          <a
+            className="socials-button"
+            href="https://lukasmoro.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Privacy Policy</a><a
+            className="socials-button"
+            href="https://lukasmoro.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Open Source</a>
         </div>
       </ThemeProvider>
     </div>

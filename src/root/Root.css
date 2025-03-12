@@ -44,6 +44,8 @@ p {
 
 a {
   text-decoration: none;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-medium);
   color: var(--link-text-color);
 }
 
