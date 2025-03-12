@@ -150,16 +150,19 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
                   <div className="header-container">
                     <div className="header-content">
                       <div className="podcast-title-container">
-                        <h2 className="podcast-title">
-                          {textTruncate(podcast.title || 'Unknown Title', 30)}
-                        </h2>
+
+                        <div className="podcast-title-text">
+                          <h2 className="podcast-title">
+                            {textTruncate(podcast.title || 'Unknown Title', 30)}
+                          </h2>
+                          <h3 className="podcast-episode">
+                            {textTruncate(podcast.episode, 45)}
+                          </h3>
+                        </div>
                         <StatusIndicator
                           status={podcast.status || 'unplayed'}
                         />
                       </div>
-                      <h3 className="podcast-episode">
-                        {textTruncate(podcast.episode, 45)}
-                      </h3>
                     </div>
                   </div>
                   <div className="cover-mask"></div>

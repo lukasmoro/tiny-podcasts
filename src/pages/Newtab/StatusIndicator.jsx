@@ -1,5 +1,4 @@
 import React from 'react';
-import './StatusIndicator.css';
 
 const StatusIndicator = ({ status }) => {
   const getStatusColor = () => {
