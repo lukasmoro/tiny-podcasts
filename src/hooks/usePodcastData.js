@@ -63,7 +63,7 @@ export const usePodcastData = () => {
         }))
       };
 
-      // Add specific action details to analytics data
+      // specific action details to analytics data
       if (action.action === 'add') {
         analyticsData.added_item = {
           title: action.item.title,

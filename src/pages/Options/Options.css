@@ -108,6 +108,7 @@
 }
 
 .socials {
+  cursor: alias;
   font-size: var(--font-size-links);
   font-weight: var(--font-weight-bold);
   color: var(--link-text-color);

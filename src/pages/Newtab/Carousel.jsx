@@ -10,8 +10,12 @@ import './Carousel.css';
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
+
+  //custom hook
   const { items, handleUpdatePodcastTime, handleUpdatePodcastStatus } =
     usePodcastData();
+
+  //refs
   const cardsRef = useRef(null);
 
   // states
@@ -106,7 +110,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   useEffect(() => {
     startLoading();
 
-    // Log podcast items and their currentTime values when they change
+    // log podcast items and their currentTime values when they change
     if (items.length > 0) {
       console.log('Carousel: Current podcast items with times:');
       items.forEach((item) => {

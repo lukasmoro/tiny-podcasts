@@ -5,6 +5,9 @@
   font-family: var(--font-family);
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -14,6 +17,13 @@ body {
 em {
   font-weight: 500;
   font-style: normal;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
 }
 
 h1 {
@@ -88,9 +98,9 @@ a {
   --font-size-small: 0.75rem;
 
   /* font weight */
-  --font-weight-bold: 400;
-  --font-weight-medium: 300;
-  --font-weight-regular: 200;
+  --font-weight-bold: 500;
+  --font-weight-medium: 400;
+  --font-weight-regular: 300;
 
   /* letter spacing */
   --letter-spacing-h2: auto;
