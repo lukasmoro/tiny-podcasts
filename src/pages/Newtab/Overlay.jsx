@@ -43,7 +43,7 @@ const Overlay = () => {
 
   return (
     <div className="corner-overlay">
-      <h2 className="corner bottom-left">→ TINY PODCASTS</h2>
+      <h2 className="corner bottom-left">→ TINY SOFTWARE</h2>
       <div className="circles-container">
         <div className="circle"></div>
         <div className="circle"></div>

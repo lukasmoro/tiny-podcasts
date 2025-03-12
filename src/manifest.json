@@ -5,7 +5,8 @@
   "version": "0.0.2",
   "options_page": "options.html",
   "background": {
-    "service_worker": "background.bundle.js"
+    "service_worker": "background.bundle.js",
+    "type": "module"
   },
   "action": {
     "default_popup": "popup.html",
@@ -18,22 +19,40 @@
     "32": "icon-34.png",
     "128": "icon-128.png"
   },
-  "permissions": ["storage", "tabs"],
-  "host_permissions": ["https://www.google-analytics.com/*"],
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*",
+    "https://www.google-analytics.com/*"
+  ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline'"
   },
   "content_scripts": [
     {
-      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
-      "js": ["contentScript.bundle.js"],
-      "css": ["content.styles.css"]
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScript.bundle.js"
+      ],
+      "css": [
+        "content.styles.css"
+      ]
     }
   ],
   "devtools_page": "devtools.html",
   "web_accessible_resources": [
     {
-      "resources": ["content.styles.css"],
+      "resources": [
+        "content.styles.css"
+      ],
       "matches": []
     }
   ]

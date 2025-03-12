@@ -14,22 +14,74 @@ chrome.runtime.onInstalled.addListener((event) => {
 // subscribe to event
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
+// rss parser function
+async function parseRss(text) {
+  try {
+    const getTag = (tag, content) => {
+      const regex = new RegExp(`<${tag}[^>]*>([^<]+)</${tag}>`, 'i');
+      const match = content.match(regex);
+      return match ? match[1].trim() : '';
+    };
+
+    const getTagAttribute = (tag, attr, content) => {
+      const regex = new RegExp(`<${tag}[^>]*${attr}="([^"]+)"[^>]*>`, 'i');
+      const match = content.match(regex);
+      return match ? match[1].trim() : '';
+    };
+
+    // Find the first item block
+    const itemRegex = /<item[^>]*>([\s\S]*?)<\/item>/i;
+    const itemMatch = text.match(itemRegex);
+
+    if (!itemMatch) {
+      console.warn('No item found in feed');
+      return null;
+    }
+
+    const itemContent = itemMatch[1];
+    const channelContent = text.replace(/<item[\s\S]*$/, '');
+
+    return {
+      title: getTag('title', itemContent),
+      episode: getTag('title', itemContent),
+      image: getTagAttribute('itunes:image', 'href', channelContent) || getTag('url', text.match(/<image>([\s\S]*?)<\/image>/i)?.[1] || ''),
+      description: getTag('description', itemContent) || getTag('itunes:summary', itemContent),
+      author: getTag('itunes:author', itemContent) || getTag('itunes:author', channelContent),
+      category: getTag('itunes:category', itemContent) || getTag('itunes:category', channelContent),
+      mp3: getTagAttribute('enclosure', 'url', itemContent),
+      releaseDate: getTag('pubDate', itemContent),
+      publisher: getTag('itunes:author', channelContent),
+      duration: getTag('itunes:duration', itemContent)
+    };
+  } catch (error) {
+    console.error('Error parsing RSS:', error);
+    return null;
+  }
+}
+
 // check every minute
 function setupPeriodicChecking() {
   chrome.alarms.create('checkPodcastUpdates', {
     periodInMinutes: 1,
   });
 
-  // Debug: Check if alarm was created
+  // debug: check if alarm was created
   chrome.alarms.getAll((alarms) => {
     console.log('🔔 Current alarms:', alarms);
   });
 }
 
-// utility function to broadcast updates, matching usePodcastData.js
+// utility function to broadcast updates - modified for service worker
 function updateEventBroadcast(detail = {}) {
-  const event = new CustomEvent(PODCAST_UPDATED_EVENT, { detail });
-  window.dispatchEvent(event);
+  // Instead of using window events, use chrome.runtime.sendMessage
+  chrome.runtime.sendMessage({
+    type: PODCAST_UPDATED_EVENT,
+    detail
+  }).catch(error => {
+    // Ignore errors when no listeners are available
+    if (error.message.includes('Could not establish connection')) return;
+    console.error('Error broadcasting update:', error);
+  });
 }
 
 chrome.alarms.onAlarm.addListener((alarm) => {
@@ -42,7 +94,7 @@ async function checkForNewEpisodes() {
   try {
     console.log('🎙 Starting background podcast update check...');
 
-    // Get existing items using the same storage key as usePodcastData.js
+    // get existing items using the same storage key as usePodcastData.js
     const storage = await chrome.storage.local.get(['newItems']);
     const existingItems = storage.newItems || [];
 
@@ -59,14 +111,14 @@ async function checkForNewEpisodes() {
           console.log(`📡 Fetching updates for podcast: ${item.title}`);
           const response = await fetch(item.url);
           const text = await response.text();
-          const parsedFeed = parseRss(text);
+          const parsedFeed = await parseRss(text);
 
           if (!parsedFeed) {
             console.warn(`⚠️ Failed to parse feed for: ${item.title}`);
             return item;
           }
 
-          // Check if there are actual changes
+          // check if there are actual changes
           const hasChanges =
             parsedFeed.title !== item.title ||
             parsedFeed.episode !== item.episode ||
@@ -79,7 +131,7 @@ async function checkForNewEpisodes() {
             console.log(`📎 No changes detected for: ${item.title}`);
           }
 
-          // Preserve existing metadata while updating feed content
+          // preserve existing metadata while updating feed content
           return {
             ...item,
             title: parsedFeed.title || item.title,
@@ -92,19 +144,19 @@ async function checkForNewEpisodes() {
             releaseDate: parsedFeed.releaseDate || item.releaseDate,
             publisher: parsedFeed.publisher || item.publisher,
             duration: parsedFeed.duration || item.duration,
-            // Preserve user-specific data
+            // preserve user-specific data
             status: item.status,
             currentTime: item.currentTime,
             key: item.key
           };
         } catch (error) {
           console.error(`❌ Error updating podcast ${item.url}:`, error);
-          return item; // Keep existing item on error
+          return item; // keep existing item on error
         }
       })
     );
 
-    // Update storage and broadcast change
+    // pdate storage and broadcast change
     await chrome.storage.local.set({ newItems: updatedItems });
     updateEventBroadcast({
       action: 'backgroundUpdate',
