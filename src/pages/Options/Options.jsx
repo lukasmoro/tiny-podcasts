@@ -84,18 +84,18 @@ const Options = () => {
         </div>
         <div className="socials-links-container">
           <a
-            className="socials-button"
+            className="socials"
             href="https://lukasmoro.com"
             target="_blank"
             rel="noopener noreferrer"
           >Tiny Software</a>
           <a
-            className="socials-button"
+            className="socials"
             href="https://lukasmoro.com"
             target="_blank"
             rel="noopener noreferrer"
           >Privacy Policy</a><a
-            className="socials-button"
+            className="socials"
             href="https://lukasmoro.com"
             target="_blank"
             rel="noopener noreferrer"

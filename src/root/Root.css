@@ -29,7 +29,7 @@ h2 {
 }
 
 h3 {
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-large);
   color: var(--secondary-text-color);
   letter-spacing: var(--letter-spacing-h3);
@@ -44,8 +44,8 @@ p {
 
 a {
   text-decoration: none;
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-links);
   color: var(--link-text-color);
 }
 
@@ -62,7 +62,7 @@ a {
   --primary-text-color: #d0d0d0;
   --secondary-text-color: #a0a0a0;
   --tertiary-text-color: #ffffff;
-  --link-text-color: #19a0fc;
+  --link-text-color: #68c3ff;
   --button-text-color: #5dffb1;
   --primary-accent-color: #5dffb1;
   --secondary-accent-color: #ffffff;
@@ -84,10 +84,12 @@ a {
   --font-size-xlarge: 1.25rem;
   --font-size-large: 1rem;
   --font-size-medium: 0.875rem;
+  --font-size-links: 0.8rem;
   --font-size-small: 0.75rem;
 
   /* font weight */
   --font-weight-bold: 400;
+  --font-weight-medium: 300;
   --font-weight-regular: 200;
 
   /* letter spacing */
