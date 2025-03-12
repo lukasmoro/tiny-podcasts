@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { parseRss } from '../utils/rssParser';
+import { sendEvent } from '../utils/googleAnalytics';
 
 // update event broadcast utility function to make specific storage changes listenable across application
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
@@ -46,6 +47,65 @@ export const usePodcastData = () => {
     chrome.storage.local.set({ newItems }, () => {
       storedItemsRef.current = newItems; // update ref to match what's in storage
       console.log('Storage updated:', action);
+
+      // Track storage update with analytics including full snapshot
+      const analyticsData = {
+        action_type: action.action,
+        total_items: newItems.length,
+        items_snapshot: newItems.map(item => ({
+          title: item.title,
+          episode: item.episode,
+          status: item.status,
+          currentTime: item.currentTime,
+          duration: item.duration,
+          publisher: item.publisher,
+          category: item.category
+        }))
+      };
+
+      // Add specific action details to analytics data
+      if (action.action === 'add') {
+        analyticsData.added_item = {
+          title: action.item.title,
+          publisher: action.item.publisher
+        };
+      } else if (action.action === 'remove') {
+        analyticsData.removed_key = action.key;
+      } else if (action.action === 'updateTime') {
+        analyticsData.updated_key = action.key;
+        analyticsData.new_time = action.currentTime;
+      } else if (action.action === 'updateStatus') {
+        analyticsData.updated_key = action.key;
+        analyticsData.new_status = action.status;
+      } else if (action.action === 'reorder') {
+        analyticsData.source_index = action.sourceIndex;
+        analyticsData.destination_index = action.destinationIndex;
+      }
+
+      // Debug logging
+      console.log('Sending analytics event:', {
+        event: 'podcast_storage_update',
+        data: analyticsData
+      });
+
+      // Send analytics event and handle response
+      sendEvent('podcast_storage_update', analyticsData)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          console.log('Analytics event sent successfully:', response.status);
+          return response.text();
+        })
+        .then(text => {
+          if (text) {
+            console.log('Analytics response:', text);
+          }
+        })
+        .catch(error => {
+          console.error('Error sending analytics event:', error);
+        });
+
       updateEventBroadcast({ ...action, items: newItems });
     });
   }, []);
