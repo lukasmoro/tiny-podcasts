@@ -23,6 +23,8 @@
 }
 
 .podcast-item-thumbnail {
+  outline: 1px solid var(--outline-color);
+  outline-offset: -1px;
   border-radius: var(--border-radius-thumbnail);
   flex-shrink: 0;
   width: 50px;
@@ -32,6 +34,7 @@
 
 .podcast-item-title {
   color: var(--tertiary-text-color);
+  font-weight: var(--font-weight-regular);
   flex: 1;
   display: block;
   height: 50px;
@@ -53,6 +56,7 @@
   border: none;
   cursor: pointer;
   transition: ease-in 0.15s;
+  font-weight: var(--font-weight-bold);
 }
 
 .podcast-remove-btn:hover {

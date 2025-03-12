@@ -22,6 +22,8 @@
 }
 
 .podcast-recommendation-thumbnail {
+  outline: 5px solid var(--outline-color);
+  outline-offset: -5px;
   width: 75px;
   height: 75px;
   border-radius: var(--border-radius-medium);

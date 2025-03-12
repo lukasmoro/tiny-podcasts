@@ -33,7 +33,7 @@ const Options = () => {
             <div className="text-container">
               <h2 className="sub-header">Manage Podcasts</h2>
               <h1 className="header">Subscriptions</h1>
-              <p>
+              <p className="instructions">
                 Add, remove & reorder podcasts here or in the pop-up.
               </p>
             </div>
@@ -72,7 +72,7 @@ const Options = () => {
                 <p className="instructions">
                   <em>Tiny Podcasts</em> is the first project of{' '}
                   <em>Tiny Software</em>. Every tip supports the creation of
-                  future <em>Tiny Products</em>. <br /> Thank you!
+                  future <em>Tiny Products</em>. <br /> <em>Thank you!</em>
                 </p>
                 <BuyMeACoffeeButton />
                 <div className="items">

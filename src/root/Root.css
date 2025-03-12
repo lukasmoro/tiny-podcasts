@@ -18,7 +18,7 @@ em {
 
 h1 {
   font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-xxlarge);
+  font-size: var(--font-size-xlarge);
   color: var(--primary-text-color);
 }
 
@@ -98,7 +98,7 @@ a {
   --letter-spacing-p: 0em;
 
   /*margins*/
-  --margin-header: 5rem;
+  --margin-header: 1rem;
   --margin-subheader: 0.5rem;
   --margin-info: 1rem;
   --margin-text: 1.5rem;
