@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
-import './AudioPlayer.css';
+import { animated } from '@react-spring/web';
 import { PlayIcon } from '../Icons/PlayIcon';
 import { PauseIcon } from '../Icons/PauseIcon';
+import './AudioPlayer.css';
 
 const AudioPlayer = (props) => {
   // states
@@ -35,7 +35,7 @@ const AudioPlayer = (props) => {
     },
   });
 
-  // Last saved time reference to avoid redundant saves
+  // last saved time reference to avoid redundant saves
   const lastSavedTimeRef = useRef(props.initialTime || 0);
 
   // useEffect to handle initialTime changes or podcastID changes
@@ -44,7 +44,9 @@ const AudioPlayer = (props) => {
     podcastID.current = props.podcastID;
 
     // Log to help debug time tracking issues
-    console.log(`AudioPlayer: Initializing ${props.podcastID} with time ${props.initialTime}`);
+    console.log(
+      `AudioPlayer: Initializing ${props.podcastID} with time ${props.initialTime}`
+    );
 
     // Update the lastSavedTimeRef when initialTime changes
     lastSavedTimeRef.current = props.initialTime || 0;
@@ -148,13 +150,6 @@ const AudioPlayer = (props) => {
       const currentValue = audio.currentTime;
       const audioDuration = audio.duration;
       setCurrentTime(currentValue);
-
-      // Save current time at appropriate intervals (every 5 seconds)
-      // Or if we've moved more than 3 seconds from last saved position
-      const timeDiff = Math.abs(currentValue - lastSavedTimeRef.current);
-      if (Math.floor(currentValue) % 5 === 0 || timeDiff > 3) {
-        saveCurrentTime();
-      }
 
       if (progressBar.current && isFinite(audioDuration) && audioDuration > 0) {
         progressBar.current.value = currentValue;
@@ -262,7 +257,9 @@ const AudioPlayer = (props) => {
       if (force || Math.abs(currentTimeToSave - lastSavedTimeRef.current) > 1) {
         lastSavedTimeRef.current = currentTimeToSave;
         props.onTimeUpdate(props.podcastID, currentTimeToSave);
-        console.log(`Saved time for podcast ${props.podcastID}: ${currentTimeToSave}`);
+        console.log(
+          `Saved time for podcast ${props.podcastID}: ${currentTimeToSave}`
+        );
       }
     }
   };
