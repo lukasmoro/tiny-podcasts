@@ -30,27 +30,29 @@ const Options = () => {
         <Overlay />
         <div className="cards-container">
           <div className="card left-card">
-            <div className="container">
+            <div className="text-container">
               <h2 className="sub-header">Manage Podcasts</h2>
               <h1 className="header">Subscriptions</h1>
-              <p className="instructions">
-                Manage podcasts here or in the pop-up window. Drag to reorder.
+              <p>
+                Add, remove & reorder podcasts here or in the pop-up.
               </p>
-              <Searchbar onSubmit={handleAddPodcast} />
-              <div className="overflow">
-                <div className="podcast-divider"></div>
-                <List
-                  items={items}
-                  removeUrl={handleRemovePodcast}
-                  moveItem={handleReorderPodcasts}
-                  className="options-list-overflow"
-                />
-              </div>
             </div>
+            <div className="search-container">
+              <Searchbar onSubmit={handleAddPodcast} />
+            </div>
+            <div className="list-container">
+              <List
+                items={items}
+                removeUrl={handleRemovePodcast}
+                moveItem={handleReorderPodcasts}
+              />
+            </div>
+
+
           </div>
           <div className="right-cards">
             <div className="card right-card">
-              <div className="container">
+              <div className="text-container">
                 <h2 className="sub-header">Find Podcasts</h2>
                 <h1 className="header">Recommendations</h1>
                 <p className="instructions">
@@ -66,7 +68,7 @@ const Options = () => {
               </div>
             </div>
             <div className="card right-card">
-              <div className="container">
+              <div className="text-container">
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
                 <h1 className="header">Tip Char</h1>
                 <p className="instructions">

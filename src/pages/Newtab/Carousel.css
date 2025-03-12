@@ -183,6 +183,7 @@ h3 {
 }
 
 .indicators {
+  cursor: pointer;
   display: flex;
   position: absolute;
   align-items: center;
@@ -213,6 +214,7 @@ h3 {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -222,9 +224,11 @@ h3 {
   35% {
     z-index: 0;
   }
+
   50% {
     z-index: 100;
   }
+
   65% {
     z-index: 0;
   }
@@ -234,9 +238,11 @@ h3 {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -246,9 +252,11 @@ h3 {
   35% {
     transform: translateX(0) rotateY(-35deg);
   }
+
   50% {
     transform: rotateY(0deg) translateZ(1em) scale(1.1);
   }
+
   65% {
     transform: translateX(0) rotateY(35deg);
   }

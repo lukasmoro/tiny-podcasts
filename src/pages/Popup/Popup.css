@@ -1,18 +1,35 @@
 .App {
-  padding: 1.5rem 1rem 1.5rem 1rem;
-  min-height: 250px;
-  height: auto;
+  padding: 1.5rem 0rem 0rem 0rem;
   background-color: var(--background-color-info);
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+html {
+  max-height: 400px;
+}
+
+.search-container {
+  padding-left: var(--padding-list);
+  padding-right: var(--padding-list);
 }
 
 .list-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: auto;
-  flex-grow: 1;
-}
-
-.popup-list-overflow {
-  margin-top: var(--margin-input);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  padding: var(--padding-list);
+  mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      black 20px,
+      black calc(100% - 20px),
+      transparent 100%);
 }

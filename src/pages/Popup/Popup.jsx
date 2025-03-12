@@ -15,18 +15,20 @@ const Popup = () => {
   } = usePodcastData();
 
   return (
-    <div className="App">
-      <ThemeProvider>
-        <div className="list-container">
+    <ThemeProvider>
+      <div className="App">
+        <div className='search-container'>
           <Searchbar onSubmit={handleAddPodcast} />
+        </div>
+        <div className='list-container'>
           <List
             items={items}
             removeUrl={handleRemovePodcast}
             moveItem={handleReorderPodcasts}
           />
         </div>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 };
 
