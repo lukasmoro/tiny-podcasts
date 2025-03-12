@@ -16,7 +16,7 @@ const AudioPlayer = (props) => {
   // refs (no re-render when updated)
   const audioPlayer = useRef(); // ref for audio element
   const progressBar = useRef(); // ref for progressbar
-  const podcastID = useRef(props.podcastID); // Store the podcast ID in a ref
+  const podcastID = useRef(props.podcastID); // store the podcast ID in a ref
 
   // animation config for player progress
   const [springs, api] = useSpring(() => ({
@@ -48,15 +48,8 @@ const AudioPlayer = (props) => {
 
   // useEffect to handle podcastID changes and initialTime
   useEffect(() => {
-    // Update the podcast ID ref when it changes
-    podcastID.current = props.podcastID;
+    podcastID.current = props.podcastID; // update the podcast ID ref when it changes
 
-    // Log to help debug time tracking issues
-    console.log(
-      `AudioPlayer: Initializing ${props.podcastID} with time ${props.initialTime} and status ${props.initialStatus || 'unplayed'}`
-    );
-
-    // If status is 'played', ensure we start from the beginning
     if (props.initialStatus === 'played') {
       lastSavedTimeRef.current = 0;
       setCurrentTime(0);
@@ -68,9 +61,7 @@ const AudioPlayer = (props) => {
         progressBar.current.style.setProperty('--seek-before-width', '0%');
       }
     } else {
-      // Update the lastSavedTimeRef when initialTime changes
-      lastSavedTimeRef.current = props.initialTime || 0;
-
+      lastSavedTimeRef.current = props.initialTime || 0; // update the lastSavedTimeRef when initialTime changes
       if (audioPlayer.current && props.initialTime) {
         audioPlayer.current.currentTime = props.initialTime;
         setCurrentTime(props.initialTime);
@@ -87,13 +78,12 @@ const AudioPlayer = (props) => {
     }
   }, [props.initialTime, props.podcastID, props.initialStatus]);
 
-  // Save current time when component unmounts
+  // save current time when component unmounts
   useEffect(() => {
     return () => {
-      // When unmounting, save the current time
-      // For 'played' podcasts, this should be 0
+      // when unmounting, save the current time
       if (podcastID.current) {
-        saveCurrentTime(true); // Force save on unmount
+        saveCurrentTime(true); // save on unmount
       }
     };
   }, []);
@@ -204,7 +194,6 @@ const AudioPlayer = (props) => {
 
     const handlePlay = () => {
       setIsPlaying(true);
-      // Update status to "playing" when playback starts
       updateStatus('playing');
       api.start({
         to: {
@@ -216,7 +205,6 @@ const AudioPlayer = (props) => {
 
     const handlePause = () => {
       setIsPlaying(false);
-      // Don't change status on pause - it remains "playing"
       api.start({
         to: {
           opacity: 0,
@@ -227,35 +215,23 @@ const AudioPlayer = (props) => {
 
     const handleEnded = () => {
       setIsPlaying(false);
-
-      // First notify parent component about completion so it can update storage
       if (props.onEnded) {
         props.onEnded(props.podcastID);
       }
-
-      // Update status to "played" when playback completes
       updateStatus('played');
 
-      // Reset the last saved time reference
       lastSavedTimeRef.current = 0;
 
-      // Delay the UI reset slightly to prevent race conditions
       setTimeout(() => {
-        // Reset currentTime to 0 in the component state
         setCurrentTime(0);
-
-        // Reset current time in the audio element if it still exists
         if (audioPlayer.current) {
           audioPlayer.current.currentTime = 0;
         }
 
-        // Update the progress bar to show 0 progress
         if (progressBar.current) {
           progressBar.current.value = 0;
           progressBar.current.style.setProperty('--seek-before-width', '0%');
         }
-
-        console.log(`AudioPlayer: Reset podcast ${props.podcastID} to beginning after completion`);
       }, 50);
 
       api.start({
@@ -294,16 +270,13 @@ const AudioPlayer = (props) => {
     if (status !== newStatus) {
       setStatus(newStatus);
 
-      // If status is changing to 'played', ensure the time is reset to 0
       if (newStatus === 'played') {
-        // Force save with time 0
         lastSavedTimeRef.current = 0;
         if (props.onTimeUpdate && podcastID.current) {
           props.onTimeUpdate(podcastID.current, 0);
         }
       }
 
-      // Notify parent component if onStatusUpdate prop is provided
       if (props.onStatusUpdate && podcastID.current) {
         props.onStatusUpdate(podcastID.current, newStatus);
       }
@@ -314,8 +287,6 @@ const AudioPlayer = (props) => {
   const togglePlayPause = () => {
     if (!audioPlayer.current) return;
     if (!isPlaying) {
-      // If resuming a podcast that was previously played to completion,
-      // update its status back to 'playing'
       if (status === 'played') {
         updateStatus('playing');
       }
@@ -332,17 +303,23 @@ const AudioPlayer = (props) => {
   // function to save the current time
   const saveCurrentTime = (force = false) => {
     if (props.onTimeUpdate && props.podcastID) {
-      // If status is 'played', always save time as 0 regardless of actual position
-      const currentTimeToSave = status === 'played' ? 0 :
-        (audioPlayer.current ? audioPlayer.current.currentTime : 0);
-
-      // Only save if the time has changed significantly (more than 1 second) or if forced
-      // or if the status is 'played' (always ensure played podcasts are at time 0)
-      if (force || status === 'played' || Math.abs(currentTimeToSave - lastSavedTimeRef.current) > 1) {
+      const currentTimeToSave =
+        status === 'played'
+          ? 0
+          : audioPlayer.current
+          ? audioPlayer.current.currentTime
+          : 0;
+      if (
+        force ||
+        status === 'played' ||
+        Math.abs(currentTimeToSave - lastSavedTimeRef.current) > 1
+      ) {
         lastSavedTimeRef.current = currentTimeToSave;
         props.onTimeUpdate(props.podcastID, currentTimeToSave);
         console.log(
-          `Saved time for podcast ${props.podcastID}: ${currentTimeToSave}${status === 'played' ? ' (fully played)' : ''}`
+          `Saved time for podcast ${props.podcastID}: ${currentTimeToSave}${
+            status === 'played' ? ' (fully played)' : ''
+          }`
         );
       }
     }
@@ -360,15 +337,12 @@ const AudioPlayer = (props) => {
     if (!audioPlayer.current || !progressBar.current) return;
     const newTime = Number(progressBar.current.value);
     if (isNaN(newTime)) return;
-
-    // If the user starts interacting with a podcast, mark it as "playing"
     if (status === 'unplayed') {
       updateStatus('playing');
     }
-
     audioPlayer.current.currentTime = newTime;
     setCurrentTime(newTime);
-    saveCurrentTime(true); // Force save when manually seeking
+    saveCurrentTime(true);
     if (audioPlayer.current.duration && progressBar.current) {
       const percentage = (newTime / audioPlayer.current.duration) * 100;
       progressBar.current.style.setProperty(

@@ -10,7 +10,8 @@ import './Carousel.css';
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
-  const { items, handleUpdatePodcastTime, handleUpdatePodcastStatus } = usePodcastData();
+  const { items, handleUpdatePodcastTime, handleUpdatePodcastStatus } =
+    usePodcastData();
   const cardsRef = useRef(null);
 
   // states
@@ -28,38 +29,26 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
     setIsLoadingActive(false);
   };
 
-  // Handler for time updates
+  // handle time updates
   const handleTimeUpdate = (podcastID, time) => {
-    console.log(`Carousel: Updating time for podcast ${podcastID} to ${time}`);
     handleUpdatePodcastTime(podcastID, time);
   };
 
-  // Handler for status updates
+  // handle status updates
   const handleStatusUpdate = (podcastID, status) => {
-    console.log(`Carousel: Updating status for podcast ${podcastID} to ${status}`);
     handleUpdatePodcastStatus(podcastID, status);
   };
 
-  // Handle podcast ending
+  // handle podcast ending
   const handlePodcastEnd = (podcastID) => {
-    console.log(`Carousel: Podcast ${podcastID} ended, resetting time to 0`);
-
-    // First update time to 0 in storage (always do this first to ensure it's saved)
     handleUpdatePodcastTime(podcastID, 0);
-
-    // Then mark as played
     handleUpdatePodcastStatus(podcastID, 'played');
-
-    // Log additional confirmation
-    console.log(`Carousel: Successfully reset podcast ${podcastID} time to 0 and marked as played`);
-
-    // Notify parent if needed
     if (onPodcastEnd) {
       onPodcastEnd();
     }
   };
 
-  // Navigate to a specific podcast card
+  // navigate to a specific podcast card
   const navigateToCard = (index) => {
     if (cardsRef.current && items[index]) {
       const cards = cardsRef.current;
@@ -68,14 +57,14 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         cardElements[index].scrollIntoView({
           behavior: 'smooth',
           block: 'center',
-          inline: 'center'
+          inline: 'center',
         });
         setActiveIndex(index);
       }
     }
   };
 
-  // Monitor scroll position to update active index
+  // monitor scroll position to update active index
   useEffect(() => {
     const handleScroll = () => {
       if (cardsRef.current) {
@@ -210,8 +199,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         )}
         <li className="spacer"></li>
       </ul>
-
-      {/* Indicators showing which podcast is active */}
       <div className="indicators">
         {items.map((podcast, index) => (
           <button

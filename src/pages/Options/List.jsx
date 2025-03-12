@@ -55,27 +55,27 @@ const List = ({ items, removeUrl, moveItem }) => {
   //animation config for react-spring
   const fn =
     (order, active = false, originalIndex = 0, curIndex = 0, y = 0) =>
-    (index) => {
-      // if this is the item being dragged
-      if (active && index === originalIndex) {
-        return {
-          y: curIndex * itemHeight + y, // position based on current index + drag offset
-          scale: 1.03, // slightly larger scale to indicate selection
-          zIndex: 1, // bring to front
-          immediate: (key) => key === 'y' || key === 'zIndex', // no animation for position and z-index
-        };
-      }
+      (index) => {
+        // if this is the item being dragged
+        if (active && index === originalIndex) {
+          return {
+            y: curIndex * itemHeight + y, // position based on current index + drag offset
+            scale: 1.03, // slightly larger scale to indicate selection
+            zIndex: 1, // bring to front
+            immediate: (key) => key === 'y' || key === 'zIndex', // no animation for position and z-index
+          };
+        }
 
-      // for all other items
-      return {
-        y: order.indexOf(index) * itemHeight, // position based on current order
-        scale: 1, // normal scale
-        zIndex: 0, // normal z-index
-        shadow: 1, // normal shadow
-        immediate: !isVisible, // skip animation if not visible yet
-        config: { tension: 300, friction: 30 }, // spring animation config
+        // for all other items
+        return {
+          y: order.indexOf(index) * itemHeight, // position based on current order
+          scale: 1, // normal scale
+          zIndex: 0, // normal z-index
+          shadow: 1, // normal shadow
+          immediate: !isVisible, // skip animation if not visible yet
+          config: { tension: 300, friction: 30 }, // spring animation config
+        };
       };
-    };
 
   // intialise react-spring hooks to animate items, each item has own spring animation
   const [springs, api] = useSprings(items.length, (index) => ({
