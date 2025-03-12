@@ -1,17 +1,15 @@
 import React from 'react';
 import './StatusIndicator.css';
 
-const StatusIndicator = ({ podcastId }) => {
-  const playbackStatus = null;
-
+const StatusIndicator = ({ status }) => {
   const getStatusColor = () => {
-    switch (playbackStatus) {
-      // case currentStatus.UNPLAYED:
-      //   return 'var(--unplayed-color, #19a0fc)';
-      // case currentStatus.IN_PROGRESS:
-      //   return 'var(--in-progress-color, #ffa500)';
-      // case currentStatus.FINISHED:
-      //   return 'var(--completed-color, #5dffb1)';
+    switch (status) {
+      case 'unplayed':
+        return 'var(--unplayed-color, #19a0fc)';
+      case 'playing':
+        return 'var(--in-progress-color, #ffa500)';
+      case 'played':
+        return 'var(--completed-color, #5dffb1)';
       default:
         return 'var(--default-color, #d0d0d0)';
     }

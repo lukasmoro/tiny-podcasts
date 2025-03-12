@@ -220,14 +220,14 @@ export const usePodcastData = () => {
       );
 
       if (itemIndex === -1) {
-        console.warn(`Podcast with key ${key} not found when updating time.`);
+        console.warn(`Podcast with key ${key} not found when updating status.`);
         return;
       }
 
-      if (currentStoredItems[itemIndex].currentTime === currentTime) {
+      if (currentStoredItems[itemIndex].status === status) {
         return;
       }
-      const updatedItems = [...currentStoredItems]; // create a copy & update the time
+      const updatedItems = [...currentStoredItems]; // create a copy & update the status
       updatedItems[itemIndex] = {
         ...updatedItems[itemIndex],
         status,
@@ -235,7 +235,7 @@ export const usePodcastData = () => {
 
       // log for debugging
       console.log(
-        `Updating time for "${updatedItems[itemIndex].title}" (${key}): ${currentTime}`
+        `Updating status for "${updatedItems[itemIndex].title}" (${key}): ${status}`
       );
 
       // update state and storage
@@ -243,7 +243,7 @@ export const usePodcastData = () => {
       synchronizeToStorage(updatedItems, {
         action: 'updateStatus',
         key,
-        currentTime,
+        status,
       });
     },
     [synchronizeToStorage]
