@@ -1,35 +1,17 @@
 import React from 'react';
-import usePlaybackPosition from '../../hooks/usePlaybackPosition';
 import './StatusIndicator.css';
-import { CheckIcon } from '../Icons/CheckIcon';
 
-const StatusIndicator = ({ podcastId }) => {
-  const { status: playbackStatus, PLAYBACK_STATUS } =
-    usePlaybackPosition(podcastId);
-
+const StatusIndicator = ({ status }) => {
   const getStatusColor = () => {
-    switch (playbackStatus) {
-      case PLAYBACK_STATUS.UNPLAYED:
+    switch (status) {
+      case 'unplayed':
         return 'var(--unplayed-color, #19a0fc)';
-      case PLAYBACK_STATUS.IN_PROGRESS:
+      case 'playing':
         return 'var(--in-progress-color, #ffa500)';
-      case PLAYBACK_STATUS.FINISHED:
+      case 'played':
         return 'var(--completed-color, #5dffb1)';
       default:
         return 'var(--default-color, #d0d0d0)';
-    }
-  };
-
-  const getStatusIcon = () => {
-    switch (playbackStatus) {
-      case PLAYBACK_STATUS.UNPLAYED:
-        return null;
-      case PLAYBACK_STATUS.IN_PROGRESS:
-        return null;
-      case PLAYBACK_STATUS.FINISHED:
-        return <CheckIcon className="status-icon" />;
-      default:
-        return null;
     }
   };
 
@@ -41,7 +23,6 @@ const StatusIndicator = ({ podcastId }) => {
         '--outline-color': getStatusColor(),
       }}
     >
-      {getStatusIcon()}
       <span className="status-dot"></span>
     </div>
   );

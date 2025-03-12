@@ -1,120 +1,160 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { animated } from '@react-spring/web';
 import { useSpring } from '@react-spring/core';
-import './AudioPlayer.css';
-import BehaviourClick from './BehaviourClick.jsx';
-import usePlaybackPosition from '../../hooks/usePlaybackPosition.js';
+import { animated } from '@react-spring/web';
 import { PlayIcon } from '../Icons/PlayIcon';
 import { PauseIcon } from '../Icons/PauseIcon';
-// Import Google Analytics tracking functions
-import { trackButtonClick } from '../../utils/googleAnalytics';
+import './AudioPlayer.css';
 
 const AudioPlayer = (props) => {
+  // states
   const [isPlaying, setIsPlaying] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(false);
   const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [currentTime, setCurrentTime] = useState(props.initialTime || 0);
+  const [status, setStatus] = useState(props.initialStatus || 'unplayed');
 
-  const {
-    currentTime: savedTime,
-    duration: savedDuration,
-    status,
-    updatePlaybackState,
-    PLAYBACK_STATUS,
-    wasFinished,
-  } = usePlaybackPosition(props.podcastId);
+  // refs (no re-render when updated)
+  const audioPlayer = useRef(); // ref for audio element
+  const progressBar = useRef(); // ref for progressbar
+  const podcastID = useRef(props.podcastID); // store the podcast ID in a ref
 
-  const audioPlayer = useRef();
-  const progressBar = useRef();
-  const animationRef = useRef();
-  const lastUpdateTimeRef = useRef(0);
-
+  // animation config for player progress
   const [springs, api] = useSpring(() => ({
     from: { opacity: 0, y: 0 },
     to: { opacity: isPlaying ? 1 : 0, y: isPlaying ? 50 : 0 },
     config: { tension: 280, friction: 60 },
   }));
 
+  // animation config for button click
+  const buttonSpring = useSpring({
+    display: 'inline-block',
+    backfaceVisibility: 'hidden',
+    transform: buttonClicked ? 'translateY(-10px)' : 'translateY(0px)',
+    config: {
+      tension: 300,
+      friction: 10,
+    },
+  });
+
+  // last saved time reference to avoid redundant saves
+  const lastSavedTimeRef = useRef(props.initialTime || 0);
+
+  // useEffect to initialize status from props
   useEffect(() => {
-    if (!isInitialized && audioPlayer.current) {
-      const timeToSet = status === PLAYBACK_STATUS.FINISHED ? 0 : savedTime;
+    if (props.initialStatus) {
+      setStatus(props.initialStatus);
+    }
+  }, [props.initialStatus]);
 
-      if (
-        (timeToSet > 0 || status === PLAYBACK_STATUS.FINISHED) &&
-        savedDuration > 0
-      ) {
-        setCurrentTime(timeToSet);
+  // useEffect to handle podcastID changes and initialTime
+  useEffect(() => {
+    podcastID.current = props.podcastID; // update the podcast ID ref when it changes
 
-        if (progressBar.current) {
-          progressBar.current.max = savedDuration;
-          setDuration(savedDuration);
-          progressBar.current.value = timeToSet;
-          const percentage = (timeToSet / savedDuration) * 100;
-          const validPercentage = isFinite(percentage) ? percentage : 0;
+    if (props.initialStatus === 'played') {
+      lastSavedTimeRef.current = 0;
+      setCurrentTime(0);
+      if (audioPlayer.current) {
+        audioPlayer.current.currentTime = 0;
+      }
+      if (progressBar.current) {
+        progressBar.current.value = 0;
+        progressBar.current.style.setProperty('--seek-before-width', '0%');
+      }
+    } else {
+      lastSavedTimeRef.current = props.initialTime || 0; // update the lastSavedTimeRef when initialTime changes
+      if (audioPlayer.current && props.initialTime) {
+        audioPlayer.current.currentTime = props.initialTime;
+        setCurrentTime(props.initialTime);
+        if (progressBar.current && audioPlayer.current.duration) {
+          const percentage =
+            (props.initialTime / audioPlayer.current.duration) * 100;
+          progressBar.current.value = props.initialTime;
           progressBar.current.style.setProperty(
             '--seek-before-width',
-            `${validPercentage}%`
+            `${percentage}%`
           );
         }
       }
     }
-  }, [savedTime, savedDuration, isInitialized, status, PLAYBACK_STATUS]);
+  }, [props.initialTime, props.podcastID, props.initialStatus]);
 
+  // save current time when component unmounts
+  useEffect(() => {
+    return () => {
+      // when unmounting, save the current time
+      if (podcastID.current) {
+        saveCurrentTime(true); // save on unmount
+      }
+    };
+  }, []);
+
+  // useEffect to set initial time from storage
+  useEffect(() => {
+    if (audioPlayer.current && props.initialTime) {
+      audioPlayer.current.currentTime = props.initialTime;
+      setCurrentTime(props.initialTime);
+      if (progressBar.current && audioPlayer.current.duration) {
+        const percentage =
+          (props.initialTime / audioPlayer.current.duration) * 100;
+        progressBar.current.value = props.initialTime;
+        progressBar.current.style.setProperty(
+          '--seek-before-width',
+          `${percentage}%`
+        );
+      }
+    }
+  }, [props.initialTime]);
+
+  // useEffect to reset button click animation
+  useEffect(() => {
+    if (!buttonClicked) {
+      return;
+    }
+    const timeoutId = window.setTimeout(() => {
+      setButtonClicked(false);
+    }, 150);
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [buttonClicked]);
+
+  // useEffect to handle audio metadata loading
   useEffect(() => {
     const audio = audioPlayer.current;
     if (!audio) return;
 
     const handleLoadedMetadata = () => {
       const audioDuration = audio.duration;
-
-      if (isNaN(audioDuration) || !isFinite(audioDuration)) return;
-
       setDuration(audioDuration);
-
       if (progressBar.current) {
         progressBar.current.max = audioDuration;
       }
 
-      if (status === PLAYBACK_STATUS.FINISHED && !isInitialized) {
-        audio.currentTime = 0;
+      // Set initial time after duration is known
+      if (props.initialTime && isFinite(audioDuration)) {
+        audio.currentTime = props.initialTime;
+        setCurrentTime(props.initialTime);
 
+        // Update progress bar with correct percentage
         if (progressBar.current) {
-          progressBar.current.value = 0;
-          progressBar.current.style.setProperty('--seek-before-width', '0%');
-        }
-
-        setCurrentTime(0);
-        setIsInitialized(true);
-      } else if (!isInitialized && savedTime > 0 && savedTime < audioDuration) {
-        audio.currentTime = savedTime;
-
-        if (progressBar.current) {
-          progressBar.current.value = savedTime;
-          const percentage = (savedTime / audioDuration) * 100;
+          const percentage = (props.initialTime / audioDuration) * 100;
+          progressBar.current.value = props.initialTime;
           progressBar.current.style.setProperty(
             '--seek-before-width',
             `${percentage}%`
           );
         }
-
-        setCurrentTime(savedTime);
-        setIsInitialized(true);
-      } else if (!isInitialized) {
-        setIsInitialized(true);
       }
     };
 
     audio.addEventListener('loadedmetadata', handleLoadedMetadata);
 
-    if (audio.readyState >= 2) {
-      handleLoadedMetadata();
-    }
-
     return () => {
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
     };
-  }, [savedTime, isInitialized]);
+  }, [props.initialTime]);
 
+  // useEffect to update progress bar during playback
   useEffect(() => {
     const audio = audioPlayer.current;
     if (!audio) return;
@@ -122,33 +162,21 @@ const AudioPlayer = (props) => {
     const handleTimeUpdate = () => {
       const currentValue = audio.currentTime;
       const audioDuration = audio.duration;
-
       setCurrentTime(currentValue);
 
       if (progressBar.current && isFinite(audioDuration) && audioDuration > 0) {
         progressBar.current.value = currentValue;
-
         const percentage = (currentValue / audioDuration) * 100;
-
         const minVisibleWidth =
           currentValue > 0 ? Math.max(percentage, 0.5) : 0;
-
         const rightRadius = percentage >= 66.67 ? '3.5px' : '0px';
         progressBar.current.style.setProperty('--right-radius', rightRadius);
-
         const widthAdjust = percentage >= 66.67 ? '0px' : '1px';
         progressBar.current.style.setProperty('--width-adjust', widthAdjust);
-
         progressBar.current.style.setProperty(
           '--seek-before-width',
           `${minVisibleWidth}%`
         );
-      }
-
-      const now = Date.now();
-      if (now - lastUpdateTimeRef.current > 1000) {
-        lastUpdateTimeRef.current = now;
-        updatePlaybackState(currentValue, audioDuration);
       }
     };
 
@@ -157,55 +185,54 @@ const AudioPlayer = (props) => {
     return () => {
       audio.removeEventListener('timeupdate', handleTimeUpdate);
     };
-  }, [updatePlaybackState]);
+  }, []);
 
+  // useEffect to handle play/pause state changes and track completion
   useEffect(() => {
     const audio = audioPlayer.current;
     if (!audio) return;
 
     const handlePlay = () => {
       setIsPlaying(true);
-
+      updateStatus('playing');
       api.start({
         to: {
           opacity: 1,
           y: 50,
         },
       });
-
-      // Track play event with Google Analytics
-      trackButtonClick('audio_play', {
-        podcast_id: props.podcastId,
-        podcast_title: props.title || 'Unknown',
-        playback_position: audio.currentTime,
-      }).catch((err) => console.error('Error tracking play event:', err));
     };
 
     const handlePause = () => {
       setIsPlaying(false);
-
       api.start({
         to: {
           opacity: 0,
           y: 0,
         },
       });
-
-      if (audio.currentTime && audio.duration) {
-        updatePlaybackState(audio.currentTime, audio.duration);
-      }
-
-      // Track pause event with Google Analytics
-      trackButtonClick('audio_pause', {
-        podcast_id: props.podcastId,
-        podcast_title: props.title || 'Unknown',
-        playback_position: audio.currentTime,
-        duration_played: audio.currentTime,
-      }).catch((err) => console.error('Error tracking pause event:', err));
     };
 
     const handleEnded = () => {
       setIsPlaying(false);
+      if (props.onEnded) {
+        props.onEnded(props.podcastID);
+      }
+      updateStatus('played');
+
+      lastSavedTimeRef.current = 0;
+
+      setTimeout(() => {
+        setCurrentTime(0);
+        if (audioPlayer.current) {
+          audioPlayer.current.currentTime = 0;
+        }
+
+        if (progressBar.current) {
+          progressBar.current.value = 0;
+          progressBar.current.style.setProperty('--seek-before-width', '0%');
+        }
+      }, 50);
 
       api.start({
         to: {
@@ -213,21 +240,6 @@ const AudioPlayer = (props) => {
           y: 0,
         },
       });
-
-      if (audio.duration) {
-        updatePlaybackState(audio.duration, audio.duration);
-      }
-
-      // Track podcast completion with Google Analytics
-      trackButtonClick('audio_completed', {
-        podcast_id: props.podcastId,
-        podcast_title: props.title || 'Unknown',
-        duration: audio.duration,
-      }).catch((err) => console.error('Error tracking completion event:', err));
-
-      if (props.onEnded) {
-        props.onEnded();
-      }
     };
 
     const handleDurationChange = () => {
@@ -250,39 +262,87 @@ const AudioPlayer = (props) => {
       audio.removeEventListener('pause', handlePause);
       audio.removeEventListener('ended', handleEnded);
       audio.removeEventListener('durationchange', handleDurationChange);
-
-      if (audio.currentTime && audio.duration) {
-        updatePlaybackState(audio.currentTime, audio.duration);
-      }
     };
-  }, [updatePlaybackState, props.onEnded, api, props.podcastId, props.title]);
+  }, [api, props.onEnded, status]);
 
-  const togglePlayPause = () => {
-    if (!audioPlayer.current) return;
+  // function to update status and notify parent component
+  const updateStatus = (newStatus) => {
+    if (status !== newStatus) {
+      setStatus(newStatus);
 
-    if (!isPlaying) {
-      audioPlayer.current.play().catch((err) => {
-        console.error('Error playing audio:', err);
-        // Track error with Google Analytics
-        trackError(err).catch((trackErr) =>
-          console.error('Error tracking error event:', trackErr)
-        );
-      });
-    } else {
-      audioPlayer.current.pause();
+      if (newStatus === 'played') {
+        lastSavedTimeRef.current = 0;
+        if (props.onTimeUpdate && podcastID.current) {
+          props.onTimeUpdate(podcastID.current, 0);
+        }
+      }
+
+      if (props.onStatusUpdate && podcastID.current) {
+        props.onStatusUpdate(podcastID.current, newStatus);
+      }
     }
   };
 
+  // function to toggle play/pause state
+  const togglePlayPause = () => {
+    if (!audioPlayer.current) return;
+    if (!isPlaying) {
+      if (status === 'played') {
+        updateStatus('playing');
+      }
+
+      audioPlayer.current.play().catch((err) => {
+        console.error('Error playing audio:', err);
+      });
+    } else {
+      audioPlayer.current.pause();
+      saveCurrentTime();
+    }
+  };
+
+  // function to save the current time
+  const saveCurrentTime = (force = false) => {
+    if (props.onTimeUpdate && props.podcastID) {
+      const currentTimeToSave =
+        status === 'played'
+          ? 0
+          : audioPlayer.current
+          ? audioPlayer.current.currentTime
+          : 0;
+      if (
+        force ||
+        status === 'played' ||
+        Math.abs(currentTimeToSave - lastSavedTimeRef.current) > 1
+      ) {
+        lastSavedTimeRef.current = currentTimeToSave;
+        props.onTimeUpdate(props.podcastID, currentTimeToSave);
+        console.log(
+          `Saved time for podcast ${props.podcastID}: ${currentTimeToSave}${
+            status === 'played' ? ' (fully played)' : ''
+          }`
+        );
+      }
+    }
+  };
+
+  // function to handle button click combined with play/pause toggle
+  const handleButtonClick = () => {
+    setButtonClicked(true);
+    togglePlayPause();
+    if (props.handleClick) props.handleClick();
+  };
+
+  // function to handle manual seeking via progress bar
   const changeRange = () => {
     if (!audioPlayer.current || !progressBar.current) return;
-
     const newTime = Number(progressBar.current.value);
     if (isNaN(newTime)) return;
-
+    if (status === 'unplayed') {
+      updateStatus('playing');
+    }
     audioPlayer.current.currentTime = newTime;
-
     setCurrentTime(newTime);
-
+    saveCurrentTime(true);
     if (audioPlayer.current.duration && progressBar.current) {
       const percentage = (newTime / audioPlayer.current.duration) * 100;
       progressBar.current.style.setProperty(
@@ -290,27 +350,12 @@ const AudioPlayer = (props) => {
         `${percentage}%`
       );
     }
-
-    if (audioPlayer.current.duration) {
-      updatePlaybackState(newTime, audioPlayer.current.duration);
-    }
-
-    // Track seek event with Google Analytics
-    trackButtonClick('audio_seek', {
-      podcast_id: props.podcastId,
-      podcast_title: props.title || 'Unknown',
-      seek_position: newTime,
-      seek_percentage: audioPlayer.current.duration
-        ? Math.round((newTime / audioPlayer.current.duration) * 100)
-        : 0,
-    }).catch((err) => console.error('Error tracking seek event:', err));
   };
 
+  // function to format seconds into mm:ss display format
   const calculateTime = (secs) => {
     if (!isFinite(secs) || secs < 0) return '00:00';
-
     const timeInSeconds = Number(secs);
-
     const minutes = Math.floor(timeInSeconds / 60);
     const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
     const seconds = Math.floor(timeInSeconds % 60);
@@ -323,21 +368,17 @@ const AudioPlayer = (props) => {
       <div className="player-container">
         <audio ref={audioPlayer} src={props.src} preload="metadata" />
         <div className="button">
-          <BehaviourClick>
-            <button
-              className="play-pause"
-              onClick={() => {
-                togglePlayPause();
-                if (props.handleClick) props.handleClick();
-              }}
-            >
-              {isPlaying ? (
-                <PauseIcon className="player-icon" />
-              ) : (
-                <PlayIcon className="player-icon" />
-              )}
-            </button>
-          </BehaviourClick>
+          <animated.button
+            className="play-pause"
+            onClick={handleButtonClick}
+            style={buttonSpring}
+          >
+            {isPlaying ? (
+              <PauseIcon className="player-icon" />
+            ) : (
+              <PlayIcon className="player-icon" />
+            )}
+          </animated.button>
         </div>
         <animated.div style={springs} className="progress-container">
           <div className="current-time">{calculateTime(currentTime)}</div>

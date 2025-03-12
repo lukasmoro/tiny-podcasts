@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { ThemeProvider } from './ThemeProvider.jsx';
 import Carousel from './Carousel';
+import Overlay from './Overlay.jsx';
 import Onboarding from '../Panel/Onboarding.jsx';
 import Redirect from './Redirect';
 import '../../root/Root.css';
 
+const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
+
 const Newtab = () => {
   const [onboarding, setOnboarding] = useState(false);
   const [redirect, setRedirect] = useState(false);
+  const [isBlurVisible, setIsBlurVisible] = useState(false);
 
   useEffect(() => {
     chrome.tabs.query({ currentWindow: true }, function (tabs) {
@@ -25,28 +29,84 @@ const Newtab = () => {
     });
   });
 
-  useEffect(() => {
-    chrome.storage.local.get(['newUrls'], (item, key) => {
-      const checker = item.newUrls.length;
-      if (checker === 0) {
+  const checkForPodcasts = () => {
+    chrome.storage.local.get(['newItems'], (item) => {
+      if (item.newItems && item.newItems.length > 0) {
+        setOnboarding(false);
+      } else {
         setOnboarding(true);
       }
     });
-  }, []);
+  };
+
+  useEffect(() => {
+    checkForPodcasts();
+
+    const handlePodcastUpdated = (event) => {
+      if (event.detail?.action === 'add' && onboarding) {
+        checkForPodcasts();
+      }
+    };
+
+    window.addEventListener(PODCAST_UPDATED_EVENT, handlePodcastUpdated);
+
+    const handleStorageChanged = (changes, area) => {
+      if (area === 'local' && changes.newItems) {
+        const newValue = changes.newItems.newValue || [];
+        if (newValue.length > 0 && onboarding) {
+          setOnboarding(false);
+        } else if (newValue.length === 0 && !onboarding) {
+          setOnboarding(true);
+        }
+      }
+    };
+    chrome.storage.onChanged.addListener(handleStorageChanged);
+    return () => {
+      window.removeEventListener(PODCAST_UPDATED_EVENT, handlePodcastUpdated);
+      chrome.storage.onChanged.removeListener(handleStorageChanged);
+    };
+  }, [onboarding]);
+
+  const handleBlurToggle = () => {
+    setIsBlurVisible((prevIsBlurVisible) => !prevIsBlurVisible);
+  };
+
+  const handlePodcastEnd = () => {
+    setIsBlurVisible(false);
+  };
+
+  useEffect(() => {
+    if (isBlurVisible) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [isBlurVisible]);
 
   return (
     <ThemeProvider>
       <div>
         {onboarding ? (
           <div>
-            <Onboarding />
+            <Onboarding onPodcastAdded={() => setOnboarding(false)} />
           </div>
         ) : redirect ? (
           <div>
             <Redirect />
           </div>
         ) : (
-          <Carousel />
+          <div className="App">
+            <Overlay />
+            <Carousel
+              isBlurVisible={isBlurVisible}
+              handleBlurToggle={handleBlurToggle}
+              onPodcastEnd={handlePodcastEnd}
+            />
+            <div className={`blur ${isBlurVisible ? 'visible' : ''}`}></div>
+          </div>
         )}
       </div>
     </ThemeProvider>

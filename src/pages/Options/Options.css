@@ -24,12 +24,6 @@
   max-width: calc(50% - 10px);
 }
 
-.left-card .container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
 .right-cards {
   display: flex;
   flex-direction: column;
@@ -65,40 +59,16 @@
   height: calc(50% - 10px);
 }
 
-.container {
-  padding: var(--padding-card);
+.text-container {
+  padding-left: var(--padding-card);
+  padding-right: var(--padding-card);
+  padding-top: var(--padding-card);
+  margin-bottom: var(--margin-text);
 }
 
-.right-card .container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.left-card .overflow {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 260px;
-}
-
-.greets {
-  text-align: center;
-  max-width: 100%;
-}
-
-.line {
-  background: var(--background-color-detail);
-  height: 1px;
-}
-
-.overflow {
-  overflow: auto;
-  overscroll-behavior: contain;
-  scrollbar-width: none;
-  scroll-behavior: smooth;
-  overflow-y: auto;
-  overscroll-behavior-y: auto;
+.search-container {
+  padding-left: var(--padding-card);
+  padding-right: var(--padding-card);
 }
 
 .podcast-truncate-text {
@@ -107,17 +77,25 @@
   text-overflow: ellipsis;
 }
 
-.left-card .overflow {
+.list-container {
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  padding-top: var(--padding-list);
+  padding-left: var(--padding-card);
+  padding-right: var(--padding-card);
+  margin-bottom: var(--margin-text);
   flex: 1;
   display: flex;
   flex-direction: column;
   max-height: 330px;
   overflow-y: auto;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 20px,
-    black calc(100% - 20px),
-    transparent 100%
-  );
+  mask-image: linear-gradient(to bottom,
+      transparent 0%,
+      black 20px,
+      black calc(100% - 20px),
+      transparent 100%);
 }

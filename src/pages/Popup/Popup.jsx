@@ -1,29 +1,34 @@
-import React from 'react';
-import Form from '../Options/Form';
+import React, { useState } from 'react';
+import Searchbar from '../Options/Searchbar';
 import List from '../Options/List';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
-import { usePodcastStorage } from '../../hooks/usePodcastStorage';
+import { usePodcastData } from '../../hooks/usePodcastData';
 import './Popup.css';
-import '../Options/List.css';
 import '../../root/Root.css';
 
 const Popup = () => {
-  const { items, handleAddPodcast, handleRemovePodcast } = usePodcastStorage();
+  const {
+    items,
+    handleAddPodcast,
+    handleRemovePodcast,
+    handleReorderPodcasts,
+  } = usePodcastData();
 
   return (
-    <div className="App">
-      <ThemeProvider>
-        <div className="list-container">
-          <Form onSubmit={handleAddPodcast} />
+    <ThemeProvider>
+      <div className="App">
+        <div className='search-container'>
+          <Searchbar onSubmit={handleAddPodcast} />
+        </div>
+        <div className='list-container'>
           <List
             items={items}
             removeUrl={handleRemovePodcast}
-            className="popup-list-overflow"
-            stretchContent={true}
+            moveItem={handleReorderPodcasts}
           />
         </div>
-      </ThemeProvider>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 };
 

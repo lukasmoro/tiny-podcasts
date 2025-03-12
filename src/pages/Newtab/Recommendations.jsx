@@ -1,42 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Recommendations.css';
 
-function Recommendations({ podcasts, onAddPodcast }) {
-  const handleAddPodcast = (podcast) => {
-    if (!podcast.feedUrl) {
-      console.error('No feed URL available for this podcast');
-      return;
-    }
-    const podcastItem = {
-      key: new Date().getTime(),
-      text: podcast.feedUrl,
-      title: podcast.collectionName,
-      artwork: podcast.artworkUrl600,
+const Recommendations = ({ podcastID, onAddPodcast }) => {
+  //state
+  const [podcasts, setPodcasts] = useState([]);
+
+  useEffect(() => {
+    // fetch podcast url from itunes api for ui & adding item if handleAddPodcast is called
+    const fetchPodcasts = async () => {
+      try {
+        const podcastPromises = podcastID.map((id) =>
+          fetch(`https://itunes.apple.com/lookup?id=${id}&entity=podcast`)
+            .then((response) => response.json())
+            .then((data) => data.results[0])
+        );
+        const podcasts = await Promise.all(podcastPromises);
+        setPodcasts(podcasts.filter((podcast) => podcast));
+      } catch (error) {
+        console.error('Error fetching podcast recommendations:', error);
+      }
     };
-    onAddPodcast(podcastItem);
+    fetchPodcasts();
+  }, [podcastID]);
+
+  //pass fetched url to parent
+  const handleAddPodcast = (podcast) => {
+    const podcastData = {
+      url: podcast.feedUrl,
+    };
+    onAddPodcast(podcastData);
   };
 
   return (
     <div className="podcast-recommendations">
       <div className="podcast-recommendations-grid">
-        {podcasts &&
-          podcasts.map((podcast) => (
-            <div
-              key={podcast.collectionId}
-              className="podcast-recommendation-item"
-              onClick={() => handleAddPodcast(podcast)}
-            >
-              <img
-                className="podcast-recommendation-thumbnail"
-                src={podcast.artworkUrl600}
-                alt={podcast.collectionName}
-                title={`Subscribe to ${podcast.collectionName}`}
-              />
-            </div>
-          ))}
+        {podcasts.map((podcast) => (
+          <div
+            key={podcast.key}
+            className="podcast-recommendation-item"
+            onClick={() => handleAddPodcast(podcast)}
+          >
+            <img
+              className="podcast-recommendation-thumbnail"
+              src={podcast.artworkUrl600}
+              alt={podcast.collectionName}
+              title={`Subscribe to ${podcast.collectionName}`}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
-}
+};
 
 export default Recommendations;

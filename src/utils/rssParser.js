@@ -17,6 +17,7 @@ function parseRss(xml) {
       publisher: safeExecute(() => getPublisher(xmlDoc)) || null,
       category: safeExecute(() => getCategory(xmlDoc)) || null,
       description: safeExecute(() => getDescription(firstItem)) || null,
+      duration: safeExecute(() => getDuration(firstItem)) || null,
     };
 
     console.log('Parsed item:', item);
@@ -260,6 +261,54 @@ function getDescription(item) {
   return null;
 }
 
+function getDuration(item) {
+  const possibleDurationPaths = [
+    'itunes\\:duration',
+    'duration',
+    'media\\:content',
+    'enclosure',
+  ];
+
+  for (const path of possibleDurationPaths) {
+    try {
+      const element = item.querySelector(path);
+      if (!element) continue;
+      if (path.includes('duration') && element.textContent) {
+        return parseDurationString(element.textContent.trim());
+      }
+      if (path === 'media\\:content' && element.getAttribute('duration')) {
+        const duration = parseInt(element.getAttribute('duration'));
+        if (!isNaN(duration)) return duration;
+      }
+      if (path === 'enclosure' && element.getAttribute('length')) {
+        const length = parseInt(element.getAttribute('length'));
+        if (!isNaN(length) && length < 100000) {
+          return length;
+        }
+      }
+    } catch (e) {
+      console.log(`Error finding duration with path ${path}:`, e);
+    }
+  }
+
+  return null;
+}
+
+function parseDurationString(durationStr) {
+  if (!durationStr) return null;
+  if (/^\d+$/.test(durationStr)) {
+    return parseInt(durationStr);
+  }
+  const parts = durationStr.split(':').map((part) => parseInt(part));
+  if (parts.length === 3) {
+    return parts[0] * 3600 + parts[1] * 60 + parts[2];
+  } else if (parts.length === 2) {
+    return parts[0] * 60 + parts[1];
+  }
+  console.log(`Couldn't parse duration string: ${durationStr}`);
+  return null;
+}
+
 export {
   parseRss,
   getEnclosureUrl,
@@ -271,4 +320,5 @@ export {
   getPublisher,
   getCategory,
   getDescription,
+  getDuration,
 };
