@@ -23,6 +23,8 @@
 }
 
 .podcast-item-thumbnail {
+  outline: 2px solid var(--outline-color);
+  outline-offset: -2px;
   border-radius: var(--border-radius-thumbnail);
   flex-shrink: 0;
   width: 50px;
@@ -32,6 +34,7 @@
 
 .podcast-item-title {
   color: var(--tertiary-text-color);
+  font-weight: var(--font-weight-regular);
   flex: 1;
   display: block;
   height: 50px;
@@ -48,11 +51,15 @@
   align-self: center;
   font-size: var(--font-size-medium);
   color: var(--tertiary-accent-color);
+  /* background: linear-gradient(0deg,
+      var(--tertiary-accent-color) 0%,
+      white 100%); */
   box-shadow: var(--button-shadow);
   border-radius: var(--border-radius-button);
   border: none;
   cursor: pointer;
   transition: ease-in 0.15s;
+  font-weight: var(--font-weight-bold);
 }
 
 .podcast-remove-btn:hover {

@@ -10,8 +10,12 @@ import './Carousel.css';
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
+
+  //custom hook
   const { items, handleUpdatePodcastTime, handleUpdatePodcastStatus } =
     usePodcastData();
+
+  //refs
   const cardsRef = useRef(null);
 
   // states
@@ -106,7 +110,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   useEffect(() => {
     startLoading();
 
-    // Log podcast items and their currentTime values when they change
+    // log podcast items and their currentTime values when they change
     if (items.length > 0) {
       console.log('Carousel: Current podcast items with times:');
       items.forEach((item) => {
@@ -150,16 +154,19 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
                   <div className="header-container">
                     <div className="header-content">
                       <div className="podcast-title-container">
-                        <h2 className="podcast-title">
-                          {textTruncate(podcast.title || 'Unknown Title', 30)}
-                        </h2>
+
+                        <div className="podcast-title-text">
+                          <h2 className="podcast-title">
+                            {textTruncate(podcast.title || 'Unknown Title', 30)}
+                          </h2>
+                          <h3 className="podcast-episode">
+                            {textTruncate(podcast.episode, 45)}
+                          </h3>
+                        </div>
                         <StatusIndicator
                           status={podcast.status || 'unplayed'}
                         />
                       </div>
-                      <h3 className="podcast-episode">
-                        {textTruncate(podcast.episode, 45)}
-                      </h3>
                     </div>
                   </div>
                   <div className="cover-mask"></div>
@@ -199,7 +206,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         )}
         <li className="spacer"></li>
       </ul>
-      <div className="indicators">
+      <div className={`indicators ${items.length <= 1 || isBlurVisible ? 'hidden' : ''}`}>
         {items.map((podcast, index) => (
           <button
             key={index}

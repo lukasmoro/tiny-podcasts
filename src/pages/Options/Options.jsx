@@ -33,7 +33,7 @@ const Options = () => {
             <div className="text-container">
               <h2 className="sub-header">Manage Podcasts</h2>
               <h1 className="header">Subscriptions</h1>
-              <p>
+              <p className="instructions">
                 Add, remove & reorder podcasts here or in the pop-up.
               </p>
             </div>
@@ -47,8 +47,6 @@ const Options = () => {
                 moveItem={handleReorderPodcasts}
               />
             </div>
-
-
           </div>
           <div className="right-cards">
             <div className="card right-card">
@@ -74,7 +72,7 @@ const Options = () => {
                 <p className="instructions">
                   <em>Tiny Podcasts</em> is the first project of{' '}
                   <em>Tiny Software</em>. Every tip supports the creation of
-                  future <em>Tiny Products</em>. <br /> Thank you!
+                  future <em>Tiny Products</em>. <br /> <em>Thank you!</em>
                 </p>
                 <BuyMeACoffeeButton />
                 <div className="items">
@@ -83,6 +81,25 @@ const Options = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="socials-links-container">
+          <a
+            className="socials"
+            href="https://lukasmoro.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Tiny Software</a>
+          <a
+            className="socials"
+            href="https://lukasmoro.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Privacy Policy</a><a
+            className="socials"
+            href="https://lukasmoro.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Open Source</a>
         </div>
       </ThemeProvider>
     </div>

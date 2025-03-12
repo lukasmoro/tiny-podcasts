@@ -17,6 +17,7 @@ html {
 }
 
 .list-container {
+  font-weight: var(--font-weight-regular);
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;

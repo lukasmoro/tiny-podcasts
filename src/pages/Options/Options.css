@@ -39,13 +39,14 @@
 
 .sub-header {
   font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-regular);
   color: var(--secondary-text-color);
   margin-bottom: var(--margin-subheader);
 }
 
 .instructions {
   margin-bottom: var(--margin-text);
+  font-weight: var(--font-weight-regular);
 }
 
 .card {
@@ -63,7 +64,6 @@
   padding-left: var(--padding-card);
   padding-right: var(--padding-card);
   padding-top: var(--padding-card);
-  margin-bottom: var(--margin-text);
 }
 
 .search-container {
@@ -98,4 +98,18 @@
       black 20px,
       black calc(100% - 20px),
       transparent 100%);
+}
+
+.socials-links-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 0px;
+}
+
+.socials {
+  cursor: alias;
+  font-size: var(--font-size-links);
+  font-weight: var(--font-weight-bold);
+  color: var(--link-text-color);
 }
