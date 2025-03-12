@@ -202,7 +202,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         )}
         <li className="spacer"></li>
       </ul>
-      <div className="indicators">
+      <div className={`indicators ${items.length <= 1 || isBlurVisible ? 'hidden' : ''}`}>
         {items.map((podcast, index) => (
           <button
             key={index}
