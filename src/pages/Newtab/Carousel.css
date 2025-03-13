@@ -269,8 +269,12 @@ h3 {
 }
 
 @keyframes rotate-cover {
-  35% {
+  0% {
     transform: translateX(0) rotateY(-35deg);
+  }
+
+  35% {
+    transform: translateX(0) rotateY(-20deg);
   }
 
   50% {
@@ -278,6 +282,10 @@ h3 {
   }
 
   65% {
+    transform: translateX(0) rotateY(20deg);
+  }
+
+  100% {
     transform: translateX(0) rotateY(35deg);
   }
 }
