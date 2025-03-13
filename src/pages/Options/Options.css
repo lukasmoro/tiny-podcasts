@@ -38,7 +38,7 @@
 }
 
 .sub-header {
-  font-size: var(--font-size-medium);
+  font-size: var(--font-size-links);
   font-weight: var(--font-weight-regular);
   color: var(--secondary-text-color);
   margin-bottom: var(--margin-subheader);

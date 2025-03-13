@@ -332,9 +332,10 @@ h3 {
 
 .status-indicator {
   box-shadow: var(--secondary-shadow);
-  border-radius: var(--border-radius-circle);
-  width: 20px;
-  height: 20px;
+  border-radius: 5px;
+  margin-top: -1px;
+  width: 5px;
+  height: 35px;
   flex-shrink: 0;
   outline: 2px solid;
   outline-color: color-mix(in srgb, var(--outline-color) 70%, white);
