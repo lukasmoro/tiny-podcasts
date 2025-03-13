@@ -15,7 +15,7 @@ body {
   background-color: var(--background-color-play);
   outline: 5px solid var(--secondary-accent-color);
   border-radius: var(--border-radius-circle);
-  box-shadow: var(--primary-inner-shadow);
+  box-shadow: var(--play-button-shadow);
   position: relative;
   width: 55px;
   height: 55px;
@@ -37,8 +37,8 @@ body {
   width: 25px;
   color: var(--background-color-icons);
   height: 25px;
-  filter: drop-shadow(0px 0px 15px rgba(0, 0, 0, 0.8));
-  animation: linear adjust-opacity-ui both;
+  filter: var(--drop-shadow-icons);
+  animation: adjust-opacity-ui linear both;
   animation-timeline: --li-in-and-out-of-view;
   -webkit-user-select: none;
   user-select: none;
@@ -97,19 +97,15 @@ body {
   height: 7px;
   appearance: none;
   outline: none;
-  animation: linear adjust-opacity-ui both;
+  animation: adjust-opacity-ui linear both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
 .progress-bar::before {
-  border-top-right-radius: var(
-    --right-radius,
-    var(--border-radius-progressbar)
-  );
-  border-bottom-right-radius: var(
-    --right-radius,
-    var(--border-radius-progressbar)
-  );
+  border-top-right-radius: var(--right-radius,
+      var(--border-radius-progressbar));
+  border-bottom-right-radius: var(--right-radius,
+      var(--border-radius-progressbar));
   width: calc(var(--seek-before-width) + var(--width-adjust));
   border-radius: var(--border-radius-progressbar);
   background-color: var(--seek-before-color);
@@ -175,15 +171,19 @@ body {
   0% {
     opacity: 0;
   }
+
   25% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
+
   75% {
     opacity: 0;
   }
+
   100% {
     opacity: 0;
   }

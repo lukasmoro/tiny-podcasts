@@ -333,7 +333,7 @@ h3 {
 .status-indicator {
   box-shadow: var(--secondary-shadow);
   border-radius: 5px;
-  margin-top: -1px;
+  margin-top: -1spx;
   width: 5px;
   height: 35px;
   flex-shrink: 0;

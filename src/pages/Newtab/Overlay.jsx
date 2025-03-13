@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SunIcon } from '../Icons/SunIcon';
 import { MoonIcon } from '../Icons/MoonIcon';
+import { LogoIcon } from '../Icons/LogoIcon';
 import './Overlay.css';
 
 const Overlay = () => {
@@ -44,11 +45,9 @@ const Overlay = () => {
   return (
     <div className="corner-overlay">
       <h2 className="corner bottom-left">→ TINY PODCASTS</h2>
-      <div className="circles-container">
-        <div className="circle"></div>
-        <div className="circle"></div>
-      </div>
-      <div className="top-center"></div>
+      <h2 className="corner logo-container">
+        <LogoIcon className="logo" isDarkMode={isDarkMode} />
+      </h2>
       <h2 className="corner top-right">
         {isDarkMode ? (
           <MoonIcon className="theme-toggle" onClick={handleThemeToggle} />
