@@ -75,6 +75,7 @@
 
 .episode-title {
   font-size: var(--font-size-large);
+  font-weight: var(--font-weight-medium);
   color: var(--tertiary-text-color);
   margin-bottom: var(--margin-header);
   text-transform: uppercase;
@@ -93,6 +94,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }

@@ -10,7 +10,8 @@
 
 .corner {
   font-size: var(--font-size-small);
-  color: var(--primary-text-color);
+  font-weight: var(--font-weight-bold);
+  color: var(--overlay-detail-color);
   padding: var(--padding-overlay);
   position: absolute;
   text-transform: uppercase;
@@ -45,7 +46,7 @@
   -moz-osx-font-smoothing: grayscale;
   height: 50px;
   width: auto;
-  color: var(--background-color-detail);
+  color: var(--overlay-detail-color);
 }
 
 .bottom-left {
@@ -59,7 +60,7 @@
 }
 
 .theme-toggle {
-  color: var(--background-color-detail);
+  color: var(--overlay-detail-color);
   width: 20px;
   height: 20px;
   cursor: pointer;

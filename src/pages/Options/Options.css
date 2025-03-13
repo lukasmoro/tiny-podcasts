@@ -50,7 +50,7 @@
 }
 
 .card {
-  box-shadow: var(--primary-shadow);
+  box-shadow: var(--options-card-shadow);
   background-color: var(--background-color-info);
   border-radius: var(--border-radius-large);
   flex-shrink: 0;

@@ -181,6 +181,7 @@ h3 {
 
 .podcast-title {
   font-size: var(--font-size-xlarge);
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
   line-height: 1.2;
   text-align: left;
@@ -188,6 +189,7 @@ h3 {
 }
 
 .podcast-episode {
+  font-weight: var(--font-weight-regular);
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
@@ -316,7 +318,7 @@ h3 {
 
 @media only screen and (min-height: 720px) {
   .cards {
-    padding-top: 3vh;
+    padding-top: 8vh;
   }
 }
 

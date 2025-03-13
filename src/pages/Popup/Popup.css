@@ -1,5 +1,5 @@
 .App {
-  padding: 1.5rem 0rem 0rem 0rem;
+  padding: 1.5rem 0rem 1.5rem 0rem;
   background-color: var(--background-color-info);
   height: 400px;
   display: flex;
