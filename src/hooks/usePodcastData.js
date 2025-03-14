@@ -34,7 +34,7 @@ export const usePodcastData = () => {
         category: feedItem.category || 'Unknown Category',
         releaseDate: feedItem.releaseDate || 'Unknown Release',
         publisher: feedItem.publisher || 'Unknown Publisher',
-        status: feedItem.status || null,
+        status: feedItem.status || 'unplayed',
         currentTime: feedItem.currentTime || null,
       }));
       setItems(feedItems);
@@ -162,7 +162,7 @@ export const usePodcastData = () => {
           releaseDate: parsedItem.releaseDate,
           publisher: parsedItem.publisher,
           duration: parsedItem.duration,
-          status: null,
+          status: 'unplayed',
           currentTime: 0,
         };
 

@@ -12,7 +12,7 @@ body.no-scroll {
 
 h2,
 h3 {
-  animation: linear adjust-opacity both;
+  animation: adjust-opacity linear both;
   animation-timeline: --li-in-and-out-of-view;
 }
 

@@ -65,20 +65,20 @@ const Searchbar = (props) => {
         <ul className="search-results">
           {searchResults.map((podcast) => (
             <li className="search-result-item" key={podcast.collectionId}>
-              <div className="podcast-items">
+              <div className="search-items">
                 <img
-                  className="podcast-item-thumbnail"
+                  className="search-item-thumbnail"
                   src={podcast.artworkUrl60}
                   alt={podcast.collectionName}
                 />
-                <p className="podcast-item-title">
+                <p className="search-item-title">
                   {textTruncate(
                     podcast.collectionName || 'Unnamed Podcast',
                     10
                   )}
                 </p>
                 <button
-                  className="podcast-add-btn"
+                  className="search-add-btn"
                   onClick={() => handlePodcastSelect(podcast)}
                 >
                   Subscribe
