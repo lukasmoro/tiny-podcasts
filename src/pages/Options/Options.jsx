@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Searchbar from './Searchbar';
 import List from './List';
 import Overlay from '../Newtab/Overlay';

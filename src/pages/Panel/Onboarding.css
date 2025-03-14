@@ -6,21 +6,26 @@
   min-height: 100vh;
   width: 100%;
 }
+
 .sub-header {
   font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-regular);
   color: var(--secondary-text-color);
   margin-bottom: var(--margin-subheader);
 }
+
 .header {
   margin-bottom: var(--margin-header);
 }
+
 .instructions {
   margin-bottom: var(--margin-text);
+  font-weight: var(--font-weight-regular);
   max-width: 400px;
 }
+
 .card {
-  box-shadow: var(--primary-shadow);
+  box-shadow: var(--options-card-shadow);
   background-color: var(--background-color-info);
   border-radius: var(--border-radius-large);
   max-width: 400px;
@@ -29,6 +34,7 @@
   margin: 0 auto;
   position: relative;
 }
+
 .container {
   padding: var(--padding-card);
 }
