@@ -13,21 +13,35 @@ const Newtab = () => {
   const [redirect, setRedirect] = useState(false);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
 
+  // Fixed this useEffect to include dependency array and cleanup
   useEffect(() => {
-    chrome.tabs.query({ currentWindow: true }, function (tabs) {
-      for (let i = 0; i < tabs.length - 1; i++) {
-        let tab = tabs[i];
-        if (
-          tab.pendingUrl === 'chrome://newtab/' ||
-          tab.url === 'chrome://newtab/'
-        ) {
-          setRedirect(true);
-        } else {
-          setRedirect(false);
+    let isMounted = true;
+
+    const checkTabs = () => {
+      chrome.tabs.query({ currentWindow: true }, function (tabs) {
+        if (!isMounted) return;
+
+        let shouldRedirect = false;
+        for (let i = 0; i < tabs.length - 1; i++) {
+          let tab = tabs[i];
+          if (
+            tab.pendingUrl === 'chrome://newtab/' ||
+            tab.url === 'chrome://newtab/'
+          ) {
+            shouldRedirect = true;
+            break;
+          }
         }
-      }
-    });
-  });
+        setRedirect(shouldRedirect);
+      });
+    };
+
+    checkTabs();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []); // Empty dependency array means this runs once on mount
 
   const checkForPodcasts = () => {
     chrome.storage.local.get(['newItems'], (item) => {
@@ -60,7 +74,9 @@ const Newtab = () => {
         }
       }
     };
+
     chrome.storage.onChanged.addListener(handleStorageChanged);
+
     return () => {
       window.removeEventListener(PODCAST_UPDATED_EVENT, handlePodcastUpdated);
       chrome.storage.onChanged.removeListener(handleStorageChanged);
@@ -81,6 +97,7 @@ const Newtab = () => {
     } else {
       document.body.classList.remove('no-scroll');
     }
+
     return () => {
       document.body.classList.remove('no-scroll');
     };
