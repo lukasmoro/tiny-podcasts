@@ -1,5 +1,5 @@
 .podcast-items {
-  box-shadow: var(--primary-shadow);
+  box-shadow: var(--list-item-shadow);
   display: flex;
   align-items: center;
   gap: 1rem;

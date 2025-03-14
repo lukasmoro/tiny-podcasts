@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import Recommendations from '../Newtab/Recommendations.jsx';
 import Overlay from '../Newtab/Overlay.jsx';
 import Searchbar from '../Options/Searchbar.jsx';
@@ -10,6 +10,27 @@ import '../../root/Root.css';
 
 const Onboarding = () => {
   const { handleAddPodcast } = usePodcastData();
+  const isMounted = useRef(true);
+
+  // cleanup
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  // safe wrapper for handleAddPodcast
+  const safeHandleAddPodcast = async (podcast) => {
+    if (!isMounted.current) return;
+
+    try {
+      await handleAddPodcast(podcast);
+    } catch (error) {
+      if (isMounted.current) {
+        console.error('Error adding podcast:', error);
+      }
+    }
+  };
 
   // define podcast IDs for each row of recommendations
   const recommendationItems = [
@@ -30,13 +51,13 @@ const Onboarding = () => {
             <p className="instructions">
               Search a podcast or pick a recommendation...
             </p>
-            <Searchbar onSubmit={handleAddPodcast} />
+            <Searchbar onSubmit={safeHandleAddPodcast} />
             <div className="recommendations-container">
               {recommendationItems.map((row, index) => (
                 <Recommendations
                   key={`row-${index}`}
                   podcastID={row}
-                  onAddPodcast={handleAddPodcast}
+                  onAddPodcast={safeHandleAddPodcast}
                 />
               ))}
             </div>

@@ -1,9 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
-
-import Onboarding from './Onboarding.jsx';
+import Newtab from '../Newtab/Newtab.jsx';
 import './Onboarding.css';
 
-render(<Onboarding />, window.document.querySelector('#app-container'));
+render(<Newtab />, window.document.querySelector('#app-container'));
 
 if (module.hot) module.hot.accept();

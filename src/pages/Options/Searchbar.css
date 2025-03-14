@@ -16,7 +16,44 @@
   height: 2.22rem;
 }
 
-.podcast-add-btn {
+.search-items {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  padding: var(--padding-items);
+  background-color: var(--background-color-info);
+  transition: background-color 0.2s ease-in-out;
+  max-width: 100%;
+  user-select: none;
+  transition: box-shadow 0.3s ease, background-color 0.2s ease-in-out;
+  cursor: default;
+}
+
+.search-items:hover {
+  background-color: var(--accent-color-item);
+}
+
+.search-item-thumbnail {
+  outline: 2px solid var(--outline-color);
+  outline-offset: -2px;
+  border-radius: var(--border-radius-thumbnail);
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.search-item-title {
+  color: var(--tertiary-text-color);
+  font-weight: var(--font-weight-regular);
+  flex: 1;
+  display: block;
+  height: 50px;
+  line-height: 50px;
+}
+
+.search-add-btn {
   flex-shrink: 0;
   width: 5rem;
   height: 2.22rem;
@@ -25,7 +62,8 @@
   justify-content: center;
   align-self: center;
   font-size: var(--font-size-medium);
-  color: var(--button-text-color);
+  font-weight: var(--font-weight-bold);
+  color: var(--background-color-info);
   box-shadow: var(--button-shadow);
   border-radius: var(--border-radius-button);
   border: none;
@@ -33,9 +71,10 @@
   transition: ease-in 0.15s;
 }
 
-.podcast-add-btn:hover {
+.search-add-btn:hover {
   background-color: var(--button-color-positive);
   color: var(--secondary-accent-color);
+
 }
 
 .podcast-search-container {
@@ -44,7 +83,7 @@
 
 .search-results {
   background-color: var(--background-color-info);
-  box-shadow: var(--info-card-shadow);
+  box-shadow: var(--list-item-shadow);
   border-radius: var(--border-radius-medium);
   backdrop-filter: blur(12px);
   position: absolute;

@@ -34,7 +34,7 @@ export const usePodcastData = () => {
         category: feedItem.category || 'Unknown Category',
         releaseDate: feedItem.releaseDate || 'Unknown Release',
         publisher: feedItem.publisher || 'Unknown Publisher',
-        status: feedItem.status || null,
+        status: feedItem.status || 'unplayed',
         currentTime: feedItem.currentTime || null,
       }));
       setItems(feedItems);
@@ -46,49 +46,40 @@ export const usePodcastData = () => {
   const synchronizeToStorage = useCallback((newItems, action = {}) => {
     chrome.storage.local.set({ newItems }, () => {
       storedItemsRef.current = newItems; // update ref to match what's in storage
-      console.log('Storage updated:', action);
 
-      // Track storage update with analytics including full snapshot
+      // serialised string representation of each item title, episode, currentTime & status
+      const itemsSerializedTitles = newItems.map(item =>
+        `${item.title}`
+      ).join('; ');
+
+      const itemsSerializedEpisodes = newItems.map(item =>
+        `${item.episode}`
+      ).join('; ');
+
+      const itemsSerializedTime = newItems.map(item =>
+        `${item.currentTime}`
+      ).join('; ');
+
+      const itemsSerializedStatus = newItems.map(item =>
+        `${item.status}`
+      ).join('; ');
+
       const analyticsData = {
         action_type: action.action,
-        total_items: newItems.length,
-        items_snapshot: newItems.map(item => ({
-          title: item.title,
-          episode: item.episode,
-          status: item.status,
-          currentTime: item.currentTime,
-          duration: item.duration,
-          publisher: item.publisher,
-          category: item.category
-        }))
+        items_count: newItems.length,
+        items_serialized_titles: itemsSerializedTitles,
+        items_serialized_episodes: itemsSerializedEpisodes,
+        items_serialized_times: itemsSerializedTime,
+        items_serialized_status: itemsSerializedStatus
       };
 
-      // specific action details to analytics data
-      if (action.action === 'add') {
-        analyticsData.added_item = {
-          title: action.item.title,
-          publisher: action.item.publisher
-        };
-      } else if (action.action === 'remove') {
-        analyticsData.removed_key = action.key;
-      } else if (action.action === 'updateTime') {
-        analyticsData.updated_key = action.key;
-        analyticsData.new_time = action.currentTime;
-      } else if (action.action === 'updateStatus') {
-        analyticsData.updated_key = action.key;
-        analyticsData.new_status = action.status;
-      } else if (action.action === 'reorder') {
-        analyticsData.source_index = action.sourceIndex;
-        analyticsData.destination_index = action.destinationIndex;
-      }
-
-      // Debug logging
+      // debug logging
       console.log('Sending analytics event:', {
         event: 'podcast_storage_update',
         data: analyticsData
       });
 
-      // Send analytics event and handle response
+      // send analytics event and handle response
       sendEvent('podcast_storage_update', analyticsData)
         .then(response => {
           if (!response.ok) {
@@ -171,7 +162,7 @@ export const usePodcastData = () => {
           releaseDate: parsedItem.releaseDate,
           publisher: parsedItem.publisher,
           duration: parsedItem.duration,
-          status: null,
+          status: 'unplayed',
           currentTime: 0,
         };
 

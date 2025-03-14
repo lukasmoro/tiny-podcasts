@@ -12,7 +12,7 @@ body.no-scroll {
 
 h2,
 h3 {
-  animation: linear adjust-opacity both;
+  animation: adjust-opacity linear both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
@@ -181,6 +181,7 @@ h3 {
 
 .podcast-title {
   font-size: var(--font-size-xlarge);
+  font-weight: var(--font-weight-medium);
   text-transform: uppercase;
   line-height: 1.2;
   text-align: left;
@@ -188,6 +189,7 @@ h3 {
 }
 
 .podcast-episode {
+  font-weight: var(--font-weight-regular);
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
@@ -269,8 +271,12 @@ h3 {
 }
 
 @keyframes rotate-cover {
-  35% {
+  0% {
     transform: translateX(0) rotateY(-35deg);
+  }
+
+  35% {
+    transform: translateX(0) rotateY(-20deg);
   }
 
   50% {
@@ -278,6 +284,10 @@ h3 {
   }
 
   65% {
+    transform: translateX(0) rotateY(20deg);
+  }
+
+  100% {
     transform: translateX(0) rotateY(35deg);
   }
 }
@@ -308,7 +318,7 @@ h3 {
 
 @media only screen and (min-height: 720px) {
   .cards {
-    padding-top: 3vh;
+    padding-top: 8vh;
   }
 }
 
@@ -332,9 +342,10 @@ h3 {
 
 .status-indicator {
   box-shadow: var(--secondary-shadow);
-  border-radius: var(--border-radius-circle);
-  width: 20px;
-  height: 20px;
+  border-radius: 5px;
+  margin-top: -1spx;
+  width: 5px;
+  height: 35px;
   flex-shrink: 0;
   outline: 2px solid;
   outline-color: color-mix(in srgb, var(--outline-color) 70%, white);
