@@ -68,7 +68,7 @@ const Options = () => {
             <div className="card right-card">
               <div className="text-container">
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
-                <h1 className="header">Tip Char</h1>
+                <h1 className="header">Tip Jar</h1>
                 <p className="instructions">
                   Tiny Software solves Tiny Problems with Tiny Products.
                   Enjoy Tiny Podcasts? Every support helps me creating more Tiny Products in the future.
