@@ -15,6 +15,7 @@
   padding: var(--padding-overlay);
   position: absolute;
   text-transform: uppercase;
+  cursor: default;
 }
 
 .top-left {
@@ -38,7 +39,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  pointer-events: auto;
 }
 
 .logo {
@@ -53,18 +53,20 @@
   bottom: 0;
   left: 0;
   pointer-events: auto;
+  cursor: pointer;
 }
 
 .bottom-right {
   bottom: 0;
   right: 0;
+  cursor: default;
 }
 
 .theme-toggle {
+  cursor: pointer;
   color: var(--overlay-detail-color);
   width: 20px;
   height: 20px;
-  cursor: pointer;
   -webkit-user-drag: none;
   -webkit-user-select: none;
   user-select: none;

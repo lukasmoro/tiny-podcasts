@@ -199,7 +199,6 @@ h3 {
 }
 
 .indicators {
-  cursor: pointer;
   display: flex;
   position: absolute;
   align-items: center;
@@ -215,9 +214,9 @@ h3 {
 }
 
 .indicator {
+  cursor: pointer;
   box-shadow: var(--primary-inner-shadow);
   background-color: var(--background-color-ui);
-  cursor: pointer;
   width: 10px;
   height: 10px;
   border-radius: var(--border-radius-circle);
