@@ -70,9 +70,9 @@ const Options = () => {
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
                 <h1 className="header">Tip Char</h1>
                 <p className="instructions">
-                  <em>Tiny Podcasts</em> is the first project of{' '}
-                  <em>Tiny Software</em>. Every tip supports the creation of
-                  future <em>Tiny Products</em>. <br /> <em>Thank you!</em>
+                  Tiny Software solves Tiny Problems with Tiny Products.
+                  Enjoy Tiny Podcasts? Every support helps me creating more Tiny Products in the future.
+                  Thank you!
                 </p>
                 <BuyMeACoffeeButton />
                 <div className="items">
@@ -102,8 +102,8 @@ const Options = () => {
           >Open Source</a>
 
         </div>
-      </ThemeProvider>
-    </div>
+      </ThemeProvider >
+    </div >
   );
 };
 
