@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Searchbar from '../Options/Searchbar';
 import List from '../Options/List';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
