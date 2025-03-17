@@ -30,11 +30,16 @@
   border-radius: var(--border-radius-large);
   max-width: 400px;
   width: 100%;
-  height: fit-content;
+  min-height: 400px;
   margin: 0 auto;
   position: relative;
 }
 
 .container {
   padding: var(--padding-card);
+}
+
+.recommendations-container {
+  margin-top: var(--margin-additional);
+  min-height: 340px;
 }

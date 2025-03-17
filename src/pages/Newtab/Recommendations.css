@@ -11,10 +11,14 @@
   align-items: center;
   gap: 0.5rem;
   width: 100%;
+  min-height: 75px;
 }
 
 .podcast-recommendation-item {
   cursor: pointer;
+  width: 75px;
+  height: 75px;
+  border-radius: var(--border-radius-medium);
 }
 
 .recommendations-container {
@@ -30,4 +34,27 @@
   border-radius: var(--border-radius-medium);
   object-fit: cover;
   cursor: pointer;
+}
+
+/* Loading state styles */
+.podcast-recommendation-placeholder {
+  width: 75px;
+  height: 75px;
+  border-radius: var(--border-radius-medium);
+  background: var(--background-color-info);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
 }

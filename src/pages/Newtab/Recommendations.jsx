@@ -60,7 +60,7 @@ const Recommendations = ({ podcastID, onAddPodcast }) => {
     };
 
     fetchPodcasts();
-  }, []);
+  }, [podcastID]);
 
   // pass fetched url to parent
   const handlePodcastAdd = (podcast) => {
@@ -77,23 +77,33 @@ const Recommendations = ({ podcastID, onAddPodcast }) => {
     }
   };
 
+  const renderLoadingPlaceholders = () => {
+    return Array(4).fill(null).map((_, index) => (
+      <div key={`placeholder-${index}`} className="podcast-recommendation-item">
+        <div className="podcast-recommendation-placeholder" />
+      </div>
+    ));
+  };
+
   return (
     <div className="podcast-recommendations">
       <div className="podcast-recommendations-grid">
-        {podcasts.map((podcast) => (
-          <div
-            key={podcast.collectionId}
-            className="podcast-recommendation-item"
-            onClick={() => handlePodcastAdd(podcast)}
-          >
-            <img
-              className="podcast-recommendation-thumbnail"
-              src={podcast.artworkUrl600}
-              alt={podcast.collectionName}
-              title={`Subscribe to ${podcast.collectionName}`}
-            />
-          </div>
-        ))}
+        {isLoading ? renderLoadingPlaceholders() : (
+          podcasts.map((podcast) => (
+            <div
+              key={podcast.collectionId}
+              className="podcast-recommendation-item"
+              onClick={() => handlePodcastAdd(podcast)}
+            >
+              <img
+                className="podcast-recommendation-thumbnail"
+                src={podcast.artworkUrl600}
+                alt={podcast.collectionName}
+                title={`Subscribe to ${podcast.collectionName}`}
+              />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
