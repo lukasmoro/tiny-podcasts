@@ -19,4 +19,4 @@
 
 ## License
 
-MIT
+«Tiny Podcasts» is licensed under MIT. See the [LICENSE](LICENSE) file for details.

@@ -77,7 +77,7 @@ const Recommendations = ({ podcastID, onAddPodcast }) => {
     }
   };
 
-  const renderLoadingPlaceholders = () => {
+  const loadingPlaceholders = () => {
     return Array(4).fill(null).map((_, index) => (
       <div key={`placeholder-${index}`} className="podcast-recommendation-item">
         <div className="podcast-recommendation-placeholder" />
@@ -88,7 +88,7 @@ const Recommendations = ({ podcastID, onAddPodcast }) => {
   return (
     <div className="podcast-recommendations">
       <div className="podcast-recommendations-grid">
-        {isLoading ? renderLoadingPlaceholders() : (
+        {isLoading ? loadingPlaceholders() : (
           podcasts.map((podcast) => (
             <div
               key={podcast.collectionId}

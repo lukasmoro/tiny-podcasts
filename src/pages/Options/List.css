@@ -23,8 +23,6 @@
 }
 
 .podcast-item-thumbnail {
-  outline: 2px solid var(--outline-color);
-  outline-offset: -2px;
   border-radius: var(--border-radius-thumbnail);
   flex-shrink: 0;
   width: 50px;
