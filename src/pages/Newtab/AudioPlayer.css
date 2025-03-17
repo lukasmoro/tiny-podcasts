@@ -97,7 +97,7 @@ body {
   max-width: 25em;
   height: 7px;
   appearance: none;
-  outline: none;
+  outline: 0.5px solid var(--outline-color-info);
   animation: adjust-opacity-ui linear both;
   animation-timeline: --li-in-and-out-of-view;
 }
