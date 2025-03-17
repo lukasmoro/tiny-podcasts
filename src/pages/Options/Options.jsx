@@ -85,13 +85,13 @@ const Options = () => {
         <div className="socials-links-container">
           <a
             className="socials"
-            href="https://tinysoftware.app"
+            href="https://discord.gg/kMDJ9xHr"
             target="_blank"
             rel="noopener noreferrer"
           >Join Discord</a>
           <a
             className="socials"
-            href="https://lukasmoro.com/"
+            href="https://tinysoftware.club/privacy/"
             target="_blank"
             rel="noopener noreferrer"
           >Privacy Policy</a><a
