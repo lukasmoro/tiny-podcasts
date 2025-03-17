@@ -111,7 +111,10 @@
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-regular);
   padding-bottom: var(--padding-infocard-description);
-  line-height: 1.4;
+  line-height: 1.5;
+  text-align: left;
+  overflow-wrap: break-word;
+  word-break: normal;
   animation: fadeIn 0.3s ease-in-out;
 }
 
