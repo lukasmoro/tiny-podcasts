@@ -70,8 +70,8 @@ const Options = () => {
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
                 <h1 className="header">Tip Jar</h1>
                 <p className="instructions">
-                  Tiny Software solves Tiny Problems with Tiny Products.
-                  Enjoy Tiny Podcasts? Every support helps me creating more Tiny Products in the future.
+                  Tiny Software solves tiny problems with tiny products.
+                  Every support helps us in creating more tiny products in the future.
                   Thank you!
                 </p>
                 <BuyMeACoffeeButton />

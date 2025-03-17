@@ -67,6 +67,7 @@ a {
   --background-color-ui: #e7e7e7;
   --background-color-detail: #d4d4d4;
   --background-color-info: #a0a0a0a6;
+  --background-color-listitem: #a0a0a0;
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #d0d0d0;
@@ -150,7 +151,6 @@ a {
   --drop-shadow-icons: drop-shadow(rgba(0, 0, 0, 0.18) 0px 2px 4px);
   --drop-shadow-recommendations: drop-shadow(0px 51px 14px rgba(0, 0, 0, 0.00)) drop-shadow(0px 33px 13px rgba(0, 0, 0, 0.02)) drop-shadow(0px 18px 11px rgba(0, 0, 0, 0.07)) drop-shadow(0px 8px 8px rgba(0, 0, 0, 0.12)) drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.14));
 
-
   /*radii*/
   --border-radius-circle: 50%;
   --border-radius-progressbar: 3.5px;
@@ -169,6 +169,7 @@ a {
   --background-color-ui: #CCCCFF;
   --background-color-detail: #978f7e;
   --background-color-info: #777891a6;
+  --background-color-listitem: #a5a6c6;
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #463000;
@@ -181,5 +182,5 @@ a {
   --quarternary-accent-color: #bdffdf;
   --accent-color-item: #e4d9bf;
   --outline-color: #4630000f;
-  --outline-color-info: #a5a5a5a6;
+  --outline-color-info: #b9b9b9a6;
 }

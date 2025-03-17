@@ -33,7 +33,8 @@ async function fetchAndParseRss(url) {
         '&#39;': "'",
         '&#x27;': "'",
         '&#x2F;': '/',
-        '&#x2f;': '/'
+        '&#x2f;': '/',
+        '&nbsp;': ' ' 
       };
 
       return text.replace(/&[^;]+;/g, (entity) => {

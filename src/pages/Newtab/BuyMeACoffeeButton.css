@@ -4,13 +4,16 @@
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+
 }
 
 .bmc-img {
+  border-radius: var(--border-radius-button);
   height: 40px;
   user-select: none;
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+  box-shadow: var(--button-shadow);
 }
