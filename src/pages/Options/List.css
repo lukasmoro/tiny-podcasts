@@ -5,7 +5,7 @@
   gap: 1rem;
   position: relative;
   padding: var(--padding-items);
-  background-color: var(--background-color-info);
+  background-color: var(--background-color-listitem);
   border-radius: var(--border-radius-medium);
   transition: background-color 0.2s ease-in-out;
   max-width: 100%;

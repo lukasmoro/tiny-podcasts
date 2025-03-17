@@ -67,6 +67,7 @@ a {
   --background-color-ui: #e7e7e7;
   --background-color-detail: #d4d4d4;
   --background-color-info: #a0a0a0a6;
+  --background-color-listitem: #a0a0a0;
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #d0d0d0;
@@ -169,6 +170,7 @@ a {
   --background-color-ui: #CCCCFF;
   --background-color-detail: #978f7e;
   --background-color-info: #777891a6;
+  --background-color-listitem: #777891;
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #463000;
