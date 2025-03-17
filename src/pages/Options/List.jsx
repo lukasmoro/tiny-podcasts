@@ -9,7 +9,7 @@ import './List.css';
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 const List = ({ items, removeUrl, moveItem }) => {
   // states
-  const [itemHeight, setItemHeight] = useState(70); // default height for each list item
+  const [itemHeight, setItemHeight] = useState(72); // default height for each list item
   const [isVisible, setIsVisible] = useState(false); // controls whether animations should play
 
   // refs (no re-render when updated)
@@ -39,7 +39,7 @@ const List = ({ items, removeUrl, moveItem }) => {
   useEffect(() => {
     order.current = items.map((_, index) => index);
     lastProcessedItemsRef.current = [...items];
-    setItemHeight(70);
+    setItemHeight(72);
     setIsVisible(true);
     initialRenderRef.current = false;
   }, []);

@@ -119,15 +119,15 @@
 
 @keyframes drop-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(var(--primary-accent-color-rgb), 0.7);
+    box-shadow: 0 0 0 0 rgba(var(--primary-accent-color), 0.7);
   }
 
   70% {
-    box-shadow: 0 0 0 10px rgba(var(--primary-accent-color-rgb), 0);
+    box-shadow: 0 0 0 10px rgba(var(--primary-accent-color), 0);
   }
 
   100% {
-    box-shadow: 0 0 0 0 rgba(var(--primary-accent-color-rgb), 0);
+    box-shadow: 0 0 0 0 rgba(var(--primary-accent-color), 0);
   }
 }
 
