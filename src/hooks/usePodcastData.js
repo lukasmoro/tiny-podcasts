@@ -135,8 +135,11 @@ export const usePodcastData = () => {
   const handleAddPodcast = useCallback(
     async (item) => {
       let check = items.every((podcastItem) => podcastItem.url !== item.url);
-      if (items.length > 4 || !check) {
+      if (!check) {
         alert('This podcast has already been added! 👀');
+        return;
+      } else if (items.length > 4) {
+        alert('You can only add 5 podcasts! 👀');
         return;
       }
 

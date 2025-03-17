@@ -60,7 +60,7 @@ const Recommendations = ({ podcastID, onAddPodcast }) => {
     };
 
     fetchPodcasts();
-  }, [podcastID]);
+  }, []);
 
   // pass fetched url to parent
   const handlePodcastAdd = (podcast) => {
