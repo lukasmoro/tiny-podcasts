@@ -14,8 +14,8 @@
 
 ## Credits
 
-React Chrome Extension Boilerplate by [@MichaelXieyangLiu](https://github.com/lxieyang)
-Beautiful Shadows Figma Plugin by [@AlexWidua](https://github.com/alexwidua)
+- React Chrome Extension Boilerplate by [@MichaelXieyangLiu](https://github.com/lxieyang)
+- Beautiful Shadows Figma Plugin by [@AlexWidua](https://github.com/alexwidua)
 
 ## License
 
