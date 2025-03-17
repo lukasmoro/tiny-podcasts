@@ -20,5 +20,16 @@ src/utils/googleAnalytics.js
 .env.production.local
 .history
 
+# IDE
+.vscode/
+
+# config files
+.babelrc
+.eslintrc
+.prettierrc
+
+# data files
+podcasts.zip
+
 # secrets
 secrets.*.js
