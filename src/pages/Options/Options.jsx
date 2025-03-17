@@ -68,11 +68,11 @@ const Options = () => {
             <div className="card right-card">
               <div className="text-container">
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
-                <h1 className="header">Tip Char</h1>
+                <h1 className="header">Tip Jar</h1>
                 <p className="instructions">
-                  <em>Tiny Podcasts</em> is the first project of{' '}
-                  <em>Tiny Software</em>. Every tip supports the creation of
-                  future <em>Tiny Products</em>. <br /> <em>Thank you!</em>
+                  Tiny Software solves Tiny Problems with Tiny Products.
+                  Enjoy Tiny Podcasts? Every support helps me creating more Tiny Products in the future.
+                  Thank you!
                 </p>
                 <BuyMeACoffeeButton />
                 <div className="items">
@@ -85,13 +85,13 @@ const Options = () => {
         <div className="socials-links-container">
           <a
             className="socials"
-            href="https://tinysoftware.app"
+            href="https://discord.gg/kMDJ9xHr"
             target="_blank"
             rel="noopener noreferrer"
           >Join Discord</a>
           <a
             className="socials"
-            href="https://lukasmoro.com/"
+            href="https://tinysoftware.club/privacy/"
             target="_blank"
             rel="noopener noreferrer"
           >Privacy Policy</a><a
@@ -102,8 +102,8 @@ const Options = () => {
           >Open Source</a>
 
         </div>
-      </ThemeProvider>
-    </div>
+      </ThemeProvider >
+    </div >
   );
 };
 

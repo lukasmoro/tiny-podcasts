@@ -14,22 +14,47 @@ chrome.runtime.onInstalled.addListener((event) => {
 // subscribe to event
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
-// rss parser function
-async function parseRss(text) {
+// custom text-based RSS parser for background context
+async function fetchAndParseRss(url) {
   try {
+    const response = await fetch(url);
+    const text = await response.text();
+
+    // decoding HTML entities
+    const decodeHtmlEntities = (text) => {
+      if (!text) return text;
+      const entities = {
+        '&apos;': "'",
+        '&quot;': '"',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&amp;': '&',
+        '&nbsp;': ' ',
+        '&#39;': "'",
+        '&#x27;': "'",
+        '&#x2F;': '/',
+        '&#x2f;': '/'
+      };
+
+      return text.replace(/&[^;]+;/g, (entity) => {
+        return entities[entity] || entity;
+      });
+    };
+
+    // XML parsing functions for background context
     const getTag = (tag, content) => {
       const regex = new RegExp(`<${tag}[^>]*>([^<]+)</${tag}>`, 'i');
       const match = content.match(regex);
-      return match ? match[1].trim() : '';
+      return decodeHtmlEntities(match ? match[1].trim() : '');
     };
 
     const getTagAttribute = (tag, attr, content) => {
       const regex = new RegExp(`<${tag}[^>]*${attr}="([^"]+)"[^>]*>`, 'i');
       const match = content.match(regex);
-      return match ? match[1].trim() : '';
+      return decodeHtmlEntities(match ? match[1].trim() : '');
     };
 
-    // Find the first item block
+    // find the first item block
     const itemRegex = /<item[^>]*>([\s\S]*?)<\/item>/i;
     const itemMatch = text.match(itemRegex);
 
@@ -41,20 +66,67 @@ async function parseRss(text) {
     const itemContent = itemMatch[1];
     const channelContent = text.replace(/<item[\s\S]*$/, '');
 
+    // extract image with fallbacks
+    let image = getTagAttribute('itunes:image', 'href', channelContent);
+    if (!image) {
+      const imageBlockMatch = text.match(/<image>([\s\S]*?)<\/image>/i);
+      if (imageBlockMatch) {
+        image = getTag('url', imageBlockMatch[1]);
+      }
+    }
+
+    // format the release date
+    let releaseDate = getTag('pubDate', itemContent);
+    if (releaseDate) {
+      try {
+        const date = new Date(releaseDate);
+        if (!isNaN(date.getTime())) {
+          releaseDate = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          });
+        }
+      } catch (e) {
+        console.log('Error formatting date:', e);
+      }
+    }
+
+    // parse duration
+    let duration = getTag('itunes:duration', itemContent);
+    if (duration) {
+      if (/^\d+$/.test(duration)) {
+        duration = parseInt(duration);
+      } else {
+        const parts = duration.split(':').map(part => parseInt(part));
+        if (parts.length === 3) {
+          duration = parts[0] * 3600 + parts[1] * 60 + parts[2];
+        } else if (parts.length === 2) {
+          duration = parts[0] * 60 + parts[1];
+        }
+      }
+    }
+
+    // strip HTML from description
+    let description = getTag('description', itemContent) || getTag('itunes:summary', itemContent);
+    if (description) {
+      description = description.replace(/<\/?[^>]+(>|$)/g, '');
+    }
+
     return {
-      title: getTag('title', channelContent),
-      episode: getTag('title', itemContent),
-      image: getTagAttribute('itunes:image', 'href', channelContent) || getTag('url', text.match(/<image>([\s\S]*?)<\/image>/i)?.[1] || ''),
-      description: getTag('description', itemContent) || getTag('itunes:summary', itemContent),
-      author: getTag('itunes:author', itemContent) || getTag('itunes:author', channelContent),
-      category: getTag('itunes:category', itemContent) || getTag('itunes:category', channelContent),
-      mp3: getTagAttribute('enclosure', 'url', itemContent),
-      releaseDate: getTag('pubDate', itemContent),
-      publisher: getTag('itunes:author', channelContent),
-      duration: getTag('itunes:duration', itemContent)
+      title: getTag('title', channelContent) || 'Unknown Podcast',
+      episode: getTag('title', itemContent) || 'Unknown Episode',
+      image: image || null,
+      description: description || null,
+      author: getTag('itunes:author', itemContent) || getTag('itunes:author', channelContent) || null,
+      category: getTag('itunes:category', itemContent) || getTag('itunes:category', channelContent) || null,
+      mp3: getTagAttribute('enclosure', 'url', itemContent) || null,
+      releaseDate: releaseDate || null,
+      publisher: getTag('itunes:author', channelContent) || null,
+      duration: duration || null
     };
   } catch (error) {
-    console.error('Error parsing RSS:', error);
+    console.error('Error fetching or parsing RSS:', error);
     return null;
   }
 }
@@ -73,12 +145,10 @@ function setupPeriodicChecking() {
 
 // utility function to broadcast updates - modified for service worker
 function updateEventBroadcast(detail = {}) {
-  // Instead of using window events, use chrome.runtime.sendMessage
   chrome.runtime.sendMessage({
     type: PODCAST_UPDATED_EVENT,
     detail
   }).catch(error => {
-    // Ignore errors when no listeners are available
     if (error.message.includes('Could not establish connection')) return;
     console.error('Error broadcasting update:', error);
   });
@@ -109,9 +179,7 @@ async function checkForNewEpisodes() {
       existingItems.map(async (item) => {
         try {
           console.log(`📡 Fetching updates for podcast: ${item.title}`);
-          const response = await fetch(item.url);
-          const text = await response.text();
-          const parsedFeed = await parseRss(text);
+          const parsedFeed = await fetchAndParseRss(item.url);
 
           if (!parsedFeed) {
             console.warn(`⚠️ Failed to parse feed for: ${item.title}`);
@@ -156,7 +224,7 @@ async function checkForNewEpisodes() {
       })
     );
 
-    // pdate storage and broadcast change
+    // update storage and broadcast change
     await chrome.storage.local.set({ newItems: updatedItems });
     updateEventBroadcast({
       action: 'backgroundUpdate',

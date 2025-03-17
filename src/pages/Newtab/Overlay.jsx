@@ -44,7 +44,12 @@ const Overlay = () => {
 
   return (
     <div className="corner-overlay">
-      <h2 className="corner bottom-left">→ TINY PODCASTS</h2>
+      <a
+        className="corner bottom-left"
+        href="https://tinysoftware.club"
+        target="_blank"
+        rel="noopener noreferrer"
+      >→ TINY PODCASTS</a>
       <h2 className="corner logo-container">
         <LogoIcon className="logo" isDarkMode={isDarkMode} />
       </h2>
