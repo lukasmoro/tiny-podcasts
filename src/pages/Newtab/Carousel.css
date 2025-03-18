@@ -43,12 +43,10 @@ h3 {
   align-items: center;
 }
 
-/* Apply scroll-snapping only to podcast items */
 .cards .podcast-item {
   width: var(--cover-size);
   scroll-snap-align: center;
-  scroll-snap-stop: always;
-  perspective: 30rem;
+  perspective: 25rem;
   animation: linear adjust-z-index both;
   animation-timeline: --li-in-and-out-of-view;
   view-timeline-name: --li-in-and-out-of-view;
@@ -84,7 +82,7 @@ h3 {
 }
 
 .item-spacer {
-  width: 50px;
+  width: 30px;
   height: 15vw;
 }
 
@@ -96,7 +94,7 @@ h3 {
   height: 400px;
   z-index: 100;
   position: relative;
-  animation: linear adjust-opacity both;
+  animation: adjust-opacity linear both;
   animation-timeline: --li-in-and-out-of-view;
   outline-offset: -1px;
   -webkit-user-drag: none;
@@ -117,7 +115,7 @@ h3 {
 .cover-container {
   margin-top: var(--margin-covers);
   position: relative;
-  animation: linear rotate-cover both;
+  animation: rotate-cover linear both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
@@ -234,7 +232,6 @@ h3 {
   margin-top: -1spx;
   width: 5px;
   height: 35px;
-  flex-shrink: 0;
   outline: 2px solid;
   outline-color: color-mix(in srgb, var(--outline-color) 70%, white);
   outline-offset: -1px;
