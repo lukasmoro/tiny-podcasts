@@ -15,35 +15,12 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
   //ref holding which card is currently centered
   const cardsRef = useRef(null);
-  const [spacerWidth, setSpacerWidth] = useState(0);
-
-  // Calculate dynamic spacer width
-  const calculateSpacerWidth = () => {
-    if (cardsRef.current) {
-      const containerWidth = cardsRef.current.clientWidth;
-      const cardWidth = 400;
-      const neededSpace = (containerWidth - cardWidth) / 2;
-      setSpacerWidth(Math.max(0, neededSpace));
-    }
-  };
-
-  // recalculate spacer width on window resize
-  useEffect(() => {
-    calculateSpacerWidth();
-    
-    const handleResize = () => {
-      calculateSpacerWidth();
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   // center first card on initial load
   useEffect(() => {
     if (cardsRef.current && items.length > 0) {
       const cards = cardsRef.current;
-      const cardElements = cards.querySelectorAll('li:not(.spacer)');
+      const cardElements = cards.querySelectorAll('.podcast-item');
       if (cardElements[0]) {
         cardElements[0].scrollIntoView({
           behavior: 'instant',
@@ -52,7 +29,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         });
         setActiveIndex(0);
       }
-      calculateSpacerWidth();
     }
   }, [items.length]);
 
@@ -83,7 +59,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   const navigateToCard = (index) => {
     if (cardsRef.current && items[index]) {
       const cards = cardsRef.current;
-      const cardElements = cards.querySelectorAll('li:not(.spacer)');
+      const cardElements = cards.querySelectorAll('.podcast-item');
       if (cardElements[index]) {
         cardElements[index].scrollIntoView({
           behavior: 'smooth',
@@ -100,7 +76,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
     const handleScroll = () => {
       if (cardsRef.current) {
         const cards = cardsRef.current;
-        const cardElements = cards.querySelectorAll('li:not(.spacer)');
+        const cardElements = cards.querySelectorAll('.podcast-item');
         const containerCenter = cards.scrollLeft + cards.clientWidth / 2;
         let closestIndex = 0;
         let minDistance = Infinity;
@@ -137,11 +113,12 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         className={`cards ${isBlurVisible ? 'visible' : ''}`}
         ref={cardsRef}
       >
-        <li className="spacer" style={{ width: spacerWidth }}></li>
-        {items.map(
-          (podcast, index) =>
-            podcast && (
-              <li key={index}>
+        <li className="spacer main-spacer"></li>
+        {items.reduce((acc, podcast, index) => {
+          // Add the podcast item
+          if (podcast) {
+            acc.push(
+              <li key={`podcast-${index}`} className="podcast-item">
                 <div className="cover-container">
                   <div className="header-container">
                     <div className="header-content">
@@ -194,9 +171,18 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
                   </div>
                 </div>
               </li>
-            )
-        )}
-        <li className="spacer" style={{ width: spacerWidth }}></li>
+            );
+            
+            // Add 100px spacer after each podcast item except the last one
+            if (index < items.length - 1) {
+              acc.push(
+                <li key={`spacer-${index}`} className="item-spacer"></li>
+              );
+            }
+          }
+          return acc;
+        }, [])}
+        <li className="spacer main-spacer"></li>
       </ul>
       <div className={`indicators ${items.length <= 1 || isBlurVisible ? 'hidden' : ''}`}>
         {items.map((podcast, index) => (
