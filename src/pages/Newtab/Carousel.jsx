@@ -11,26 +11,30 @@ const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
-  //custom hook
+  //custom hook for updating podcast data
   const { items, handleUpdatePodcastTime, handleUpdatePodcastStatus } =
     usePodcastData();
 
-  //refs
+  //ref holding which card is currently centered
   const cardsRef = useRef(null);
 
   // states
   const [isLoading, setIsLoadingActive] = useState(true);
+  const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   // start loading
   const startLoading = () => {
     setIsLoadingActive(true);
+    console.log('⚡ START LOADING TRIGGERED');
   };
 
   // stop loading
   const stopLoading = () => {
     setIsLoadingActive(false);
+    setIsLoaderVisible(false);
+    console.log('⚡ STOP LOADING TRIGGERED');
   };
 
   // handle time updates
@@ -74,9 +78,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
       if (cardsRef.current) {
         const cards = cardsRef.current;
         const cardElements = cards.querySelectorAll('li:not(.spacer)');
-
         const containerCenter = cards.scrollLeft + cards.clientWidth / 2;
-
         let closestIndex = 0;
         let minDistance = Infinity;
 
@@ -89,7 +91,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
             closestIndex = index;
           }
         });
-
         setActiveIndex(closestIndex);
       }
     };
@@ -108,6 +109,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
   // useEffect loading carousel on mount and when podcast data changes
   useEffect(() => {
+    console.log('⚡ INITIAL CAROUSEL EFFECT RUNNING');
     startLoading();
 
     // log podcast items and their currentTime values when they change
@@ -121,8 +123,16 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
     }
 
     // use the podcast update event
-    const updateEventHandler = () => {
+    const updateEventHandler = (event) => {
+      const action = event.detail?.action;
+      console.log(`⚡ EVENT RECEIVED: ${action || 'unknown action'}`, event.detail);
+      
       startLoading();
+      
+      if (action === 'add' || action === 'remove' || action === 'reorder') {
+        setIsLoaderVisible(true);
+        console.log(`⚡ LOADER VISIBLE SET FOR: ${action}`);
+      }
     };
 
     const loadingTimer = setTimeout(() => {
@@ -131,10 +141,12 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
     // listen to the custom event
     window.addEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
+    console.log('⚡ EVENT LISTENER ATTACHED FOR:', PODCAST_UPDATED_EVENT);
 
     return () => {
       clearTimeout(loadingTimer);
       window.removeEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
+      console.log('⚡ EVENT LISTENER REMOVED');
     };
   }, []);
 

@@ -13,7 +13,6 @@ const Newtab = () => {
   const [redirect, setRedirect] = useState(false);
   const [isBlurVisible, setIsBlurVisible] = useState(false);
 
-  // Fixed this useEffect to include dependency array and cleanup
   useEffect(() => {
     let isMounted = true;
 
@@ -41,7 +40,7 @@ const Newtab = () => {
     return () => {
       isMounted = false;
     };
-  }, []); // Empty dependency array means this runs once on mount
+  }, []);
 
   const checkForPodcasts = () => {
     chrome.storage.local.get(['newItems'], (item) => {
