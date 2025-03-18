@@ -6,7 +6,6 @@
     var(--background-color-info);
   outline: 1px solid var(--outline-color-info);
   outline-offset: -1px;
-  backdrop-filter: blur(10px);
   border-radius: var(--border-radius-medium);
   position: absolute;
   top: 0;
@@ -21,7 +20,7 @@
   -moz-user-select: none;
   -ms-user-select: none;
   cursor: grab;
-  animation: linear adjust-opacity-ui both;
+  animation: adjust-opacity-card-play linear both;
   animation-timeline: --li-in-and-out-of-view;
   z-index: 10 !important;
   transform: translateZ(-1px);

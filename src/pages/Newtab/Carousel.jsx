@@ -7,8 +7,6 @@ import { textTruncate } from '../../utils/textTruncate.js';
 import './Carousel.css';
 
 // subscribe to event
-// const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
-
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
   //custom hook for updating podcast data
@@ -17,6 +15,46 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
   //ref holding which card is currently centered
   const cardsRef = useRef(null);
+  const [spacerWidth, setSpacerWidth] = useState(0);
+
+  // Calculate dynamic spacer width
+  const calculateSpacerWidth = () => {
+    if (cardsRef.current) {
+      const containerWidth = cardsRef.current.clientWidth;
+      const cardWidth = 400;
+      const neededSpace = (containerWidth - cardWidth) / 2;
+      setSpacerWidth(Math.max(0, neededSpace));
+    }
+  };
+
+  // recalculate spacer width on window resize
+  useEffect(() => {
+    calculateSpacerWidth();
+    
+    const handleResize = () => {
+      calculateSpacerWidth();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // center first card on initial load
+  useEffect(() => {
+    if (cardsRef.current && items.length > 0) {
+      const cards = cardsRef.current;
+      const cardElements = cards.querySelectorAll('li:not(.spacer)');
+      if (cardElements[0]) {
+        cardElements[0].scrollIntoView({
+          behavior: 'instant',
+          block: 'center',
+          inline: 'center',
+        });
+        setActiveIndex(0);
+      }
+      calculateSpacerWidth();
+    }
+  }, [items.length]);
 
   // states
   const [activeInfoCard, setActiveInfoCard] = useState(null);
@@ -99,7 +137,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         className={`cards ${isBlurVisible ? 'visible' : ''}`}
         ref={cardsRef}
       >
-        <li className="spacer"></li>
+        <li className="spacer" style={{ width: spacerWidth }}></li>
         {items.map(
           (podcast, index) =>
             podcast && (
@@ -158,7 +196,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
               </li>
             )
         )}
-        <li className="spacer"></li>
+        <li className="spacer" style={{ width: spacerWidth }}></li>
       </ul>
       <div className={`indicators ${items.length <= 1 || isBlurVisible ? 'hidden' : ''}`}>
         {items.map((podcast, index) => (
