@@ -7,7 +7,7 @@ import { textTruncate } from '../../utils/textTruncate.js';
 import './Carousel.css';
 
 // subscribe to event
-const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
+// const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
@@ -19,23 +19,8 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   const cardsRef = useRef(null);
 
   // states
-  const [isLoading, setIsLoadingActive] = useState(true);
-  const [isLoaderVisible, setIsLoaderVisible] = useState(false);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
-  // start loading
-  const startLoading = () => {
-    setIsLoadingActive(true);
-    console.log('⚡ START LOADING TRIGGERED');
-  };
-
-  // stop loading
-  const stopLoading = () => {
-    setIsLoadingActive(false);
-    setIsLoaderVisible(false);
-    console.log('⚡ STOP LOADING TRIGGERED');
-  };
 
   // handle time updates
   const handleTimeUpdate = (podcastID, time) => {
@@ -104,49 +89,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
       if (cardsElement) {
         cardsElement.removeEventListener('scroll', handleScroll);
       }
-    };
-  }, []);
-
-  // useEffect loading carousel on mount and when podcast data changes
-  useEffect(() => {
-    console.log('⚡ INITIAL CAROUSEL EFFECT RUNNING');
-    startLoading();
-
-    // log podcast items and their currentTime values when they change
-    if (items.length > 0) {
-      console.log('Carousel: Current podcast items with times:');
-      items.forEach((item) => {
-        console.log(
-          `- ${item.title} (ID: ${item.key}): currentTime = ${item.currentTime}`
-        );
-      });
-    }
-
-    // use the podcast update event
-    const updateEventHandler = (event) => {
-      const action = event.detail?.action;
-      console.log(`⚡ EVENT RECEIVED: ${action || 'unknown action'}`, event.detail);
-      
-      startLoading();
-      
-      if (action === 'add' || action === 'remove' || action === 'reorder') {
-        setIsLoaderVisible(true);
-        console.log(`⚡ LOADER VISIBLE SET FOR: ${action}`);
-      }
-    };
-
-    const loadingTimer = setTimeout(() => {
-      stopLoading();
-    }, 2000);
-
-    // listen to the custom event
-    window.addEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
-    console.log('⚡ EVENT LISTENER ATTACHED FOR:', PODCAST_UPDATED_EVENT);
-
-    return () => {
-      clearTimeout(loadingTimer);
-      window.removeEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
-      console.log('⚡ EVENT LISTENER REMOVED');
     };
   }, []);
 
