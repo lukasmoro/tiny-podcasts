@@ -42,7 +42,7 @@ h3 {
   scroll-snap-align: center;
   scroll-snap-stop: always;
   display: inline-block;
-  perspective: 20rem;
+  perspective: 30rem;
   flex-direction: column;
   align-items: center;
   animation: linear adjust-z-index both;
