@@ -1,0 +1,75 @@
+.path-1,
+.path-2,
+.path-3,
+.path-4 {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-play-state: paused;
+}
+
+.path-1 {
+  animation-name: rotate-path-1;
+  animation-duration: 10s;
+}
+
+.path-2 {
+  animation-name: rotate-path-2;
+  animation-duration: 12s;
+  animation-direction: reverse;
+}
+
+.path-3 {
+  animation-name: rotate-path-3;
+  animation-duration: 15s;
+}
+
+.path-4 {
+  animation-name: rotate-path-4;
+  animation-duration: 18s;
+  animation-direction: reverse;
+}
+
+.playing .path-1,
+.playing .path-2, 
+.playing .path-3,
+.playing .path-4 {
+  animation-play-state: running;
+}
+
+@keyframes rotate-path-1 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-path-2 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-path-3 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-path-4 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} 
