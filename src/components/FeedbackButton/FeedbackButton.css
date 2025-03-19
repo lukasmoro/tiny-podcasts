@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: center;
   background-color: white;
-  color: var(--tertiary-accent-color);
+  color: var(--button-color-neutral);
   font-size: var(--font-size-medium);
   font-weight: var(--font-weight-bold);
   border-radius: var(--border-radius-button);
@@ -26,6 +26,6 @@
 }
 
 .text-button:hover {
-  background-color: var(--tertiary-accent-color);
-  color: var(--secondary-accent-color);
+  background-color: var(--button-color-neutral);
+  color: white;
 }
