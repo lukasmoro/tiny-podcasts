@@ -55,7 +55,7 @@ const Options = () => {
                 <h2 className="sub-header">Find Podcasts</h2>
                 <h1 className="header">Recommendations</h1>
                 <p className="instructions">
-                  Unsure where to start? Here are some favorites.
+                  Unsure what to listen to? Here are some favorites.
                 </p>
                 {recommendationRows.map((rowIds, index) => (
                   <Recommendations
@@ -71,12 +71,11 @@ const Options = () => {
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
                 <h1 className="header">Feedback & Tip Jar</h1>
                 <p className="instructions">
-                  Tiny Software solves Tiny Problems with Tiny Products.
-                  Every feedback and support helps us to refine existing Tiny Products and create new ones in the future.
-                  <br />Thanks for your support!
+                  Every feedback and tip helps Tiny Software to refine and create Tiny Products in the future.
+                  <br /><br /><em>Thanks for the support!</em>
                 </p>
                 <div className="buttons-container">
-                  <FeedbackButton text="Feedback" url="https://tinysoftware.club/support" />
+                  <FeedbackButton text="Feedback" url="https://form.typeform.com/to/fjkoskTH" />
                   <BuyMeACoffeeButton />
                 </div>
                 <div className="items">
@@ -98,13 +97,13 @@ const Options = () => {
             href="https://tinysoftware.club/privacy/"
             target="_blank"
             rel="noopener noreferrer"
-          >Privacy Policy</a><a
+          >Privacy Policy</a>
+          {/* <a
             className="socials"
             href="https://discord.gg/kMDJ9xHr"
             target="_blank"
             rel="noopener noreferrer"
-          >Open Source</a>
-
+          >Open Source</a> */}
         </div>
       </ThemeProvider >
     </div >

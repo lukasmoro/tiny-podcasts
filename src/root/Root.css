@@ -54,7 +54,7 @@ p {
 
 a {
   text-decoration: none;
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-regular);
   font-size: var(--font-size-links);
   color: var(--link-text-color);
 }
@@ -132,7 +132,7 @@ a {
   --padding-infocard-description: 50px;
   --padding-input: 1rem;
   --padding-items: 0.5rem;
-  --padding-overlay: 25px;
+  --padding-overlay: 20px;
   --padding-cards-container: 2rem;
   --padding-list: 1rem;
 

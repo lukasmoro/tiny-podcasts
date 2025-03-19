@@ -201,7 +201,7 @@ h3 {
   justify-content: center;
   width: 100%;
   bottom: 0;
-  padding-bottom: var(--padding-overlay);
+  padding-bottom: calc(var(--padding-overlay) + 5px);
   transition: opacity 0.3s ease;
 }
 
