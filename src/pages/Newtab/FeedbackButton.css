@@ -1,0 +1,24 @@
+.text-button-link {
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  text-decoration: none;
+  display: inline-block;
+  height: 40px;
+}
+
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-accent-color);
+  color: var(--button-text-color);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-button);
+  box-shadow: var(--button-shadow);
+  text-align: center;
+  height: 40px;
+  min-width: 140px;
+}

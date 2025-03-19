@@ -68,6 +68,7 @@ a {
   --background-color-detail: #d4d4d4;
   --background-color-info: #a0a0a0a6;
   --background-color-listitem: #a0a0a0;
+  --background-color-suggestions: #a0a0a083;
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #d0d0d0;
@@ -118,7 +119,7 @@ a {
   --margin-input: 1rem;
   --margin-gap-card: 20px;
   --margin-circle: -10px;
-  --margin-covers: 33%;
+  --margin-covers: 32%;
   --margin-indicators: 0.2rem;
   --margin-progress-time: 0.9rem;
   --margin-recommendations: 0.7rem;
@@ -170,6 +171,7 @@ a {
   --background-color-listitem: #a5a6c6;
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
+  --background-color-suggestions: #b7b8da83;
   --primary-text-color: #463000;
   --secondary-text-color: #6e5829;
   --tertiary-text-color: #181720;
@@ -215,7 +217,7 @@ a {
   }
 
   25% {
-    opacity: 0;
+    opacity: 0.3;
   }
 
   50% {
@@ -223,7 +225,7 @@ a {
   }
 
   75% {
-    opacity: 0;
+    opacity: 0.3;
   }
   
   100% {

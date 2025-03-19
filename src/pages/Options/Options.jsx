@@ -4,6 +4,7 @@ import List from './List';
 import Overlay from '../Newtab/Overlay';
 import Recommendations from '../Newtab/Recommendations';
 import BuyMeACoffeeButton from '../Newtab/BuyMeACoffeeButton';
+import FeedbackButton from '../Newtab/FeedbackButton';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastData } from '../../hooks/usePodcastData';
 import './Options.css';
@@ -68,13 +69,16 @@ const Options = () => {
             <div className="card right-card">
               <div className="text-container">
                 <h2 className="sub-header">Enjoy Podcasts?</h2>
-                <h1 className="header">Tip Jar</h1>
+                <h1 className="header">Feedback & Tip Jar</h1>
                 <p className="instructions">
-                  Tiny Software solves tiny problems with tiny products.
-                  Every support helps us in creating more tiny products in the future.
-                  Thank you!
+                  Tiny Software solves Tiny Problems with Tiny Products.
+                  Every feedback and support helps us to refine existing Tiny Products and create new ones in the future.
+                  <br />Thanks for your support!
                 </p>
-                <BuyMeACoffeeButton />
+                <div className="buttons-container">
+                  <FeedbackButton text="Feedback" url="https://tinysoftware.club/support" />
+                  <BuyMeACoffeeButton />
+                </div>
                 <div className="items">
                   <p></p>
                 </div>

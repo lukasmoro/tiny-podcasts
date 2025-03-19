@@ -46,8 +46,8 @@ h3 {
 .cards .podcast-item {
   width: var(--cover-size);
   scroll-snap-align: center;
-  perspective: 25rem;
-  animation: linear adjust-z-index both;
+  perspective: 40rem;
+  animation: adjust-z-index linear both;
   animation-timeline: --li-in-and-out-of-view;
   view-timeline-name: --li-in-and-out-of-view;
   view-timeline-axis: inline;
@@ -82,7 +82,7 @@ h3 {
 }
 
 .item-spacer {
-  width: 30px;
+  width: 100px;
   height: 15vw;
 }
 
@@ -200,7 +200,8 @@ h3 {
   align-items: center;
   justify-content: center;
   width: 100%;
-  top: 95%;
+  bottom: 0;
+  padding-bottom: var(--padding-overlay);
   transition: opacity 0.3s ease;
 }
 
@@ -229,7 +230,7 @@ h3 {
 
 .status-indicator {
   border-radius: 5px;
-  margin-top: -1spx;
+  margin-top: -1px;
   width: 5px;
   height: 35px;
   outline: 2px solid;

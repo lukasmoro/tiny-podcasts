@@ -172,8 +172,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
                 </div>
               </li>
             );
-            
-            // Add 100px spacer after each podcast item except the last one
             if (index < items.length - 1) {
               acc.push(
                 <li key={`spacer-${index}`} className="item-spacer"></li>

@@ -113,3 +113,9 @@
   font-weight: var(--font-weight-bold);
   color: var(--link-text-color);
 }
+
+.buttons-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+}

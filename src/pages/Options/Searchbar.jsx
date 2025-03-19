@@ -16,7 +16,7 @@ const Searchbar = (props) => {
         )}&entity=podcast&limit=5`
       );
       const data = await response.json();
-      setSearchResults(data.results.slice(0, 3));
+      setSearchResults(data.results.slice(0, 5));
     } catch (error) {
       console.error('Error searching podcasts:', error);
     }

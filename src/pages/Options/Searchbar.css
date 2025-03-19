@@ -22,11 +22,8 @@
   gap: 1rem;
   position: relative;
   padding: var(--padding-items);
-  background-color: var(--background-color-info);
-  transition: background-color 0.2s ease-in-out;
   max-width: 100%;
   user-select: none;
-  transition: box-shadow 0.3s ease, background-color 0.2s ease-in-out;
   cursor: default;
 }
 
@@ -35,8 +32,6 @@
 }
 
 .search-item-thumbnail {
-  outline: 2px solid var(--outline-color);
-  outline-offset: -2px;
   border-radius: var(--border-radius-thumbnail);
   flex-shrink: 0;
   width: 50px;
@@ -82,7 +77,7 @@
 }
 
 .search-results {
-  background-color: var(--background-color-info);
+  background-color: var(--background-color-suggestions);
   box-shadow: var(--list-item-shadow);
   border-radius: var(--border-radius-medium);
   backdrop-filter: blur(12px);
