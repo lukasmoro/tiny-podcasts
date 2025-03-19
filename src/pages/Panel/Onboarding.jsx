@@ -3,6 +3,8 @@ import Recommendations from '../Newtab/Recommendations.jsx';
 import Overlay from '../Newtab/Overlay.jsx';
 import Searchbar from '../Options/Searchbar.jsx';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
+import { ArrowIcon } from '../Icons/ArrowIcon.jsx';
+import { PinIcon } from '../Icons/PinIcon.jsx';
 import { usePodcastData } from '../../hooks/usePodcastData.js';
 import './Onboarding.css';
 import '../Options/List.css';
@@ -44,12 +46,14 @@ const Onboarding = () => {
     <div className="App">
       <ThemeProvider>
         <Overlay />
+        <ArrowIcon className="top-right-arrow" />
+        <PinIcon className="pin-icon" />
         <div className="card">
           <div className="container">
             <h2 className="sub-header">Onboarding</h2>
-            <h1 className="header">Welcome! 👋</h1>
+            <h1 className="header">Welcome! Let's get started! ✨🌞✨</h1>
             <p className="instructions">
-              Search a podcast or pick a recommendation...
+              Search podcasts or pick a recommendation below...
             </p>
             <Searchbar onSubmit={safeHandleAddPodcast} />
             <div className="recommendations-container">
