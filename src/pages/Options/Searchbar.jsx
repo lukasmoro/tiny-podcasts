@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { textTruncate } from '../../utils/textTruncate';
+import SearchAddButton from '../../components/SearchAddButton/SearchAddButton';
 import './Searchbar.css';
 
 const Searchbar = (props) => {
@@ -77,12 +78,9 @@ const Searchbar = (props) => {
                     10
                   )}
                 </p>
-                <button
-                  className="search-add-btn"
+                <SearchAddButton
                   onClick={() => handlePodcastSelect(podcast)}
-                >
-                  Subscribe
-                </button>
+                />
               </div>
             </li>
           ))}

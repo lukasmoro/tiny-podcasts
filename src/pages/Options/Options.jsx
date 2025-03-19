@@ -2,9 +2,9 @@ import React from 'react';
 import Searchbar from './Searchbar';
 import List from './List';
 import Overlay from '../Newtab/Overlay';
+import BuyMeACoffeeButton from '../../components/BuyMeACoffeeButton/BuyMeACoffeeButton';
+import FeedbackButton from '../../components/FeedbackButton/FeedbackButton';
 import Recommendations from '../Newtab/Recommendations';
-import BuyMeACoffeeButton from '../Newtab/BuyMeACoffeeButton';
-import FeedbackButton from '../Newtab/FeedbackButton';
 import { ThemeProvider } from '../Newtab/ThemeProvider';
 import { usePodcastData } from '../../hooks/usePodcastData';
 import './Options.css';
@@ -72,7 +72,7 @@ const Options = () => {
                 <h1 className="header">Feedback & Tip Jar</h1>
                 <p className="instructions">
                   Every feedback and tip helps Tiny Software to refine and create Tiny Products in the future.
-                  <br /><br /><em>Thanks for the support!</em>
+                  <br /><br /><em>Thanks for your support!✨✨</em>
                 </p>
                 <div className="buttons-container">
                   <FeedbackButton text="Feedback" url="https://form.typeform.com/to/fjkoskTH" />

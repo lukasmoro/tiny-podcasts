@@ -48,30 +48,6 @@
   line-height: 50px;
 }
 
-.search-add-btn {
-  flex-shrink: 0;
-  width: 5rem;
-  height: 2.22rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: center;
-  font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-bold);
-  color: var(--background-color-info);
-  box-shadow: var(--button-shadow);
-  border-radius: var(--border-radius-button);
-  border: none;
-  cursor: pointer;
-  transition: ease-in 0.15s;
-}
-
-.search-add-btn:hover {
-  background-color: var(--button-color-positive);
-  color: var(--secondary-accent-color);
-
-}
-
 .podcast-search-container {
   position: relative;
 }
