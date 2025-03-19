@@ -3,6 +3,7 @@ import { useSprings, animated } from '@react-spring/web';
 import { useDrag } from '@use-gesture/react';
 import clamp from 'lodash/clamp';
 import swap from 'lodash-move';
+import PodcastRemoveButton from '../../components/PodcastRemoveButton/PodcastRemoveButton';
 import './List.css';
 
 // subscribe to event
@@ -168,14 +169,11 @@ const List = ({ items, removeUrl, moveItem }) => {
             >
               {items[i]?.title || 'Unnamed Podcast'}
             </p>
-            <button
-              className="podcast-remove-btn"
+            <PodcastRemoveButton
               onClick={() => handleRemove(items[i]?.key, i)}
               onMouseDown={(e) => e.stopPropagation()}
               onTouchStart={(e) => e.stopPropagation()}
-            >
-              Remove
-            </button>
+            />
           </div>
         </animated.div>
       ))}

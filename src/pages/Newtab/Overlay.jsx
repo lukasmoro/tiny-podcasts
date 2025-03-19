@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SunIcon } from '../Icons/SunIcon';
 import { MoonIcon } from '../Icons/MoonIcon';
 import { LogoIcon } from '../Icons/LogoIcon';
+import { usePlayingState } from '../../hooks/usePlayingState';
 import './Overlay.css';
 
 const Overlay = () => {
@@ -9,6 +10,7 @@ const Overlay = () => {
   const [isDarkMode, setIsDarkMode] = useState(
     localStorage.getItem('theme') === 'dark' || false
   );
+  const isPlaying = usePlayingState();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -49,9 +51,9 @@ const Overlay = () => {
         href="https://tinysoftware.club"
         target="_blank"
         rel="noopener noreferrer"
-      >→ TINY PODCASTS</a>
+      >→ TINY SOFTWARE</a>
       <h2 className="corner logo-container">
-        <LogoIcon className="logo" isDarkMode={isDarkMode} />
+        <LogoIcon className="logo" isDarkMode={isDarkMode} isPlaying={isPlaying} />
       </h2>
       <h2 className="corner top-right">
         {isDarkMode ? (

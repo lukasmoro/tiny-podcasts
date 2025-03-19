@@ -3,6 +3,7 @@ import { useSpring } from '@react-spring/core';
 import { animated } from '@react-spring/web';
 import { PlayIcon } from '../Icons/PlayIcon';
 import { PauseIcon } from '../Icons/PauseIcon';
+import { broadcastPlayingState } from '../../hooks/usePlayingState';
 import './AudioPlayer.css';
 
 const AudioPlayer = (props) => {
@@ -195,6 +196,7 @@ const AudioPlayer = (props) => {
     const handlePlay = () => {
       setIsPlaying(true);
       updateStatus('playing');
+      broadcastPlayingState(true);
       api.start({
         to: {
           opacity: 1,
@@ -205,6 +207,7 @@ const AudioPlayer = (props) => {
 
     const handlePause = () => {
       setIsPlaying(false);
+      broadcastPlayingState(false);
       api.start({
         to: {
           opacity: 0,
@@ -215,6 +218,7 @@ const AudioPlayer = (props) => {
 
     const handleEnded = () => {
       setIsPlaying(false);
+      broadcastPlayingState(false);
       if (props.onEnded) {
         props.onEnded(props.podcastID);
       }

@@ -15,7 +15,7 @@ body {
 }
 
 em {
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-medium);
   font-style: normal;
 }
 
@@ -54,7 +54,7 @@ p {
 
 a {
   text-decoration: none;
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-regular);
   font-size: var(--font-size-links);
   color: var(--link-text-color);
 }
@@ -62,12 +62,13 @@ a {
 :root {
   /* colors */
   --background-color: #262626;
-  --background-color-play: #e9e9e9;
+  --background-color-play: #b0b0b0;
   --background-color-icons: #ffffff;
-  --background-color-ui: #e7e7e7;
+  --background-color-ui: #b0b0b0;
   --background-color-detail: #d4d4d4;
   --background-color-info: #a0a0a0a6;
   --background-color-listitem: #a0a0a0;
+  --background-color-suggestions: #a0a0a083;
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
   --primary-text-color: #d0d0d0;
@@ -84,6 +85,7 @@ a {
   --outline-color-info: #a0a0a0a6;
   --button-color-positive: #5dffb1;
   --button-color-negative: #ff8181;
+  --button-color-neutral: #262626;
   --button-text-color: #181720;
   --overlay-detail-color: #d0d0d0;
 
@@ -118,8 +120,7 @@ a {
   --margin-input: 1rem;
   --margin-gap-card: 20px;
   --margin-circle: -10px;
-  --margin-covers: 33%;
-  --margin-cards: 3.5rem;
+  --margin-covers: 32%;
   --margin-indicators: 0.2rem;
   --margin-progress-time: 0.9rem;
   --margin-recommendations: 0.7rem;
@@ -132,18 +133,17 @@ a {
   --padding-infocard-description: 50px;
   --padding-input: 1rem;
   --padding-items: 0.5rem;
-  --padding-overlay: 25px;
+  --padding-overlay: 20px;
   --padding-cards-container: 2rem;
   --padding-list: 1rem;
 
   /*elevation*/
-  --primary-shadow: 0px 252px 71px 0px rgba(0, 0, 0, 0.00), 0px 162px 65px 0px rgba(0, 0, 0, 0.02), 0px 91px 55px 0px rgba(0, 0, 0, 0.08), 0px 40px 40px 0px rgba(0, 0, 0, 0.14), 0px 10px 22px 0px rgba(0, 0, 0, 0.16);
-  --secondary-shadow: #0000001a 0px 0px 5px 0px, #0000001a 0px 0px 1px 0px;
+  --primary-shadow: 0px 91px 55px 0px rgba(0, 0, 0, 0.08), 0px 40px 40px 0px rgba(0, 0, 0, 0.14), 0px 10px 22px 0px rgba(0, 0, 0, 0.16);
   --primary-inner-shadow: #0000000f 0px 2px 4px 0px inset;
   --input-inner-shadow: #32325d40 0px 30px 60px -32px inset,
     rgba(0, 0, 0, 0.3) 0px 18px 36px -38px inset;
-  --button-shadow: 0px 51px 14px 0px rgba(0, 0, 0, 0.00), 0px 33px 13px 0px rgba(0, 0, 0, 0.02), 0px 18px 11px 0px rgba(0, 0, 0, 0.07), 0px 8px 8px 0px rgba(0, 0, 0, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.14);
-  --play-button-shadow: 0px 38px 11px 0px rgba(0, 0, 0, 0.00), 0px 24px 10px 0px rgba(0, 0, 0, 0.01), 0px 14px 8px 0px rgba(0, 0, 0, 0.05), 0px 6px 6px 0px rgba(0, 0, 0, 0.09), 0px 2px 3px 0px rgba(0, 0, 0, 0.10);
+  --button-shadow: 0px 18px 11px 0px rgba(0, 0, 0, 0.07), 0px 8px 8px 0px rgba(0, 0, 0, 0.12), 0px 2px 4px 0px rgba(0, 0, 0, 0.14);
+  --play-button-shadow: 0px 14px 8px 0px rgba(0, 0, 0, 0.05), 0px 6px 6px 0px rgba(0, 0, 0, 0.09), 0px 2px 3px 0px rgba(0, 0, 0, 0.10);
   --progress-bar-shadow: 0 1px 3px #0000001a;
   --info-card-shadow: #110c2e26 0px 48px 100px 0px;
   --options-card-shadow: 0px 126px 35px 0px rgba(0, 0, 0, 0.00), 0px 80px 32px 0px rgba(0, 0, 0, 0.03), 0px 45px 27px 0px rgba(0, 0, 0, 0.10), 0px 20px 20px 0px rgba(0, 0, 0, 0.17), 0px 5px 11px 0px rgba(0, 0, 0, 0.20);
@@ -165,13 +165,14 @@ a {
 [data-theme='light'] {
   --overlay-detail-color: #a29f8c;
   --background-color: #eeedec;
-  --background-color-play: #CCCCFF;
-  --background-color-ui: #CCCCFF;
+  --background-color-play: #b3b3ff;
+  --background-color-ui: #b3b3ff;
   --background-color-detail: #978f7e;
   --background-color-info: #777891a6;
   --background-color-listitem: #a5a6c6;
   --background-color-input: #ffffff;
   --background-color-chrome: #35363a;
+  --background-color-suggestions: #b7b8da83;
   --primary-text-color: #463000;
   --secondary-text-color: #6e5829;
   --tertiary-text-color: #181720;
@@ -183,4 +184,100 @@ a {
   --accent-color-item: #e4d9bf;
   --outline-color: #4630000f;
   --outline-color-info: #b9b9b9a6;
+}
+
+@keyframes adjust-z-index {
+  35% {
+    z-index: 0;
+  }
+
+  50% {
+    z-index: 100;
+  }
+
+  65% {
+    z-index: 0;
+  }
+}
+
+@keyframes adjust-opacity {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes adjust-opacity-ui {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  75% {
+    opacity: 0.3;
+  }
+  
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes adjust-opacity-card-play {
+  0% {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  40% {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  50% {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  60% {
+    opacity: 0;
+    pointer-events: none;
+  }
+  100% {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@keyframes rotate-cover {
+  0% {
+    transform: translateX(0) rotateY(-35deg);
+  }
+
+  35% {
+    transform: translateX(0) rotateY(-20deg);
+  }
+
+  50% {
+    transform: rotateY(0deg) translateZ(1em) scale(1.1);
+  }
+
+  65% {
+    transform: translateX(0) rotateY(20deg);
+  }
+
+  100% {
+    transform: translateX(0) rotateY(35deg);
+  }
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { textTruncate } from '../../utils/textTruncate';
+import SearchAddButton from '../../components/SearchAddButton/SearchAddButton';
 import './Searchbar.css';
 
 const Searchbar = (props) => {
@@ -16,7 +17,7 @@ const Searchbar = (props) => {
         )}&entity=podcast&limit=5`
       );
       const data = await response.json();
-      setSearchResults(data.results.slice(0, 3));
+      setSearchResults(data.results.slice(0, 5));
     } catch (error) {
       console.error('Error searching podcasts:', error);
     }
@@ -77,12 +78,9 @@ const Searchbar = (props) => {
                     10
                   )}
                 </p>
-                <button
-                  className="search-add-btn"
+                <SearchAddButton
                   onClick={() => handlePodcastSelect(podcast)}
-                >
-                  Subscribe
-                </button>
+                />
               </div>
             </li>
           ))}

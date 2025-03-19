@@ -1,0 +1,22 @@
+.podcast-remove-btn {
+  flex-shrink: 0;
+  width: 5rem;
+  height: 2.22rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  font-size: var(--font-size-medium);
+  color: var(--tertiary-accent-color);
+  box-shadow: var(--button-shadow);
+  border-radius: var(--border-radius-button);
+  border: none;
+  cursor: pointer;
+  transition: ease-in 0.15s;
+  font-weight: var(--font-weight-bold);
+}
+
+.podcast-remove-btn:hover {
+  background-color: var(--tertiary-accent-color);
+  color: var(--secondary-accent-color);
+} 

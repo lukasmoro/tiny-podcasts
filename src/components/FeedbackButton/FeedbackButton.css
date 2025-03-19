@@ -1,0 +1,31 @@
+.text-button-link {
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  text-decoration: none;
+  display: inline-block;
+  height: 2.22rem;
+}
+
+.text-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  color: var(--button-color-neutral);
+  font-size: var(--font-size-medium);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-button);
+  box-shadow: var(--button-shadow);
+  text-align: center;
+  height: 40px;
+  min-width: 140px;
+  transition: ease-in 0.15s;
+}
+
+.text-button:hover {
+  background-color: var(--button-color-neutral);
+  color: white;
+}

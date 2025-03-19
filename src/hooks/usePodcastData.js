@@ -6,6 +6,10 @@ import { sendEvent } from '../utils/googleAnalytics';
 const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
 
 const updateEventBroadcast = (detail = {}) => {
+  // debugging to show when event is dispatched
+  console.log('Dispatching podcast-storage-updated event:', detail);
+  console.log('Action:', detail.action || 'unknown');
+  
   const event = new CustomEvent(PODCAST_UPDATED_EVENT, { detail });
   window.dispatchEvent(event);
 };

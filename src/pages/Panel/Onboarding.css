@@ -43,3 +43,20 @@
   margin-top: var(--margin-additional);
   min-height: 340px;
 }
+
+.top-right-arrow {
+  position: fixed;
+  top: 20px;
+  right: 145px;
+  width: 87px;
+  height: 107px;
+  color: var(--overlay-detail-color);
+}
+
+.pin-icon {
+  position: fixed;
+  top: 120px;
+  right: 245px;
+  width: 82px;
+  color: var(--overlay-detail-color);
+}

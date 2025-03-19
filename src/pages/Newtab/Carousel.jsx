@@ -7,31 +7,34 @@ import { textTruncate } from '../../utils/textTruncate.js';
 import './Carousel.css';
 
 // subscribe to event
-const PODCAST_UPDATED_EVENT = 'podcast-storage-updated';
-
 const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
 
-  //custom hook
+  //custom hook for updating podcast data
   const { items, handleUpdatePodcastTime, handleUpdatePodcastStatus } =
     usePodcastData();
 
-  //refs
+  //ref holding which card is currently centered
   const cardsRef = useRef(null);
 
+  // center first card on initial load
+  useEffect(() => {
+    if (cardsRef.current && items.length > 0) {
+      const cards = cardsRef.current;
+      const cardElements = cards.querySelectorAll('.podcast-item');
+      if (cardElements[0]) {
+        cardElements[0].scrollIntoView({
+          behavior: 'instant',
+          block: 'center',
+          inline: 'center',
+        });
+        setActiveIndex(0);
+      }
+    }
+  }, [items.length]);
+
   // states
-  const [isLoading, setIsLoadingActive] = useState(true);
   const [activeInfoCard, setActiveInfoCard] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
-
-  // start loading
-  const startLoading = () => {
-    setIsLoadingActive(true);
-  };
-
-  // stop loading
-  const stopLoading = () => {
-    setIsLoadingActive(false);
-  };
 
   // handle time updates
   const handleTimeUpdate = (podcastID, time) => {
@@ -56,7 +59,7 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
   const navigateToCard = (index) => {
     if (cardsRef.current && items[index]) {
       const cards = cardsRef.current;
-      const cardElements = cards.querySelectorAll('li:not(.spacer)');
+      const cardElements = cards.querySelectorAll('.podcast-item');
       if (cardElements[index]) {
         cardElements[index].scrollIntoView({
           behavior: 'smooth',
@@ -73,10 +76,8 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
     const handleScroll = () => {
       if (cardsRef.current) {
         const cards = cardsRef.current;
-        const cardElements = cards.querySelectorAll('li:not(.spacer)');
-
+        const cardElements = cards.querySelectorAll('.podcast-item');
         const containerCenter = cards.scrollLeft + cards.clientWidth / 2;
-
         let closestIndex = 0;
         let minDistance = Infinity;
 
@@ -89,7 +90,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
             closestIndex = index;
           }
         });
-
         setActiveIndex(closestIndex);
       }
     };
@@ -106,38 +106,6 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
     };
   }, []);
 
-  // useEffect loading carousel on mount and when podcast data changes
-  useEffect(() => {
-    startLoading();
-
-    // log podcast items and their currentTime values when they change
-    if (items.length > 0) {
-      console.log('Carousel: Current podcast items with times:');
-      items.forEach((item) => {
-        console.log(
-          `- ${item.title} (ID: ${item.key}): currentTime = ${item.currentTime}`
-        );
-      });
-    }
-
-    // use the podcast update event
-    const updateEventHandler = () => {
-      startLoading();
-    };
-
-    const loadingTimer = setTimeout(() => {
-      stopLoading();
-    }, 2000);
-
-    // listen to the custom event
-    window.addEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
-
-    return () => {
-      clearTimeout(loadingTimer);
-      window.removeEventListener(PODCAST_UPDATED_EVENT, updateEventHandler);
-    };
-  }, []);
-
   return (
     <>
       <ul
@@ -145,11 +113,12 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
         className={`cards ${isBlurVisible ? 'visible' : ''}`}
         ref={cardsRef}
       >
-        <li className="spacer"></li>
-        {items.map(
-          (podcast, index) =>
-            podcast && (
-              <li key={index}>
+        <li className="spacer main-spacer"></li>
+        {items.reduce((acc, podcast, index) => {
+          // Add the podcast item
+          if (podcast) {
+            acc.push(
+              <li key={`podcast-${index}`} className="podcast-item">
                 <div className="cover-container">
                   <div className="header-container">
                     <div className="header-content">
@@ -202,9 +171,16 @@ const Carousel = ({ isBlurVisible, handleBlurToggle, onPodcastEnd }) => {
                   </div>
                 </div>
               </li>
-            )
-        )}
-        <li className="spacer"></li>
+            );
+            if (index < items.length - 1) {
+              acc.push(
+                <li key={`spacer-${index}`} className="item-spacer"></li>
+              );
+            }
+          }
+          return acc;
+        }, [])}
+        <li className="spacer main-spacer"></li>
       </ul>
       <div className={`indicators ${items.length <= 1 || isBlurVisible ? 'hidden' : ''}`}>
         {items.map((podcast, index) => (

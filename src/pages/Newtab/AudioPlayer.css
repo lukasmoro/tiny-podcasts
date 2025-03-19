@@ -7,7 +7,7 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  animation: linear adjust-opacity both;
+  animation: adjust-opacity-card-play linear both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
@@ -25,7 +25,7 @@ body {
   align-items: center;
   justify-content: center;
   outline-offset: -3px;
-  animation: linear adjust-opacity-ui both;
+  animation: adjust-opacity-card-play linear both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
@@ -38,7 +38,7 @@ body {
   color: var(--background-color-icons);
   height: 25px;
   filter: var(--drop-shadow-icons);
-  animation: adjust-opacity-ui linear both;
+  animation: adjust-opacity-card-play linear both;
   animation-timeline: --li-in-and-out-of-view;
   -webkit-user-select: none;
   user-select: none;
@@ -97,8 +97,8 @@ body {
   max-width: 25em;
   height: 7px;
   appearance: none;
-  outline: none;
-  animation: adjust-opacity-ui linear both;
+  outline: 0.5px solid var(--outline-color-info);
+  animation: adjust-opacity-card-play linear both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
@@ -166,26 +166,4 @@ body {
   border: none;
   cursor: pointer;
   z-index: 3;
-}
-
-@keyframes adjust-opacity-ui {
-  0% {
-    opacity: 0;
-  }
-
-  25% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  75% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 0;
-  }
 }
