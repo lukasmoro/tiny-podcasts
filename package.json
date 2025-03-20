@@ -1,11 +1,11 @@
 {
-  "name": "podcasts-for-chrome",
+  "name": "tiny-podcasts",
   "version": "0.0.2",
   "description": "A chrome extension that lets you play your favourite podcasts from a new tab.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lukasmoro/podcasts-chrome-extension.git"
+    "url": "https://github.com/lukasmoro/tiny-podcasts.git"
   },
   "scripts": {
     "build": "node utils/build.js",
