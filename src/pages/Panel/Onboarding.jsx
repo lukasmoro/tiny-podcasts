@@ -51,7 +51,7 @@ const Onboarding = () => {
         <div className="card">
           <div className="container">
             <h2 className="sub-header">Onboarding</h2>
-            <h1 className="header">Welcome! Let's get started! ✨🌞✨</h1>
+            <h1 className="header">Welcome to Tiny Podcasts! 🌞🌞🌞🌞</h1>
             <p className="instructions">
               Search podcasts or pick a recommendation below...
             </p>

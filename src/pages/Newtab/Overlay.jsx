@@ -51,7 +51,7 @@ const Overlay = () => {
         href="https://tinysoftware.club"
         target="_blank"
         rel="noopener noreferrer"
-      >→ TINY SOFTWARE</a>
+      >→ TINY PODCASTS</a>
       <h2 className="corner logo-container">
         <LogoIcon className="logo" isDarkMode={isDarkMode} isPlaying={isPlaying} />
       </h2>
