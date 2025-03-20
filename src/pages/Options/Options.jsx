@@ -88,7 +88,7 @@ const Options = () => {
         <div className="socials-links-container">
           <a
             className="socials"
-            href="https://discord.gg/kMDJ9xHr"
+            href="https://discord.gg/vGAjJcFMNA"
             target="_blank"
             rel="noopener noreferrer"
           >Join Discord</a>
@@ -98,12 +98,6 @@ const Options = () => {
             target="_blank"
             rel="noopener noreferrer"
           >Privacy Policy</a>
-          {/* <a
-            className="socials"
-            href="https://discord.gg/kMDJ9xHr"
-            target="_blank"
-            rel="noopener noreferrer"
-          >Open Source</a> */}
         </div>
       </ThemeProvider >
     </div >
