@@ -47,7 +47,7 @@
 .top-right-arrow {
   position: fixed;
   top: 20px;
-  right: 145px;
+  right: 110px;
   width: 87px;
   height: 107px;
   color: var(--overlay-detail-color);
@@ -55,8 +55,75 @@
 
 .pin-icon {
   position: fixed;
-  top: 120px;
-  right: 245px;
+  top: 123px;
+  right: 185px;
   width: 82px;
   color: var(--overlay-detail-color);
+  scale: 1.6;
+}
+
+.arrow-animation {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: 0.1s;
+}
+
+.arrow-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: drawLine 1.5s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.arrow-tip {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+  animation: drawLine 0.5s ease forwards;
+  animation-delay: 0.8s;
+}
+
+.pin-animation {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+  animation-delay: 1s;
+}
+
+.pin-path-1, .pin-path-2, .pin-path-3, .pin-path-4, .pin-path-5,
+.pin-path-6, .pin-path-7, .pin-path-8, .pin-path-9, .pin-path-10,
+.pin-path-11, .pin-path-12, .pin-path-13, .pin-path-14, .pin-path-15,
+.pin-path-16, .pin-path-17 {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: drawLine 0.3s ease forwards;
+}
+
+/* Sequential animation delays for pin paths */
+.pin-path-1 { animation-delay: 1.3s; }
+.pin-path-2 { animation-delay: 1.4s; }
+.pin-path-3 { animation-delay: 1.5s; }
+.pin-path-4 { animation-delay: 1.6s; }
+.pin-path-5 { animation-delay: 1.7s; }
+.pin-path-6 { animation-delay: 1.8s; }
+.pin-path-7 { animation-delay: 1.9s; }
+.pin-path-8 { animation-delay: 2.0s; }
+.pin-path-9 { animation-delay: 2.1s; }
+.pin-path-10 { animation-delay: 2.2s; }
+.pin-path-11 { animation-delay: 2.3s; }
+.pin-path-12 { animation-delay: 2.4s; }
+.pin-path-13 { animation-delay: 2.5s; }
+.pin-path-14 { animation-delay: 2.6s; }
+.pin-path-15 { animation-delay: 2.7s; }
+.pin-path-16 { animation-delay: 2.8s; }
+.pin-path-17 { animation-delay: 2.9s; }
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
