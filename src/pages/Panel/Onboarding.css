@@ -47,7 +47,7 @@
 .top-right-arrow {
   position: fixed;
   top: 20px;
-  right: 145px;
+  right: 110px;
   width: 87px;
   height: 107px;
   color: var(--overlay-detail-color);
@@ -56,7 +56,7 @@
 .pin-icon {
   position: fixed;
   top: 123px;
-  right: 225px;
+  right: 185px;
   width: 82px;
   color: var(--overlay-detail-color);
   scale: 1.6;
