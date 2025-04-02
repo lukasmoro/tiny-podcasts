@@ -213,9 +213,9 @@ async function checkForNewEpisodes() {
             releaseDate: parsedFeed.releaseDate || item.releaseDate,
             publisher: parsedFeed.publisher || item.publisher,
             duration: parsedFeed.duration || item.duration,
-            // preserve user-specific data
-            status: item.status,
-            currentTime: item.currentTime,
+            // reset user-specific data if episode changed, otherwise preserve it
+            status: hasChanges ? "unplayed" : item.status,
+            currentTime: hasChanges ? 0 : item.currentTime,
             key: item.key
           };
         } catch (error) {
